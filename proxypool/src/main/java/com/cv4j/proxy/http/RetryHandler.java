@@ -1,4 +1,4 @@
-package com.cv4j.proxy;
+package com.cv4j.proxy.http;
 
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpRequest;

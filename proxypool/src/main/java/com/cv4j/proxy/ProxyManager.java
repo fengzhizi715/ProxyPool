@@ -2,6 +2,7 @@ package com.cv4j.proxy;
 
 import com.cv4j.proxy.domain.Page;
 import com.cv4j.proxy.domain.Proxy;
+import com.cv4j.proxy.http.HttpManager;
 import com.cv4j.proxy.task.ProxyPageCallable;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Consumer;

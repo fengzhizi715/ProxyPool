@@ -1,4 +1,4 @@
-package com.cv4j.proxy;
+package com.cv4j.proxy.http;
 
 import com.cv4j.proxy.config.Constant;
 import org.apache.http.HttpHost;
