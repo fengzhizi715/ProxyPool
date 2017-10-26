@@ -5,6 +5,7 @@ import com.cv4j.proxy.ProxyManager;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Page;
 import com.cv4j.proxy.domain.Proxy;
+import com.cv4j.proxy.http.HttpManager;
 import com.cv4j.proxy.site.ProxyListPageParserFactory;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +24,9 @@ import java.util.concurrent.Callable;
 public class ProxyPageCallable implements Callable<List<Proxy>>{
 
     protected String url;
-    private ProxyManager proxyHttpClient = null;
 
     public ProxyPageCallable(String url){
         this.url = url;
-        this.proxyHttpClient = ProxyManager.get();
     }
 
     @Override
@@ -36,7 +35,7 @@ public class ProxyPageCallable implements Callable<List<Proxy>>{
         long requestStartTime = System.currentTimeMillis();
         HttpGet tempRequest = null;
         try {
-            Page page = proxyHttpClient.getWebPage(url);
+            Page page = HttpManager.get().getWebPage(url);
             int status = page.getStatusCode();
             long requestEndTime = System.currentTimeMillis();
             String logStr = Thread.currentThread().getName() + " "  +

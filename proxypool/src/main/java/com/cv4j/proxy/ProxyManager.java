@@ -1,6 +1,5 @@
 package com.cv4j.proxy;
 
-import com.cv4j.proxy.domain.Page;
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.http.HttpManager;
 import com.cv4j.proxy.task.ProxyPageCallable;
@@ -9,11 +8,8 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.util.EntityUtils;
 import org.reactivestreams.Publisher;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -85,33 +81,5 @@ public class ProxyManager {
                         ProxyPool.proxyList.add(proxy);
                     }
                 });
-    }
-
-    public Page getWebPage(String url) throws IOException {
-        return getWebPage(url, "UTF-8");
-    }
-
-    public Page getWebPage(String url, String charset) throws IOException {
-        Page page = new Page();
-        CloseableHttpResponse response = HttpManager.get().getResponse(url);
-        if (response!=null) {
-            page.setStatusCode(response.getStatusLine().getStatusCode());
-            page.setUrl(url);
-            try {
-                if(page.getStatusCode() == 200){
-                    page.setHtml(EntityUtils.toString(response.getEntity(), charset));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    response.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return page;
     }
 }

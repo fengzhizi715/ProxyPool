@@ -1,6 +1,7 @@
 package com.cv4j.proxy.http;
 
 import com.cv4j.proxy.config.Constant;
+import com.cv4j.proxy.domain.Page;
 import org.apache.http.HttpHost;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.config.AuthSchemes;
@@ -22,6 +23,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.cookie.BasicClientCookie;
+import org.apache.http.util.EntityUtils;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -221,5 +223,34 @@ public class HttpManager {
         }
 
         return false;
+    }
+
+
+    public Page getWebPage(String url) throws IOException {
+        return getWebPage(url, "UTF-8");
+    }
+
+    public Page getWebPage(String url, String charset) throws IOException {
+        Page page = new Page();
+        CloseableHttpResponse response = HttpManager.get().getResponse(url);
+        if (response!=null) {
+            page.setStatusCode(response.getStatusLine().getStatusCode());
+            page.setUrl(url);
+            try {
+                if(page.getStatusCode() == 200){
+                    page.setHtml(EntityUtils.toString(response.getEntity(), charset));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    response.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return page;
     }
 }
