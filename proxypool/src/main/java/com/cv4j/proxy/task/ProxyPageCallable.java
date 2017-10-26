@@ -1,7 +1,6 @@
 package com.cv4j.proxy.task;
 
 import com.cv4j.proxy.ProxyListPageParser;
-import com.cv4j.proxy.ProxyManager;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Page;
 import com.cv4j.proxy.domain.Proxy;
