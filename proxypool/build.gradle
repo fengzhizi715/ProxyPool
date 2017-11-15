@@ -6,8 +6,13 @@ apply plugin: 'java'
 sourceCompatibility = 1.8
 
 repositories {
-    mavenCentral()
     jcenter()
+    mavenCentral()
+    maven { url 'http://repo.spring.io/release' }
+}
+
+ext {
+    springVersion = '5.0.1.RELEASE'
 }
 
 dependencies {
@@ -22,4 +27,7 @@ dependencies {
     compile 'ch.qos.logback:logback-core:1.1.7'
     compile 'ch.qos.logback:logback-access:1.1.7'
     compile 'org.projectlombok:lombok:1.16.18'
+
+    compile "org.springframework:spring-context:${springVersion}"
+    compile "org.springframework:spring-core:${springVersion}"
 }
