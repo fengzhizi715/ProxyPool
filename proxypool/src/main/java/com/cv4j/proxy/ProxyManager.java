@@ -39,7 +39,6 @@ public class ProxyManager {
         Flowable.fromIterable(ProxyPool.proxyMap.keySet())
                 .parallel()
                 .map(new Function<String, List<Proxy>>() {
-
                     @Override
                     public List<Proxy> apply(String s) throws Exception {
 
@@ -65,7 +64,7 @@ public class ProxyManager {
                             @Override
                             public boolean test(Proxy proxy) {
 
-                                HttpHost httpHost = new HttpHost(proxy.getIp(), proxy.getPort());
+                                HttpHost httpHost = new HttpHost(proxy.getIp(), proxy.getPort(), proxy.getType());
                                 return HttpManager.get().checkProxy(httpHost);
                             }
                         }).collect(Collectors.toList());
@@ -77,7 +76,7 @@ public class ProxyManager {
                 .subscribe(new Consumer<Proxy>() {
                     @Override
                     public void accept(Proxy proxy) throws Exception {
-
+                        log.debug("Result Proxy = "+proxy.getType()+"://"+proxy.getIp()+":"+proxy.getPort());
                         ProxyPool.proxyList.add(proxy);
                     }
                 });

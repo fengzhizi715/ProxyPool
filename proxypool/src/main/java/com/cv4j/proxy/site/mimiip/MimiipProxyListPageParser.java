@@ -25,7 +25,8 @@ public class MimiipProxyListPageParser implements ProxyListPageParser {
             if(!anonymousFlag || isAnonymous.contains("匿")){
                 String ip = elements.get(i).select("td:eq(0)").first().text();
                 String port  = elements.get(i).select("td:eq(1)").first().text();
-                proxyList.add(new Proxy(ip, Integer.valueOf(port), Constant.TIME_INTERVAL));
+                String type = elements.get(i).select("td:eq(4)").first().text();
+                proxyList.add(new Proxy(ip, Integer.valueOf(port), type, Constant.TIME_INTERVAL));
             }
         }
         return proxyList;
