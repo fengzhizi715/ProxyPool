@@ -11,10 +11,6 @@ repositories {
     maven { url 'http://repo.spring.io/release' }
 }
 
-ext {
-    springVersion = '5.0.1.RELEASE'
-}
-
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
@@ -28,6 +24,7 @@ dependencies {
     compile 'ch.qos.logback:logback-access:1.1.7'
     compile 'org.projectlombok:lombok:1.16.18'
 
-    compile "org.springframework:spring-context:${springVersion}"
-    compile "org.springframework:spring-core:${springVersion}"
+    compile("org.springframework.boot:spring-boot-starter-web:1.5.8.RELEASE")
+
+    compile 'org.quartz-scheduler:quartz:2.3.0'
 }
