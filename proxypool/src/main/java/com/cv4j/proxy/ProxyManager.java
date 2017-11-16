@@ -1,5 +1,6 @@
 package com.cv4j.proxy;
 
+import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.http.HttpManager;
 import com.cv4j.proxy.task.ProxyPageCallable;
@@ -9,6 +10,7 @@ import io.reactivex.functions.Function;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.reactivestreams.Publisher;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -19,6 +21,9 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class ProxyManager {
+
+    @Autowired
+    private ProxyDao proxyDao;
 
     private ProxyManager() {
     }
@@ -78,6 +83,7 @@ public class ProxyManager {
                     public void accept(Proxy proxy) throws Exception {
                         log.debug("Result Proxy = "+proxy.getType()+"://"+proxy.getIp()+":"+proxy.getPort());
                         ProxyPool.proxyList.add(proxy);
+                        proxyDao.saveProxy(proxy);
                     }
                 });
     }
