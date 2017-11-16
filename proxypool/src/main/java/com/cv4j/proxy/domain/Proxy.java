@@ -1,5 +1,7 @@
 package com.cv4j.proxy.domain;
 
+import org.springframework.data.annotation.Id;
+
 import java.io.Serializable;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
@@ -12,6 +14,10 @@ public class Proxy implements Delayed, Serializable {
     private static final long serialVersionUID = -8788193271053510562L;
 
     private long timeInterval ;//任务间隔时间,单位ms
+
+    @Id
+    private Long id;
+
     private String ip;
     private int port;
     private String type;      //HTTP、HTTPS
@@ -37,6 +43,14 @@ public class Proxy implements Delayed, Serializable {
         this.type = type;
         this.timeInterval = timeInterval;
         this.timeInterval = TimeUnit.NANOSECONDS.convert(timeInterval, TimeUnit.MILLISECONDS) + System.nanoTime();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getIp() {
