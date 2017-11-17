@@ -19,13 +19,16 @@ public class Application implements CommandLineRunner{
     @Autowired
     ProxyDao proxyDao;
 
+    @Autowired
+    ProxyManager proxyManager;
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-        ProxyManager.get().start();
+        proxyManager.start();
 
         CopyOnWriteArrayList<Proxy> list = ProxyPool.proxyList;
 
