@@ -1,6 +1,7 @@
 package com.cv4j.proxy.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.concurrent.Delayed;
@@ -9,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by tony on 2017/10/19.
  */
+@Document(collection = "Proxy")
 public class Proxy implements Delayed, Serializable {
 
     private static final long serialVersionUID = -8788193271053510562L;
@@ -16,11 +18,11 @@ public class Proxy implements Delayed, Serializable {
     private long timeInterval ;//任务间隔时间,单位ms
 
     @Id
-    private Long id;
+    private String id;
 
     private String ip;
     private int port;
-    private String type;      //HTTP、HTTPS
+    private String type;      //http、https
     private boolean availableFlag;
     private boolean anonymousFlag;
     private long lastSuccessfulTime;//最近一次请求成功时间
@@ -32,7 +34,7 @@ public class Proxy implements Delayed, Serializable {
     public Proxy(String ip, int port, long timeInterval) {
         this.ip = ip;
         this.port = port;
-        this.type = "HTTP";
+        this.type = "http";
         this.timeInterval = timeInterval;
         this.timeInterval = TimeUnit.NANOSECONDS.convert(timeInterval, TimeUnit.MILLISECONDS) + System.nanoTime();
     }
@@ -45,11 +47,11 @@ public class Proxy implements Delayed, Serializable {
         this.timeInterval = TimeUnit.NANOSECONDS.convert(timeInterval, TimeUnit.MILLISECONDS) + System.nanoTime();
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
