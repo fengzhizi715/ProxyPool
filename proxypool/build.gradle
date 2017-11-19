@@ -28,4 +28,5 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-data-mongodb:+'
 
     compile 'org.quartz-scheduler:quartz:2.3.0'
+    compile 'org.quartz-scheduler:quartz-jobs:2.3.0'
 }
