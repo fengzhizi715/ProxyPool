@@ -11,6 +11,7 @@ import org.apache.http.HttpHost;
 import org.reactivestreams.Publisher;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -68,6 +69,7 @@ public class ProxyManager {
                     @Override
                     public void accept(Proxy proxy) throws Exception {
                         log.debug("Result Proxy = "+proxy.getType()+"://"+proxy.getIp()+":"+proxy.getPort());
+                        proxy.setLastSuccessfulTime(new Date().getTime());
                         ProxyPool.proxyList.add(proxy);
                     }
                 });

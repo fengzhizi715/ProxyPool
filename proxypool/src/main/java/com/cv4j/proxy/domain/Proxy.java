@@ -31,6 +31,8 @@ public class Proxy implements Delayed, Serializable {
     private int successfulTimes;//请求成功次数
     private double successfulAverageTime;//成功请求平均耗时
 
+    public Proxy() {}
+
     public Proxy(String ip, int port, long timeInterval) {
         this.ip = ip;
         this.port = port;
@@ -42,7 +44,7 @@ public class Proxy implements Delayed, Serializable {
     public Proxy(String ip, int port, String type, long timeInterval) {
         this.ip = ip;
         this.port = port;
-        this.type = type;
+        this.type = type.toLowerCase();
         this.timeInterval = timeInterval;
         this.timeInterval = TimeUnit.NANOSECONDS.convert(timeInterval, TimeUnit.MILLISECONDS) + System.nanoTime();
     }

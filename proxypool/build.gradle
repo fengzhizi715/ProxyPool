@@ -2,6 +2,7 @@ group 'com.cv4j.proxypool'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'spring-boot'
 
 sourceCompatibility = 1.8
 
@@ -26,6 +27,7 @@ dependencies {
 
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.8.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-data-mongodb:+'
+    compile "org.springframework.boot:spring-boot-starter-thymeleaf"
 
     compile 'org.quartz-scheduler:quartz:2.3.0'
     compile 'org.quartz-scheduler:quartz-jobs:2.3.0'

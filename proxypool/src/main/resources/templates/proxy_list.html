@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>代理服务器列表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/easyui/themes/material/easyui.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/easyui/themes/icon.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/page.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/easyui-lang-zh_CN.js}"></script>
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var _queryUrl = "/proxyController/queryProxy";
+        var _checkUrl = "/proxyController/doValidateProxy";   //验证一条代理数据
+        var _dataGridObj;
+
+        $(function() {
+            loadInfo();
+            bindAction();
+        });
+
+        function loadInfo() {
+            _dataGridObj = initDataGrid($('#queryResult'), checkProxy);
+            _dataGridObj.datagrid("options").pageSize = 15;
+            _dataGridObj.datagrid('options').url = _queryUrl;
+            _dataGridObj.datagrid('load');
+        }
+
+        function bindAction() {
+            $("#btnQuery").click(function() {
+                var queryUrl = _queryUrl+"?proxyType="+$('#ipType').val()+"&proxyIp="+$('#ipAddress').val()+"&minPort="+$('#minPort').val()+"&maxPort="+$('#maxPort').val();
+                _dataGridObj.datagrid('options').url = queryUrl;
+                _dataGridObj.datagrid('load');
+            });
+        }
+
+        function checkProxy(rowIndex,rowData) {
+            $.messager.progress('close');
+            progress();
+            var actionUrl = _checkUrl+"?id="+rowData.id+"&proxyType="+rowData.type+"&proxyIp="+rowData.ip+"&proxyPort="+rowData.port;
+            doGetRequest(actionUrl, successCallback1, errorCallback1);
+        }
+
+        function successCallback1(data) {
+            $.messager.progress('close');
+            if(data.ip == "") {
+                warn_alert('该代理已失效！');
+            } else {
+                info_alert("该代理有效！</br>"+data.type+"://"+data.ip+":"+data.port);
+            }
+            _dataGridObj.datagrid('reload');
+        }
+
+        function errorCallback1() {
+            $.messager.progress('close');
+            error_alert('验证过程异常！');
+        }
+
+        function progress(){
+            var win = $.messager.progress({
+                title:'提示',
+                text:'正在验证，请稍候...',
+                interval:500
+            });
+        }
+
+        /*]]>*/
+    </script>
+</head>
+<body>
+<div id="bodyDiv">
+    <div class="easyui-panel" title="代理服务器列表（请双击进行验证）" style="padding:10px 20px;">
+        <div style="width:80%;text-align:center;padding-top:10px;">
+            <div class="queryForm">
+                <select class="easyui-combobox" label="类型:" labelPosition="left" labelAlign="right" id="ipType" style="width:150px;" panelHeight="auto">
+                    <option value="http">http</option>
+                    <option value="https">https</option>
+                </select>
+                <input class="easyui-textbox" label="IP地址:" labelPosition="left" labelAlign="right" id="ipAddress" style="width:220px"/>
+                <span style="margin-right: 50px"></span>
+                <input class="easyui-textbox" label="端口范围从:" labelPosition="left" labelAlign="right" id="minPort" style="width:150px"/>
+                <input class="easyui-textbox" label="到:" labelPosition="left" labelAlign="center" id="maxPort" style="width:150px"/>
+                <a href="#" id="btnQuery" class="easyui-linkbutton" iconCls="icon-search" style="width:100px;height:38px;margin-left:50px;">查 询</a>
+            </div>
+        </div>
+        <div style="width:80%;text-align:center;padding-left:20px;padding-top:10px;">
+            <table id="queryResult">
+                <thead>
+                <tr>
+                    <th data-options="field:'type',width:120,align:'center',sortable:true">类型</th>
+                    <th data-options="field:'ip',width:200,align:'center',sortable:true">IP地址</th>
+                    <th data-options="field:'port',width:120,align:'center',sortable:true">端口</th>
+                    <th data-options="field:'lastSuccessfulTime',width:200,align:'center',sortable:true,formatter:timestamp2string">最新验证时间</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
