@@ -8,8 +8,10 @@
 
 # 使用方法：
 
-```java
-ProxyManager.get().start();
-```
+可以将该repository clone下来，可用的代理会存放到mongodb中。本地需要事先搭建mongodb。
 
-可用的代理都存放在ProxyPool.proxyList中。
+本地访问地址：http://localhost:8080/load?pagename=proxy_list
+
+预览效果如下：
+
+![](proxy_list.png)
