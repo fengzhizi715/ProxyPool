@@ -30,12 +30,14 @@ public class ScheduleJobs {
     public void cronJob() {
         System.out.println("[CronJob Execute]");
 
-        proxyDao.deleteAll();
-
         proxyManager.start();
 
         CopyOnWriteArrayList<Proxy> list = ProxyPool.proxyList;
 
+        // 先删除旧的数据
+        proxyDao.deleteAll();
+
+        // 然后再进行插入新的proxy
         if (Preconditions.isNotBlank(list)) {
 
             for (Proxy p:list) {
