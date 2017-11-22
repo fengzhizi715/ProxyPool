@@ -8,7 +8,7 @@
 
 # 使用方法：
 
-可以将该repository clone下来，可用的代理会存放到mongodb中。本地需要事先搭建mongodb。
+可以将该repository clone下来运行，可用的代理会存放到mongodb中。本地需要事先搭建mongodb。
 
 本地访问地址：http://localhost:8080/load?pagename=proxy_list
 
