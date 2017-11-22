@@ -97,7 +97,7 @@ public class HttpManager {
     }
 
     public static HttpManager get() {
-        return HttpManager.Holder.MANAGER;
+        return Holder.MANAGER;
     }
 
     private static class Holder {
