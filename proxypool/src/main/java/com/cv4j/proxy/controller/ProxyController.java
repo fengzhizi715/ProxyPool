@@ -2,7 +2,7 @@ package com.cv4j.proxy.controller;
 
 import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
-import com.cv4j.proxy.domain.QueryProxyDTO;
+import com.cv4j.proxy.domain.dto.QueryProxyDTO;
 import com.cv4j.proxy.http.HttpManager;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
@@ -39,7 +39,6 @@ public class ProxyController {
             proxy.setPort(proxyPort);
             proxyDao.updateProxyById(id);            //更新最后验证时间
         } else {
-            proxy.setIp("");
             proxyDao.deleteProxyById(id);            //物理删除数据
         }
 

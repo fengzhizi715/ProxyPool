@@ -1,7 +1,7 @@
 package com.cv4j.proxy.dao;
 
 import com.cv4j.proxy.domain.Proxy;
-import com.cv4j.proxy.domain.QueryProxyDTO;
+import com.cv4j.proxy.domain.dto.QueryProxyDTO;
 
 import java.util.List;
 

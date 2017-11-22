@@ -2,7 +2,7 @@ package com.cv4j.proxy.dao.impl;
 
 import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
-import com.cv4j.proxy.domain.QueryProxyDTO;
+import com.cv4j.proxy.domain.dto.QueryProxyDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
