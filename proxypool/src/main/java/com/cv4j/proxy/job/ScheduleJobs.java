@@ -28,7 +28,7 @@ public class ScheduleJobs {
      */
     @Scheduled(cron = "0 0 */2 * * ?")
     public void cronJob() {
-        System.out.println("[CronJob Execute]");
+        System.out.println("Job Start...");
 
         proxyManager.start();
 
@@ -45,5 +45,7 @@ public class ScheduleJobs {
                 proxyDao.saveProxy(p);
             }
         }
+
+        System.out.println("Job End...");
     }
 }
