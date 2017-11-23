@@ -26,7 +26,7 @@ public class ScheduleJobs {
     /**
      * 每两个小时跑一次任务
      */
-    @Scheduled(cron = "0 0 */2 * * * ? ")
+    @Scheduled(cron = "0 0 */2 * * ?")
     public void cronJob() {
         System.out.println("[CronJob Execute]");
 
