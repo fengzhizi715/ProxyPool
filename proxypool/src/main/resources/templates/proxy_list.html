@@ -3,12 +3,12 @@
 <head>
     <title>代理服务器列表</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/easyui/themes/material/easyui.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/easyui/themes/icon.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{http://www.jeasyui.com/easyui/themes/material/easyui.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{http://www.jeasyui.com/easyui/themes/icon.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/page.css}"/>
-    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/jquery.easyui.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/easyui-lang-zh_CN.js}"></script>
+    <script type="text/javascript" th:src="@{http://www.jeasyui.com/easyui/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{http://www.jeasyui.com/easyui/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{http://www.jeasyui.com/easyui/locale/easyui-lang-zh_CN.js}"></script>
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
 
     <script th:inline="javascript">
@@ -47,8 +47,8 @@
 
         function successCallback1(data) {
             $.messager.progress('close');
-            if(data.ip == "") {
-                warn_alert('该代理已失效！');
+            if(data.ip == "" || data.ip == null || data.ip == undefined) {
+                warn_alert('该代理已失效并被删除了！');
             } else {
                 info_alert("该代理有效！</br>"+data.type+"://"+data.ip+":"+data.port);
             }

@@ -1,43 +1,3 @@
-//基于jquery的方法，用于从form表单获取json格式的对象
-$.fn.serializeObject = function() {
-	var o = {};
-	var a = this.serializeArray();
-	$.each(a, function() {
-		if (o[this.name]) {
-			if (!o[this.name].push) {
-				o[this.name] = [ o[this.name] ];
-			}
-			o[this.name].push(this.value || '');
-		} else {
-			o[this.name] = this.value || '';
-		}
-	});
-	return o;
-};
-
-$.ajaxSetup({
-	cache: false 
-});
-
-function mydateformatter(date){
-	var y = date.getFullYear();
-	var m = date.getMonth()+1;
-	var d = date.getDate();
-	return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
-}
-
-function mydateparser(s){
-	if (!s) return new Date();
-	var ss = (s.split('-'));
-	var y = parseInt(ss[0],10);
-	var m = parseInt(ss[1],10);
-	var d = parseInt(ss[2],10);
-	if (!isNaN(y) && !isNaN(m) && !isNaN(d)){
-		return new Date(y,m-1,d);
-	} else {
-		return new Date();
-	}
-}
 
 function info_alert(msg,callback) {
 	$.messager.alert('提示',msg,'info',callback);
@@ -118,18 +78,6 @@ function pagerFilter(data){
     return data;
 }
 
-function doAjaxSubmit(formObj, actionurl, successcb, errorcb) {
-	var options = {
-					url: actionurl,
-					type:'POST',
-					dataType:'json',
-					success: successcb,
-					error: errorcb
-				   };
-	
-	formObj.ajaxSubmit(options);
-}
-
 function doPostRequest(jsonstring, actionurl, successcb, errorcb) {
 	$.ajax({
 		type : 'POST',
@@ -166,25 +114,6 @@ function fillSelectComp(selectObj, height, actionUrl, textName, valueName, loadS
     });
 }
 
-function getCurrentDate() {
-	var dateObj = new Date();
-	var strDate = dateObj.getFullYear()+"-";
-
-	if(parseInt(dateObj.getMonth()) < 9) {
-		strDate += "0"+(parseInt(dateObj.getMonth())+1)+"-";
-	} else {
-		strDate += dateObj.getMonth()+1+"-";
-	}
-	
-	if(parseInt(dateObj.getDate()) < 10) {
-		strDate += "0"+dateObj.getDate();
-	} else {
-		strDate += dateObj.getDate();
-	}
-
-	return strDate;
-}
-
 function timestamp2string(time){
 	var datetime = new Date();
 	datetime.setTime(time);
@@ -195,18 +124,4 @@ function timestamp2string(time){
 	var minute = datetime.getMinutes()< 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
 	var second = datetime.getSeconds()< 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
 	return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;
-}
-
-function date2string(datetime){
-	var year = datetime.getFullYear();
-	var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
-	var date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
-	var hour = datetime.getHours()< 10 ? "0" + datetime.getHours() : datetime.getHours();
-	var minute = datetime.getMinutes()< 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
-	var second = datetime.getSeconds()< 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
-	return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;
-}
-
-function formatFloat(src, pos) {
-    return Math.round(src*Math.pow(10, pos))/Math.pow(10, pos);
 }
