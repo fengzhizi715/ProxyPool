@@ -24,9 +24,9 @@ public class ScheduleJobs {
     ProxyManager proxyManager;
 
     /**
-     * 每两个小时跑一次任务
+     * 每六个小时跑一次任务
      */
-    @Scheduled(cron = "0 0 */2 * * ?")
+    @Scheduled(cron = "0 0 */6 * * ?")
     public void cronJob() {
         System.out.println("Job Start...");
 
