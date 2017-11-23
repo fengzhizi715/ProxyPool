@@ -65,4 +65,9 @@ public class ProxyDaoImpl implements ProxyDao {
         Query query = new Query(Criteria.where("id").is(id));
         mongoTemplate.remove(query, Proxy.class, "Proxy");
     }
+
+    @Override
+    public void deleteAll() {
+        mongoTemplate.dropCollection("Proxy");
+    }
 }

@@ -17,4 +17,6 @@ public interface ProxyDao {
     void updateProxyById(String id);
 
     void deleteProxyById(String id);
+
+    void deleteAll();
 }
