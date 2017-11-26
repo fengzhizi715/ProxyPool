@@ -3,6 +3,7 @@ package com.cv4j.proxy.dao.impl;
 import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.domain.dto.QueryProxyDTO;
+import com.cv4j.proxy.domain.dto.ResultProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -50,6 +51,13 @@ public class ProxyDaoImpl implements ProxyDao {
             query.with(new Sort(Sort.Direction.ASC, "port"));
         }
         return mongoTemplate.find(query, Proxy.class,"Proxy");
+    }
+
+    @Override
+    public List<ResultProxy> findAllProxy() {
+        Query query = new Query();
+        query.with(new Sort(Sort.Direction.ASC, "port"));
+        return mongoTemplate.find(query, ResultProxy.class,"Proxy");
     }
 
     @Override

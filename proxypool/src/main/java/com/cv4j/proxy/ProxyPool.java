@@ -3,6 +3,7 @@ package com.cv4j.proxy;
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.site.ip181.Ip181ProxyListPageParser;
 import com.cv4j.proxy.site.ip66.Ip66ProxyListPageParser;
+import com.cv4j.proxy.site.ipway.IpwayProxyListPageParser;
 import com.cv4j.proxy.site.mimiip.MimiipProxyListPageParser;
 import com.cv4j.proxy.site.xicidaili.XicidailiProxyListPageParser;
 
@@ -34,5 +35,6 @@ public class ProxyPool {
                 proxyMap.put("http://www.66ip.cn/areaindex_" + j + "/" + i + ".html", Ip66ProxyListPageParser.class);
             }
         }
+        proxyMap.put("http://ipway.net/", IpwayProxyListPageParser.class);
     }
 }

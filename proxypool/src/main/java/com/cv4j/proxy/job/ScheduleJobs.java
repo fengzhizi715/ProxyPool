@@ -6,6 +6,7 @@ import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Created by tony on 2017/11/22.
  */
 @Component
+
 public class ScheduleJobs {
 
     @Autowired
@@ -26,7 +28,7 @@ public class ScheduleJobs {
     /**
      * 每六个小时跑一次任务
      */
-    @Scheduled(cron = "0 0 */6 * * ?")
+    @Scheduled(cron="${cronJob.schedule}")
     public void cronJob() {
         System.out.println("Job Start...");
 

@@ -3,6 +3,7 @@ package com.cv4j.proxy.controller;
 import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.domain.dto.QueryProxyDTO;
+import com.cv4j.proxy.domain.dto.ResultProxy;
 import com.cv4j.proxy.http.HttpManager;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
@@ -63,6 +64,20 @@ public class ProxyController {
             return null;
         } else{
             log.info("queryProxy, result = "+result.size());
+            return result;
+        }
+    }
+
+    @RequestMapping(value="/getAllResultProxy")
+    @ResponseBody
+    public List<ResultProxy> getAllResultProxy() {
+        log.info("getAllResultProxy");
+        List<ResultProxy> result = proxyDao.findAllProxy();
+        if(result == null) {
+            log.info("getAllResultProxy, result = null");
+            return null;
+        } else{
+            log.info("getAllResultProxy, result = "+result.size());
             return result;
         }
     }

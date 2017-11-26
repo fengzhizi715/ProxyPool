@@ -2,6 +2,7 @@ package com.cv4j.proxy.dao;
 
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.domain.dto.QueryProxyDTO;
+import com.cv4j.proxy.domain.dto.ResultProxy;
 
 import java.util.List;
 
@@ -13,6 +14,8 @@ public interface ProxyDao {
     void saveProxy(Proxy proxy);
 
     List<Proxy> findProxyByCond(QueryProxyDTO queryProxyDTO);
+
+    List<ResultProxy> findAllProxy();
 
     void updateProxyById(String id);
 
