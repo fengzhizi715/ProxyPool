@@ -19,3 +19,7 @@ ProxyPool可以供给网络爬虫使用，ProxyPool由Spring Boot+RxJava2.x+Mong
 另外，还提供了一个接口，返回代理池中所有的Proxy
 
 http://localhost:8080/getAllResultProxy
+
+# 联系方式
+
+QQ交流群：490882934
