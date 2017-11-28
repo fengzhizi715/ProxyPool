@@ -16,7 +16,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Created by tony on 2017/11/22.
  */
 @Component
-
 public class ScheduleJobs {
 
     @Autowired
