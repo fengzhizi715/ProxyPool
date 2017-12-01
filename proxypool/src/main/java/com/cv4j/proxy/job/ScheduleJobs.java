@@ -38,10 +38,11 @@ public class ScheduleJobs {
 
         // 先删除旧的数据
         proxyDao.deleteAll();
+        System.out.println("Job after deleteAll");
 
         // 然后再进行插入新的proxy
         if (Preconditions.isNotBlank(list)) {
-
+            System.out.println("Job before saveProxy");
             for (Proxy p:list) {
 
                 proxyDao.saveProxy(p);

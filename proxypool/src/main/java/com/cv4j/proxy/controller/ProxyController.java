@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -27,7 +29,7 @@ public class ProxyController {
         return pagename;
     }
 
-    @RequestMapping(value="proxyController/doValidateProxy")
+    @RequestMapping(value="/proxyController/doValidateProxy")
     @ResponseBody
     public Proxy doValidateProxy(String id, String proxyType, String proxyIp, Integer proxyPort) {
         log.info("doValidateProxy id="+id+",proxyType="+proxyType+",proxyIp="+proxyIp+",proxyPort="+proxyPort);
@@ -46,10 +48,12 @@ public class ProxyController {
         return proxy;
     }
 
-    @RequestMapping(value="proxyController/queryProxy")
+    @RequestMapping(value="/proxyController/queryProxy")
     @ResponseBody
-    public List<Proxy> queryProxy(String proxyType, String proxyIp, Integer minPort, Integer maxPort, String sort, String order) {
-        log.info("queryProxy proxyType="+proxyType+",proxyIp="+proxyIp+",minPort="+minPort+",maxPort="+maxPort+",sort="+sort+",order="+order);
+    public Map<String,Object> queryProxy(String proxyType, String proxyIp, Integer minPort, Integer maxPort, String sort, String order, Integer page, Integer rows) {
+        log.info("queryProxy proxyType="+proxyType+",proxyIp="+proxyIp+",minPort="+minPort+",maxPort="+maxPort+",sort="+sort+",order="+order+",page="+page+",rows="+rows);
+        Map<String,Object> resultMap = new HashMap<>();
+
         QueryProxyDTO queryProxyDTO = new QueryProxyDTO();
         queryProxyDTO.setType(proxyType);
         queryProxyDTO.setIp(proxyIp);
@@ -57,15 +61,20 @@ public class ProxyController {
         queryProxyDTO.setMaxPort(maxPort == null ? 65535 : maxPort);
         queryProxyDTO.setSort(sort);
         queryProxyDTO.setOrder(order);
+        queryProxyDTO.setPage(page <=0 ? 1 : page);
+        queryProxyDTO.setRows(rows == 10 ? 15 : rows);
 
-        List<Proxy> result = proxyDao.findProxyByCond(queryProxyDTO);
-        if(result == null) {
-            log.info("queryProxy, result = null");
-            return null;
+        List<Proxy> resultAll = proxyDao.findProxyByCond(queryProxyDTO,true);
+        List<Proxy> resultPage = proxyDao.findProxyByCond(queryProxyDTO,false);
+        if(resultAll == null) {
+            log.info("queryProxy, resultAll = null");
         } else{
-            log.info("queryProxy, result = "+result.size());
-            return result;
+            log.info("queryProxy, resultAll = "+resultAll.size());
         }
+        resultMap.put("total",resultAll.size());
+        resultMap.put("rows",resultPage);
+
+        return resultMap;
     }
 
     @RequestMapping(value="/getAllResultProxy")

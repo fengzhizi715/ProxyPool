@@ -13,7 +13,7 @@ public interface ProxyDao {
 
     void saveProxy(Proxy proxy);
 
-    List<Proxy> findProxyByCond(QueryProxyDTO queryProxyDTO);
+    List<Proxy> findProxyByCond(QueryProxyDTO queryProxyDTO, boolean isGetAll);
 
     List<ResultProxy> findAllProxy();
 

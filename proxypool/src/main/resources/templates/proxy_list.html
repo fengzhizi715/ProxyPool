@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>代理服务器列表</title>
+    <title>实时有效的代理服务器列表</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" th:href="@{http://www.jeasyui.com/easyui/themes/material/easyui.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{http://www.jeasyui.com/easyui/themes/icon.css}"/>
@@ -10,13 +10,14 @@
     <script type="text/javascript" th:src="@{http://www.jeasyui.com/easyui/jquery.easyui.min.js}"></script>
     <script type="text/javascript" th:src="@{http://www.jeasyui.com/easyui/locale/easyui-lang-zh_CN.js}"></script>
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
-
     <script th:inline="javascript">
         /*<![CDATA[*/
 
-        var _queryUrl = "/proxyController/queryProxy";
-        var _checkUrl = "/proxyController/doValidateProxy";   //验证一条代理数据
+        var _queryUrl = "proxyController/queryProxy";
+        var _checkUrl = "proxyController/doValidateProxy";   //验证一条代理数据
         var _dataGridObj;
+        var _showTag = 1;
+        var _timer;
 
         $(function() {
             loadInfo();
@@ -24,10 +25,7 @@
         });
 
         function loadInfo() {
-            _dataGridObj = initDataGrid($('#queryResult'), checkProxy);
-            _dataGridObj.datagrid("options").pageSize = 15;
-            _dataGridObj.datagrid('options').url = _queryUrl;
-            _dataGridObj.datagrid('load');
+            _dataGridObj = initDataGrid($('#queryResult'), _queryUrl, checkProxy);
         }
 
         function bindAction() {
@@ -38,17 +36,28 @@
             });
         }
 
-        function checkProxy(rowIndex,rowData) {
-            $.messager.progress('close');
+        function checkProxy(rowIndex, rowData) {
+            _showTag = 1;
+            _timer = setTimeout(closeProcess, 10000); //10秒钟后自动关闭进度条（但还在继续处理中）
             progress();
             var actionUrl = _checkUrl+"?id="+rowData.id+"&proxyType="+rowData.type+"&proxyIp="+rowData.ip+"&proxyPort="+rowData.port;
             doGetRequest(actionUrl, successCallback1, errorCallback1);
         }
 
+        function closeProcess() {
+            $.messager.progress('close');
+            _showTag = 0;
+            clearTimeout(_timer);
+        }
+
         function successCallback1(data) {
+            clearTimeout(_timer);
             $.messager.progress('close');
             if(data.ip == "" || data.ip == null || data.ip == undefined) {
-                warn_alert('该代理已失效并被删除了！');
+                if(_showTag == 1) {
+                    //10秒钟以内的返回，才显示对话框
+                    warn_alert('该代理已失效并被删除了！');
+                }
             } else {
                 info_alert("该代理有效！</br>"+data.type+"://"+data.ip+":"+data.port);
             }
@@ -56,11 +65,14 @@
         }
 
         function errorCallback1() {
+            clearTimeout(_timer);
             $.messager.progress('close');
             error_alert('验证过程异常！');
         }
 
         function progress(){
+            $.messager.progress('close');
+
             var win = $.messager.progress({
                 title:'提示',
                 text:'正在验证，请稍候...',
@@ -73,8 +85,8 @@
 </head>
 <body>
 <div id="bodyDiv">
-    <div class="easyui-panel" title="代理服务器列表（请双击进行验证）" style="padding:10px 20px;">
-        <div style="width:80%;text-align:center;padding-top:10px;">
+    <div class="easyui-panel" title="代理服务器列表（请双击进行验证）">
+        <div style="width:100%;text-align:center;padding:10px 0 0 0;">
             <div class="queryForm">
                 <select class="easyui-combobox" label="类型:" labelPosition="left" labelAlign="right" id="ipType" style="width:150px;" panelHeight="auto">
                     <option value="http">http</option>
@@ -83,11 +95,11 @@
                 <input class="easyui-textbox" label="IP地址:" labelPosition="left" labelAlign="right" id="ipAddress" style="width:220px"/>
                 <span style="margin-right: 50px"></span>
                 <input class="easyui-textbox" label="端口范围从:" labelPosition="left" labelAlign="right" id="minPort" style="width:150px"/>
-                <input class="easyui-textbox" label="到:" labelPosition="left" labelAlign="center" id="maxPort" style="width:150px"/>
+                <input class="easyui-textbox" label="到:" labelWidth="50px" labelPosition="left" labelAlign="center" id="maxPort" style="width:120px"/>
                 <a href="#" id="btnQuery" class="easyui-linkbutton" iconCls="icon-search" style="width:100px;height:38px;margin-left:50px;">查 询</a>
             </div>
         </div>
-        <div style="width:80%;text-align:center;padding-left:20px;padding-top:10px;">
+        <div style="width:100%;text-align:center;padding:10px 0 0 0;">
             <table id="queryResult">
                 <thead>
                 <tr>
@@ -100,6 +112,11 @@
             </table>
         </div>
     </div>
+</div>
+<div>
+    <p><span style="font-size: 16px">QQ交流群：490882934</span></p>
+    <p><span style="font-size: 16px">源代码地址：<a href="https://github.com/fengzhizi715/ProxyPool" target="_blank">https://github.com/fengzhizi715/ProxyPool</a></span></p>
+    <p><span style="font-size: 16px">最后更新：20171201</span></p>
 </div>
 </body>
 </html>

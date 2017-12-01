@@ -15,12 +15,46 @@ function confirm(title, msg, callback) {
 	$.messager.confirm(title, msg, callback);
 }
 
-function initDataGrid(datagridObj, dblClickFun) {
+
+function initDataGrid(datagridObj, dgurl, dblClickFun) {
+    datagridObj.datagrid({
+        url:dgurl,
+        onDblClickRow:dblClickFun,
+        method:"get",
+        loadMsg: "数据加载中,请稍等...",
+        rownumbers:true,
+        striped: true,
+        fitColumns:true,
+        singleSelect:true,
+        autoRowHeight:false,
+        pagination:true,
+        collapsible:true,
+        minimizable:false,
+        maximizable:false
+    });
+
+    //设置分页控件
+    var p = datagridObj.datagrid('getPager');
+    $(p).pagination({
+        pageNumber: 1,
+        pageSize: 15,
+        pageList: [15,30,45],
+        beforePageText: '第',
+        afterPageText: '页    共 {pages} 页',
+        displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
+    });
+
+    datagridObj.datagrid('options').pageNumber = 1;  //默认从第一个开始
+
+    return datagridObj;
+}
+
+function initDataGridWithPager(datagridObj, dblClickFun) {
     datagridObj.datagrid({
         // url:dgurl,
         onDblClickRow:dblClickFun,
         method:"get",
-        loadMsg: "数据加载中...",
+        loadMsg: "数据加载中，请稍等...",
         rownumbers:true,
         striped: true,
         fitColumns:true,

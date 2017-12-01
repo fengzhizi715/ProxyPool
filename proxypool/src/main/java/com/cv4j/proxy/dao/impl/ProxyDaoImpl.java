@@ -30,7 +30,7 @@ public class ProxyDaoImpl implements ProxyDao {
     }
 
     @Override
-    public List<Proxy> findProxyByCond(QueryProxyDTO queryProxyDTO) {
+    public List<Proxy> findProxyByCond(QueryProxyDTO queryProxyDTO, boolean isGetAll) {
         Query query = new Query();
         if(queryProxyDTO.getType() != null && !"".equals(queryProxyDTO.getType())) {
             query.addCriteria(Criteria.where("type").gte(queryProxyDTO.getType()));
@@ -41,14 +41,19 @@ public class ProxyDaoImpl implements ProxyDao {
         if(queryProxyDTO.getMinPort() != null) {
             query.addCriteria(Criteria.where("port").gte(queryProxyDTO.getMinPort()).lte(queryProxyDTO.getMaxPort()));
         }
-        if(queryProxyDTO.getSort() != null) {
-            if("asc".equals(queryProxyDTO.getOrder())) {
-                query.with(new Sort(Sort.Direction.ASC, queryProxyDTO.getSort()));
+        if(isGetAll == false) {
+            if(queryProxyDTO.getSort() != null) {
+                if("asc".equals(queryProxyDTO.getOrder())) {
+                    query.with(new Sort(Sort.Direction.ASC, queryProxyDTO.getSort()));
+                } else {
+                    query.with(new Sort(Sort.Direction.DESC, queryProxyDTO.getSort()));
+                }
             } else {
-                query.with(new Sort(Sort.Direction.DESC, queryProxyDTO.getSort()));
+                query.with(new Sort(Sort.Direction.ASC, "port"));
             }
-        } else {
-            query.with(new Sort(Sort.Direction.ASC, "port"));
+            int skip = (queryProxyDTO.getPage() - 1) * queryProxyDTO.getRows();
+            query.skip(skip);
+            query.limit(queryProxyDTO.getRows());
         }
         return mongoTemplate.find(query, Proxy.class,"Proxy");
     }
