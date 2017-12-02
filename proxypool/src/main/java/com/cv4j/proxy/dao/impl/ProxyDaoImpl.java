@@ -1,5 +1,6 @@
 package com.cv4j.proxy.dao.impl;
 
+import com.cv4j.proxy.config.Constant;
 import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.domain.dto.QueryProxyDTO;
@@ -55,14 +56,14 @@ public class ProxyDaoImpl implements ProxyDao {
             query.skip(skip);
             query.limit(queryProxyDTO.getRows());
         }
-        return mongoTemplate.find(query, Proxy.class,"Proxy");
+        return mongoTemplate.find(query, Proxy.class,Constant.COL_NAME_Proxy);
     }
 
     @Override
     public List<ResultProxy> findAllProxy() {
         Query query = new Query();
         query.with(new Sort(Sort.Direction.ASC, "port"));
-        return mongoTemplate.find(query, ResultProxy.class,"Proxy");
+        return mongoTemplate.find(query, ResultProxy.class,Constant.COL_NAME_Proxy);
     }
 
     @Override
@@ -70,17 +71,17 @@ public class ProxyDaoImpl implements ProxyDao {
         Query query = new Query(Criteria.where("id").is(id));
         Update update = new Update();
         update.set("lastSuccessfulTime", new Date().getTime());        //最近一次验证成功的时间
-        mongoTemplate.findAndModify(query, update, Proxy.class,"Proxy");
+        mongoTemplate.findAndModify(query, update, Proxy.class,Constant.COL_NAME_Proxy);
     }
 
     @Override
     public void deleteProxyById(String id) {
         Query query = new Query(Criteria.where("id").is(id));
-        mongoTemplate.remove(query, Proxy.class, "Proxy");
+        mongoTemplate.remove(query, Proxy.class, Constant.COL_NAME_Proxy);
     }
 
     @Override
     public void deleteAll() {
-        mongoTemplate.dropCollection("Proxy");
+        mongoTemplate.dropCollection(Constant.COL_NAME_Proxy);
     }
 }

@@ -41,12 +41,14 @@ public class ProxyPageCallable implements Callable<List<Proxy>>{
                     "  executing request " + page.getUrl()  + " response statusCode:" + status +
                     "  request cost time:" + (requestEndTime - requestStartTime) + "ms";
             if(status == HttpStatus.SC_OK){
-                log.debug(logStr);
+                log.info("Success: "+logStr);
                 return handle(page);
+            }else{
+                log.info("Failure: "+logStr);
             }
 
         } catch (IOException e) {
-
+            log.info("IOException: e="+e.toString());
         } finally {
             if (tempRequest != null){
                 tempRequest.releaseConnection();
