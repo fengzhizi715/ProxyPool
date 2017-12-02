@@ -29,6 +29,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
@@ -182,47 +184,24 @@ public class HttpManager {
 
         if (proxy == null) return false;
 
-        // 创建Http请求配置参数
-        RequestConfig.Builder builder = RequestConfig.custom()
-                // 获取连接超时时间
-                .setConnectionRequestTimeout(20000)
-                // 请求超时时间
-                .setConnectTimeout(20000)
-                // 响应超时时间
-                .setSocketTimeout(20000)
-                .setProxy(proxy);
-
-        RequestConfig requestConfig = builder.build();
-
-        // 创建httpClient
-        HttpClientBuilder httpClientBuilder = HttpClients.custom();
-
-        httpClientBuilder
-                // 把请求相关的超时信息设置到连接客户端
-                .setDefaultRequestConfig(requestConfig)
-                // 配置连接池管理对象
-                .setConnectionManager(connManager);
-
-        CloseableHttpClient client =  httpClientBuilder.build();
-
-        HttpClientContext httpClientContext = HttpClientContext.create();
-        CloseableHttpResponse response = null;
+        Socket socket = null;
         try {
-            HttpGet request = new HttpGet("http://www.163.com/");
-            response = client.execute(request, httpClientContext);
-
-            int statusCode = response.getStatusLine().getStatusCode();// 连接代码
-
-            if (statusCode == 200) {
-
-                return true;
-            }
+            socket = new Socket();
+            InetSocketAddress endpointSocketAddr = new InetSocketAddress(proxy.getHostName(), proxy.getPort());
+            socket.connect(endpointSocketAddr, 3000);
+            return true;
         } catch (IOException e) {
-//            e.printStackTrace();
+//            logger.warn("FAILRE - CAN not connect!  remote: " + p);
             return false;
+        } finally {
+            if (socket != null) {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+//                    logger.warn("Error occurred while closing socket of validating proxy", e);
+                }
+            }
         }
-
-        return false;
     }
 
 
