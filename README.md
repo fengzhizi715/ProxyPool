@@ -10,7 +10,7 @@ ProxyPool可以供给网络爬虫使用，ProxyPool由Spring Boot+RxJava2.x+Mong
 
 可以将该repository clone下来运行，可用的代理会存放到MongoDB中。每隔几小时会抓取一次可用的代理。不过本地需要事先搭建好MongoDB。
 
-本地访问地址：http://localhost:8080/load?pagename=proxy_list
+本地访问地址：http://localhost:8080/proxypool/load?pagename=proxy_list
 
 预览效果如下：
 
