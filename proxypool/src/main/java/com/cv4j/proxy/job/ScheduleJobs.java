@@ -43,17 +43,20 @@ public class ScheduleJobs {
 
         CopyOnWriteArrayList<Proxy> list = ProxyPool.proxyList;
 
-        // 先删除旧的数据
-        proxyDao.deleteAll();
-        log.info("Job after deleteAll");
-
-        // 然后再进行插入新的proxy
         if (Preconditions.isNotBlank(list)) {
+            // 先删除旧的数据
+            proxyDao.deleteAll();
+            log.info("Job after deleteAll");
+
+            // 然后再进行插入新的proxy
             log.info("Job before saveProxy");
             for (Proxy p:list) {
                 proxyDao.saveProxy(p);
                 log.info("saveProxy p="+p.getType()+"://"+p.getIp()+":"+p.getPort());
             }
+        } else {
+
+            log.info("proxyList is empty...");
         }
 
         log.info("Job End...");
