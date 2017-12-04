@@ -68,9 +68,14 @@ public class ProxyManager {
                 .subscribe(new Consumer<Proxy>() {
                     @Override
                     public void accept(Proxy proxy) throws Exception {
-                        log.info("Result Proxy = "+proxy.getType()+"://"+proxy.getIp()+":"+proxy.getPort());
+                        log.info("Result Proxy = " + proxy.getType() + "://" + proxy.getIp() + ":" + proxy.getPort());
                         proxy.setLastSuccessfulTime(new Date().getTime());
                         ProxyPool.proxyList.add(proxy);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        log.error(throwable.getMessage());
                     }
                 });
     }
