@@ -12,6 +12,8 @@ ProxyPool可以供给网络爬虫使用，ProxyPool由Spring Boot+RxJava2.x+Mong
 
 本地访问地址：http://localhost:8080/proxypool/load?pagename=proxy_list
 
+线上环境地址：http://47.97.7.119:8080/proxypool/load?pagename=proxy_list
+
 预览效果如下：
 
 ![](proxy_list.png)
