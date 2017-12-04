@@ -17,3 +17,10 @@ ProxyPool可以供给网络爬虫使用，ProxyPool由Spring Boot+RxJava2.x+Mong
 预览效果如下：
 
 ![](proxy_list.png)
+
+
+另外，还提供了一个接口，返回代理池中所有的Proxy
+
+本地访问地址：http://localhost:8080/proxypool/getAllResultProxy
+
+线上环境地址：http://47.97.7.119:8080/proxypool/getAllResultProxy
