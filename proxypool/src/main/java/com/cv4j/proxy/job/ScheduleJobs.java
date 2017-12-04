@@ -29,12 +29,15 @@ public class ScheduleJobs {
     ProxyManager proxyManager;
 
     /**
-     * 每六个小时跑一次任务
+     * 每隔几个小时跑一次任务
      */
     @Scheduled(cron="${cronJob.schedule}")
     public void cronJob() {
         log.info("Job Start...");
         IS_JOB_RUNNING = true;
+
+        // 跑任务之前先清空proxyList中的数据
+        ProxyPool.proxyList.clear();
 
         proxyManager.start();
 
