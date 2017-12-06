@@ -33,8 +33,6 @@ public class ScheduleJobs {
      */
     @Scheduled(cron="${cronJob.schedule}")
     public void cronJob() {
-        if(IS_JOB_RUNNING) return;
-
         log.info("Job Start...");
         IS_JOB_RUNNING = true;
 
