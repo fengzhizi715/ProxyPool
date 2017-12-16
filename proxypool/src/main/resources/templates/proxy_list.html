@@ -34,6 +34,14 @@
                 _dataGridObj.datagrid('options').url = queryUrl;
                 _dataGridObj.datagrid('load');
             });
+
+            $("#ipType").combobox({
+                onChange:function(record) {
+                    var queryUrl = _queryUrl+"?proxyType="+$('#ipType').val()+"&proxyIp="+$('#ipAddress').val()+"&minPort="+$('#minPort').val()+"&maxPort="+$('#maxPort').val();
+                    _dataGridObj.datagrid('options').url = queryUrl;
+                    _dataGridObj.datagrid('load');
+                }
+            });
         }
 
         function checkProxy(rowIndex, rowData) {
@@ -89,6 +97,7 @@
         <div style="width:100%;text-align:center;padding:10px 0 0 0;">
             <div class="queryForm">
                 <select class="easyui-combobox" label="类型:" labelPosition="left" labelAlign="right" id="ipType" style="width:150px;" panelHeight="auto">
+                    <option value="all" selected="selected">全部</option>
                     <option value="http">http</option>
                     <option value="https">https</option>
                 </select>
@@ -114,8 +123,9 @@
     </div>
 </div>
 <div>
-    <p><span style="font-size: 16px">QQ交流群：490882934</span></p>
-    <p><span style="font-size: 16px">源代码地址：<a href="https://github.com/fengzhizi715/ProxyPool" target="_blank">https://github.com/fengzhizi715/ProxyPool</a></span></p>
+    <p><span style="font-size: 16px; color:#0000EE">QQ交流群：490882934 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  源代码地址：<a href="https://github.com/fengzhizi715/ProxyPool" target="_blank">https://github.com/fengzhizi715/ProxyPool</a></span></p>
+    <hr/>
+    <p><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1271391861'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1271391861%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script></p>
 </div>
 </body>
 </html>

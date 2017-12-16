@@ -3,6 +3,7 @@ package com.cv4j.proxy.dao.impl;
 import com.cv4j.proxy.config.Constant;
 import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
+import com.cv4j.proxy.domain.dto.JobLogDTO;
 import com.cv4j.proxy.domain.dto.QueryProxyDTO;
 import com.cv4j.proxy.domain.dto.ResultProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +28,14 @@ public class ProxyDaoImpl implements ProxyDao {
 
     @Override
     public void saveProxy(Proxy proxy) {
-        mongoTemplate.save(proxy);
+        mongoTemplate.save(proxy, Constant.COL_NAME_Proxy);
     }
 
     @Override
     public List<Proxy> findProxyByCond(QueryProxyDTO queryProxyDTO, boolean isGetAll) {
         Query query = new Query();
-        if(queryProxyDTO.getType() != null && !"".equals(queryProxyDTO.getType())) {
-            query.addCriteria(Criteria.where("type").gte(queryProxyDTO.getType()));
+        if(queryProxyDTO.getType() != null && !"all".equals(queryProxyDTO.getType())) {
+            query.addCriteria(Criteria.where("type").is(queryProxyDTO.getType()));
         }
         if(queryProxyDTO.getIp() != null && !"".equals(queryProxyDTO.getIp())) {
             query.addCriteria(Criteria.where("ip").regex(".*?"+queryProxyDTO.getIp()+".*"));
@@ -83,5 +84,10 @@ public class ProxyDaoImpl implements ProxyDao {
     @Override
     public void deleteAll() {
         mongoTemplate.dropCollection(Constant.COL_NAME_Proxy);
+    }
+
+    @Override
+    public void saveJobLog(JobLogDTO jobLogDTO) {
+        mongoTemplate.save(jobLogDTO, Constant.COL_NAME_Job_Log);
     }
 }

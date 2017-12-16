@@ -1,5 +1,6 @@
 package com.cv4j.proxy.controller;
 
+import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.domain.dto.QueryProxyDTO;
@@ -101,7 +102,7 @@ public class ProxyController {
     @RequestMapping(value="/startJob")
     @ResponseBody
     public void startJob(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        log.info("startJob");
+        log.info("manual startJob");
         try {
             httpServletResponse.setContentType("text/plain; charset=utf-8");
             ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();
@@ -110,7 +111,7 @@ public class ProxyController {
                 responseOutputStream.flush();
                 responseOutputStream.close();
             } else {
-                log.info("scheduleJobs.cronJob() start...");
+                log.info("scheduleJobs.cronJob() start by controller...");
                 scheduleJobs.cronJob();
             }
         } catch (Exception e) {

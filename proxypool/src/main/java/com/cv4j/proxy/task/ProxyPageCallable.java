@@ -38,8 +38,8 @@ public class ProxyPageCallable implements Callable<List<Proxy>>{
             int status = page.getStatusCode();
             long requestEndTime = System.currentTimeMillis();
             String logStr = Thread.currentThread().getName() + " "  +
-                    "  executing request " + page.getUrl()  + " response statusCode:" + status +
-                    "  request cost time:" + (requestEndTime - requestStartTime) + "ms";
+                    "  ,executing request " + page.getUrl()  + " ,response statusCode:" + status +
+                    "  ,request cost time:" + (requestEndTime - requestStartTime) + "ms";
             if(status == HttpStatus.SC_OK){
                 log.info("Success: "+logStr);
                 return handle(page);
