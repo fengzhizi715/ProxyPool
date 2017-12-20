@@ -3,6 +3,7 @@ package com.cv4j.proxy.job;
 import com.cv4j.proxy.ProxyManager;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.config.Constant;
+import com.cv4j.proxy.dao.LogDao;
 import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.domain.dto.JobLogDTO;
@@ -28,6 +29,9 @@ public class ScheduleJobs {
 
     @Autowired
     ProxyDao proxyDao;
+
+    @Autowired
+    LogDao logDao;
 
     @Autowired
     ProxyManager proxyManager;
@@ -68,7 +72,7 @@ public class ScheduleJobs {
             jobLogDTO.setIpList(ipList);
             jobLogDTO.setResultDesc("成功保存了"+count+"条代理IP数据");
             jobLogDTO.setEndTime(Constant.getCurrentDateString());
-            proxyDao.saveJobLog(jobLogDTO);
+            logDao.saveJobLog(jobLogDTO);
 
         } else {
             log.info("proxyList is empty...");

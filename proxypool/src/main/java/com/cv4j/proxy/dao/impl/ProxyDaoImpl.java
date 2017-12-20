@@ -3,7 +3,6 @@ package com.cv4j.proxy.dao.impl;
 import com.cv4j.proxy.config.Constant;
 import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
-import com.cv4j.proxy.domain.dto.JobLogDTO;
 import com.cv4j.proxy.domain.dto.QueryProxyDTO;
 import com.cv4j.proxy.domain.dto.ResultProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,8 +85,4 @@ public class ProxyDaoImpl implements ProxyDao {
         mongoTemplate.dropCollection(Constant.COL_NAME_Proxy);
     }
 
-    @Override
-    public void saveJobLog(JobLogDTO jobLogDTO) {
-        mongoTemplate.save(jobLogDTO, Constant.COL_NAME_Job_Log);
-    }
 }

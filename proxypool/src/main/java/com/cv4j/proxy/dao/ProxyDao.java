@@ -1,7 +1,6 @@
 package com.cv4j.proxy.dao;
 
 import com.cv4j.proxy.domain.Proxy;
-import com.cv4j.proxy.domain.dto.JobLogDTO;
 import com.cv4j.proxy.domain.dto.QueryProxyDTO;
 import com.cv4j.proxy.domain.dto.ResultProxy;
 
@@ -23,6 +22,4 @@ public interface ProxyDao {
     void deleteProxyById(String id);
 
     void deleteAll();
-
-    void saveJobLog(JobLogDTO jobLogDTO);
 }

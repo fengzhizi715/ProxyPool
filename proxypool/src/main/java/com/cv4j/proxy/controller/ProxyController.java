@@ -32,8 +32,14 @@ public class ProxyController {
     private ScheduleJobs scheduleJobs;
 
     @RequestMapping(value="/load")
-    public String loadPage(String pagename) {
-        log.info("loadPage, pagename="+pagename);
+    public String load(String pagename) {
+        log.info("load, pagename="+pagename);
+        return pagename;
+    }
+
+    @RequestMapping(value="/mload")
+    public String mload(String pagename) {
+        log.info("mload, pagename="+pagename);
         return pagename;
     }
 
