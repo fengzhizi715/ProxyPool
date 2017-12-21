@@ -3,6 +3,7 @@ package com.cv4j.proxy;
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.http.HttpManager;
 import com.cv4j.proxy.task.ProxyPageCallable;
+import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -47,36 +48,41 @@ public class ProxyManager {
                     @Override
                     public Publisher<Proxy> apply(List<Proxy> proxies) throws Exception {
 
-                        if (proxies == null) return null;
+                        if (Preconditions.isNotBlank(proxies)) {
+                            List<Proxy> result = proxies
+                                    .stream()
+                                    .parallel()
+                                    .filter(new Predicate<Proxy>() {
+                                        @Override
+                                        public boolean test(Proxy proxy) {
+                                            HttpHost httpHost = new HttpHost(proxy.getIp(), proxy.getPort(), proxy.getType());
+                                            boolean result = HttpManager.get().checkProxy(httpHost);
+                                            log.info("checkProxy "+proxy.getType()+"://"+proxy.getIp()+":"+proxy.getPort()+", "+result);
+                                            return result;
+                                        }
+                                    }).collect(Collectors.toList());
 
-                        List<Proxy> result = proxies
-                                .stream()
-                                .parallel()
-                                .filter(new Predicate<Proxy>() {
-                            @Override
-                            public boolean test(Proxy proxy) {
-                                HttpHost httpHost = new HttpHost(proxy.getIp(), proxy.getPort(), proxy.getType());
-                                boolean result = HttpManager.get().checkProxy(httpHost);
-                                log.info("checkProxy "+proxy.getType()+"://"+proxy.getIp()+":"+proxy.getPort()+", "+result);
-                                return result;
-                            }
-                        }).collect(Collectors.toList());
+                            return Flowable.fromIterable(result);
+                        }
 
-                        return Flowable.fromIterable(result);
+                        return Flowable.empty();
                     }
                 })
                 .sequential()
                 .subscribe(new Consumer<Proxy>() {
                     @Override
                     public void accept(Proxy proxy) throws Exception {
-                        log.info("accept " + proxy.getType() + "://" + proxy.getIp() + ":" + proxy.getPort());
-                        proxy.setLastSuccessfulTime(new Date().getTime());
-                        ProxyPool.proxyList.add(proxy);
+
+                        if (proxy!=null) {
+                            log.info("accept " + proxy.getType() + "://" + proxy.getIp() + ":" + proxy.getPort());
+                            proxy.setLastSuccessfulTime(new Date().getTime());
+                            ProxyPool.proxyList.add(proxy);
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        log.error(throwable.getMessage());
+                        log.error("ProxyManager is error: "+throwable.getMessage());
                     }
                 });
     }
