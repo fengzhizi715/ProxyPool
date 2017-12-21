@@ -74,7 +74,7 @@ public class ScheduleJobs {
             }
 
             jobLogDTO.setIpList(ipList);
-            jobLogDTO.setResultDesc("成功保存了" + list.size() + "条代理IP数据");
+            jobLogDTO.setResultDesc(String.format("成功保存了%s条代理IP数据", list.size()));
             jobLogDTO.setEndTime(JodaUtils.formatDateTime(new Date()));
             logDao.saveJobLog(jobLogDTO);
 

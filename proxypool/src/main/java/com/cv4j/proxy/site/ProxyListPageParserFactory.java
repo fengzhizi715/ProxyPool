@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class ProxyListPageParserFactory {
 
-    private static Map<String, ProxyListPageParser> map  = new HashMap<>();
+    private static Map<String, ProxyListPageParser> map = new HashMap<>();
 
     public static ProxyListPageParser getProxyListPageParser(Class clazz){
 
