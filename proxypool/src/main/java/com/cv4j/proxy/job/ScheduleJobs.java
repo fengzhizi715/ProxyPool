@@ -41,12 +41,16 @@ public class ScheduleJobs {
      */
     @Scheduled(cron="${cronJob.schedule}")
     public void cronJob() {
+
         if(IS_JOB_RUNNING) return;
+
         log.info("Job Start...");
+
+        IS_JOB_RUNNING = true;
+
         JobLogDTO jobLogDTO = new JobLogDTO();
         jobLogDTO.setJobName("ScheduleJobs.cronJob");
         jobLogDTO.setStartTime(JodaUtils.formatDateTime(new Date()));
-        IS_JOB_RUNNING = true;
 
         // 跑任务之前先清空proxyList中的数据
         ProxyPool.proxyList.clear();
@@ -69,9 +73,8 @@ public class ScheduleJobs {
                 log.info("Job saveProxy = "+p.getType()+"://"+p.getIp()+":"+p.getPort());
             }
 
-            int count=list.size();
             jobLogDTO.setIpList(ipList);
-            jobLogDTO.setResultDesc("成功保存了"+count+"条代理IP数据");
+            jobLogDTO.setResultDesc("成功保存了" + list.size() + "条代理IP数据");
             jobLogDTO.setEndTime(JodaUtils.formatDateTime(new Date()));
             logDao.saveJobLog(jobLogDTO);
 
