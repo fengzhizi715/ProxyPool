@@ -61,14 +61,15 @@ public class ScheduleJobs {
             log.info("Job after deleteAll");
 
             // 然后再进行插入新的proxy
-            int count=0;
+
             List<String> ipList = new ArrayList<String>();
             for (Proxy p:list) {
                 proxyDao.saveProxy(p);
-                count++;
                 ipList.add(p.getIp());
                 log.info("Job saveProxy = "+p.getType()+"://"+p.getIp()+":"+p.getPort());
             }
+
+            int count=ipList.size();
             jobLogDTO.setIpList(ipList);
             jobLogDTO.setResultDesc("成功保存了"+count+"条代理IP数据");
             jobLogDTO.setEndTime(Constant.getCurrentDateString());
@@ -78,8 +79,9 @@ public class ScheduleJobs {
             log.info("proxyList is empty...");
         }
 
-        log.info("Job End...");
         IS_JOB_RUNNING = false;
         ProxyPool.proxyList.clear();
+
+        log.info("Job End...");
     }
 }
