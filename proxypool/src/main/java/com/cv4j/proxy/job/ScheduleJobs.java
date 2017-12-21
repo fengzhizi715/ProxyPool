@@ -7,6 +7,7 @@ import com.cv4j.proxy.dao.LogDao;
 import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.domain.dto.JobLogDTO;
+import com.safframework.tony.common.utils.JodaUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -45,7 +47,7 @@ public class ScheduleJobs {
         log.info("Job Start...");
         JobLogDTO jobLogDTO = new JobLogDTO();
         jobLogDTO.setJobName("ScheduleJobs.cronJob");
-        jobLogDTO.setStartTime(Constant.getCurrentDateString());
+        jobLogDTO.setStartTime(JodaUtils.formatDateTime(new Date()));
         IS_JOB_RUNNING = true;
 
         // 跑任务之前先清空proxyList中的数据
@@ -69,10 +71,10 @@ public class ScheduleJobs {
                 log.info("Job saveProxy = "+p.getType()+"://"+p.getIp()+":"+p.getPort());
             }
 
-            int count=ipList.size();
+            int count=list.size();
             jobLogDTO.setIpList(ipList);
             jobLogDTO.setResultDesc("成功保存了"+count+"条代理IP数据");
-            jobLogDTO.setEndTime(Constant.getCurrentDateString());
+            jobLogDTO.setEndTime(JodaUtils.formatDateTime(new Date()));
             logDao.saveJobLog(jobLogDTO);
 
         } else {
