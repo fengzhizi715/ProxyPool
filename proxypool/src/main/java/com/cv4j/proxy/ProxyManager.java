@@ -57,7 +57,7 @@ public class ProxyManager {
                                         public boolean test(Proxy proxy) {
                                             HttpHost httpHost = new HttpHost(proxy.getIp(), proxy.getPort(), proxy.getType());
                                             boolean result = HttpManager.get().checkProxy(httpHost);
-                                            log.info("checkProxy "+proxy.getType()+"://"+proxy.getIp()+":"+proxy.getPort()+", "+result);
+                                            log.info("checkProxy " + proxy.getProxyStr() +", "+result);
                                             return result;
                                         }
                                     }).collect(Collectors.toList());
@@ -74,7 +74,7 @@ public class ProxyManager {
                     public void accept(Proxy proxy) throws Exception {
 
                         if (proxy!=null) {
-                            log.info("accept " + proxy.getType() + "://" + proxy.getIp() + ":" + proxy.getPort());
+                            log.info("accept " + proxy.getProxyStr());
                             proxy.setLastSuccessfulTime(new Date().getTime());
                             ProxyPool.proxyList.add(proxy);
                         }

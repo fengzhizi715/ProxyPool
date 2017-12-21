@@ -194,8 +194,8 @@ public class Proxy implements Delayed, Serializable {
         return result;
     }
 
-    public String getProxyStr(){
-        return ip + ":" + port;
+    public String getProxyStr() {
+        return type + "://" + ip + ":" + port;
     }
 
     /**
