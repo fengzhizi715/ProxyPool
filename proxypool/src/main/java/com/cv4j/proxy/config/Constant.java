@@ -10,7 +10,7 @@ public class Constant {
      */
     public final static long TIME_INTERVAL = 1000;
 
-    public static final String COL_NAME_Proxy = "Proxy";
+    public static final String COL_NAME_PROXY = "Proxy";
 
     public static final String COL_NAME_Job_Log = "job_log";
 

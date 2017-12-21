@@ -5,6 +5,7 @@ import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.domain.dto.QueryProxyDTO;
 import com.cv4j.proxy.domain.dto.ResultProxy;
+import com.safframework.tony.common.utils.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -27,24 +28,24 @@ public class ProxyDaoImpl implements ProxyDao {
 
     @Override
     public void saveProxy(Proxy proxy) {
-        mongoTemplate.save(proxy, Constant.COL_NAME_Proxy);
+        mongoTemplate.save(proxy, Constant.COL_NAME_PROXY);
     }
 
     @Override
     public List<Proxy> findProxyByCond(QueryProxyDTO queryProxyDTO, boolean isGetAll) {
 
         Query query = new Query();
-        if(queryProxyDTO.getType() != null && !"all".equals(queryProxyDTO.getType())) {
+        if(Preconditions.isNotBlank(queryProxyDTO.getType()) && !"all".equals(queryProxyDTO.getType())) {
             query.addCriteria(Criteria.where("type").is(queryProxyDTO.getType()));
         }
-        if(queryProxyDTO.getIp() != null && !"".equals(queryProxyDTO.getIp())) {
+        if(Preconditions.isNotBlank(queryProxyDTO.getIp())) {
             query.addCriteria(Criteria.where("ip").regex(".*?"+queryProxyDTO.getIp()+".*"));
         }
         if(queryProxyDTO.getMinPort() != null) {
             query.addCriteria(Criteria.where("port").gte(queryProxyDTO.getMinPort()).lte(queryProxyDTO.getMaxPort()));
         }
         if(!isGetAll) {
-            if(queryProxyDTO.getSort() != null) {
+            if(Preconditions.isNotBlank(queryProxyDTO.getSort())) {
                 if("asc".equals(queryProxyDTO.getOrder())) {
                     query.with(new Sort(Sort.Direction.ASC, queryProxyDTO.getSort()));
                 } else {
@@ -57,14 +58,14 @@ public class ProxyDaoImpl implements ProxyDao {
             query.skip(skip);
             query.limit(queryProxyDTO.getRows());
         }
-        return mongoTemplate.find(query, Proxy.class,Constant.COL_NAME_Proxy);
+        return mongoTemplate.find(query, Proxy.class,Constant.COL_NAME_PROXY);
     }
 
     @Override
     public List<ResultProxy> findAllProxy() {
         Query query = new Query();
         query.with(new Sort(Sort.Direction.ASC, "port"));
-        return mongoTemplate.find(query, ResultProxy.class,Constant.COL_NAME_Proxy);
+        return mongoTemplate.find(query, ResultProxy.class,Constant.COL_NAME_PROXY);
     }
 
     @Override
@@ -72,17 +73,17 @@ public class ProxyDaoImpl implements ProxyDao {
         Query query = new Query(Criteria.where("id").is(id));
         Update update = new Update();
         update.set("lastSuccessfulTime", new Date().getTime());        //最近一次验证成功的时间
-        mongoTemplate.findAndModify(query, update, Proxy.class,Constant.COL_NAME_Proxy);
+        mongoTemplate.findAndModify(query, update, Proxy.class,Constant.COL_NAME_PROXY);
     }
 
     @Override
     public void deleteProxyById(String id) {
         Query query = new Query(Criteria.where("id").is(id));
-        mongoTemplate.remove(query, Proxy.class, Constant.COL_NAME_Proxy);
+        mongoTemplate.remove(query, Proxy.class, Constant.COL_NAME_PROXY);
     }
 
     @Override
     public void deleteAll() {
-        mongoTemplate.dropCollection(Constant.COL_NAME_Proxy);
+        mongoTemplate.dropCollection(Constant.COL_NAME_PROXY);
     }
 }
