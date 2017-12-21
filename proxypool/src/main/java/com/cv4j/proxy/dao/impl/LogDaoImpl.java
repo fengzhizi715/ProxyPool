@@ -15,6 +15,6 @@ public class LogDaoImpl implements LogDao {
 
     @Override
     public void saveJobLog(JobLogDTO jobLogDTO) {
-        mongoTemplate.save(jobLogDTO, Constant.COL_NAME_Job_Log);
+        mongoTemplate.save(jobLogDTO, Constant.COL_NAME_JOB_LOG);
     }
 }

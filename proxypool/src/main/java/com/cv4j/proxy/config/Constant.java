@@ -12,7 +12,7 @@ public class Constant {
 
     public static final String COL_NAME_PROXY = "Proxy";
 
-    public static final String COL_NAME_Job_Log = "job_log";
+    public static final String COL_NAME_JOB_LOG = "job_log";
 
     public final static String[] userAgentArray = new String[]{
             "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36",

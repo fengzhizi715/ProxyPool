@@ -70,7 +70,7 @@ public class ScheduleJobs {
             for (Proxy p:list) {
                 proxyDao.saveProxy(p);
                 ipList.add(p.getIp());
-                log.info("Job saveProxy = "+p.getType()+"://"+p.getIp()+":"+p.getPort());
+                log.info("Job saveProxy = "+p.getProxyStr());
             }
 
             jobLogDTO.setIpList(ipList);
