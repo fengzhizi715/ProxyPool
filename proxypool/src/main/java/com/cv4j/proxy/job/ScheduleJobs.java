@@ -2,7 +2,6 @@ package com.cv4j.proxy.job;
 
 import com.cv4j.proxy.ProxyManager;
 import com.cv4j.proxy.ProxyPool;
-import com.cv4j.proxy.config.Constant;
 import com.cv4j.proxy.dao.LogDao;
 import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
@@ -11,7 +10,6 @@ import com.safframework.tony.common.utils.JodaUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 

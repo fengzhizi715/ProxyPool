@@ -1,9 +1,5 @@
 package com.cv4j.proxy.config;
 
-import java.text.SimpleDateFormat;
-import java.sql.Timestamp;
-import java.util.Date;
-
 /**
  * Created by tony on 2017/10/19.
  */
