@@ -1,6 +1,5 @@
 package com.cv4j.proxy.controller;
 
-import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.domain.dto.QueryProxyDTO;
