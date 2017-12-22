@@ -107,6 +107,7 @@ public class ProxyController {
     @RequestMapping(value="/startJob")
     @ResponseBody
     public void startJob(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+
         log.info("manual startJob");
         try {
             httpServletResponse.setContentType("text/plain; charset=utf-8");
@@ -120,7 +121,7 @@ public class ProxyController {
                 scheduleJobs.cronJob();
             }
         } catch (Exception e) {
-            log.info("startJob exception e="+e.toString());
+            log.info("startJob exception e="+e.getMessage());
         }
     }
 

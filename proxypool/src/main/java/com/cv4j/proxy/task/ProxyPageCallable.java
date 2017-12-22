@@ -53,7 +53,7 @@ public class ProxyPageCallable implements Callable<List<Proxy>>{
             }
 
         } catch (IOException e) {
-            log.info("IOException: e="+e.toString());
+            log.info("IOException: e="+e.getMessage());
         } finally {
             if (tempRequest != null){
                 tempRequest.releaseConnection();
