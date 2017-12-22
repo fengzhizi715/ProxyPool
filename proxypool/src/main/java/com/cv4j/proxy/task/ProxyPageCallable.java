@@ -55,7 +55,7 @@ public class ProxyPageCallable implements Callable<List<Proxy>>{
             }
         }
 
-        return null;
+        return new ArrayList<Proxy>();
     }
 
     /**
@@ -65,7 +65,7 @@ public class ProxyPageCallable implements Callable<List<Proxy>>{
     private List<Proxy> handle(Page page){
 
         if (page == null || Preconditions.isBlank(page.getHtml())){
-            return null;
+            return new ArrayList<Proxy>();
         }
 
         List<Proxy> result = new ArrayList<>();

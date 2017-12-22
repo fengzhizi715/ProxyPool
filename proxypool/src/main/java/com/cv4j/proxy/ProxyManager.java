@@ -12,6 +12,7 @@ import org.apache.http.HttpHost;
 import org.reactivestreams.Publisher;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
@@ -41,7 +42,7 @@ public class ProxyManager {
                             e.printStackTrace();
                         }
 
-                        return null;
+                        return new ArrayList<Proxy>();
                     }
                 })
                 .flatMap(new Function<List<Proxy>, Publisher<Proxy>>() {
