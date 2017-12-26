@@ -2,6 +2,7 @@ group 'com.cv4j.proxypool'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
 
 sourceCompatibility = 1.8
 

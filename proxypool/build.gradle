@@ -12,7 +12,6 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
 
 sourceCompatibility = 1.8
 
@@ -41,8 +40,6 @@ dependencies {
 
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.8.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-data-mongodb:+'
-    compile 'org.springframework.boot:spring-boot-starter-thymeleaf:1.5.8.RELEASE'
-    compile 'org.springframework.boot:spring-boot-starter-actuator:1.4.2.RELEASE'
 
     compile 'org.quartz-scheduler:quartz:2.3.0'
     compile 'org.springframework:spring-context-support:4.3.12.RELEASE'
