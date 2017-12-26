@@ -1,0 +1,66 @@
+  html{
+    margin:0 auto;
+    padding:0;
+    text-align:center;
+    font-family: "Microsoft YaHei";
+  }
+
+  body{
+      margin:0 auto;
+      padding:0;
+      text-align:center;
+      font-family: "Microsoft YaHei";
+  }
+
+  #bodyDiv {
+	position: relative;
+	margin: 0 auto;
+	text-align: center;
+  }
+
+  .inputForm {
+      font-size:14px;
+      font-weight:bold;
+  }
+
+  .loginForm {
+      font-size:20px;
+      font-weight:bold;
+  }
+
+  .queryForm {
+      font-size:14px;
+      font-weight:bold;
+  }
+
+  .input_container {
+     margin-bottom:20px;
+     text-align:left
+  }
+
+  .login_container {
+      margin-bottom:20px;
+      text-align:center
+  }
+
+  .div-inline{
+     display:inline;
+  }
+
+
+  a:link {
+      color: #0000EE;
+      text-decoration: none;
+  }
+  a:visited {
+      color: #0000EE;
+      text-decoration: none;
+  }
+  a:hover {
+      color: #ff0000;
+      text-decoration: none;
+  }
+  a:active {
+      color: #ff0000;
+      text-decoration: none;
+  }

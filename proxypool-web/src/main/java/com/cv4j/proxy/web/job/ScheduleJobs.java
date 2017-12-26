@@ -1,4 +1,4 @@
-package com.cv4j.proxy.job;
+package com.cv4j.proxy.web.job;
 
 import com.cv4j.proxy.ProxyManager;
 import com.cv4j.proxy.ProxyPool;

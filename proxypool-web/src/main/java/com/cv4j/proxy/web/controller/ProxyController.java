@@ -5,7 +5,7 @@ import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.domain.dto.QueryProxyDTO;
 import com.cv4j.proxy.domain.dto.ResultProxy;
 import com.cv4j.proxy.http.HttpManager;
-import com.cv4j.proxy.job.ScheduleJobs;
+import com.cv4j.proxy.web.job.ScheduleJobs;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.springframework.beans.factory.annotation.Autowired;
