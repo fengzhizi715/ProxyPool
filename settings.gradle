@@ -1,3 +1,4 @@
 rootProject.name = 'ProxyPool'
 include 'proxypool'
+include 'proxypool-web'
 

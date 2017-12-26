@@ -1,8 +1,9 @@
-package com.cv4j.proxy;
+package com.cv4j.proxy.web;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
@@ -10,6 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication
 @EnableScheduling
+@ComponentScan(basePackages = {"com.cv4j.proxy"})
 public class Application implements CommandLineRunner{
 
     public static void main(String[] args) {
