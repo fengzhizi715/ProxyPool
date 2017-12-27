@@ -1,8 +1,13 @@
 package com.cv4j.proxy.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by tony on 2017/10/19.
  */
+@Getter
+@Setter
 public class Page {
 
     private String url;
@@ -10,41 +15,11 @@ public class Page {
     private String html;//response content
     private Proxy proxy;
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public int getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public String getHtml() {
-        return html;
-    }
-
-    public void setHtml(String html) {
-        this.html = html;
-    }
-
-    public Proxy getProxy() {
-        return proxy;
-    }
-
-    public void setProxy(Proxy proxy) {
-        this.proxy = proxy;
-    }
-
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
+
         if (o == null || getClass() != o.getClass()) return false;
 
         Page page = (Page) o;

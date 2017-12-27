@@ -10,10 +10,6 @@ public class Constant {
      */
     public final static long TIME_INTERVAL = 1000;
 
-    public static final String COL_NAME_PROXY = "Proxy";
-
-    public static final String COL_NAME_JOB_LOG = "job_log";
-
     public final static String[] userAgentArray = new String[]{
             "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36",
             "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2623.110 Safari/537.36",

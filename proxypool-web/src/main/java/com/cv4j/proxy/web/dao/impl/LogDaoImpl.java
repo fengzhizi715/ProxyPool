@@ -1,6 +1,6 @@
 package com.cv4j.proxy.web.dao.impl;
 
-import com.cv4j.proxy.config.Constant;
+import com.cv4j.proxy.web.config.Constant;
 import com.cv4j.proxy.web.dao.LogDao;
 import com.cv4j.proxy.web.dto.JobLogDTO;
 import org.springframework.beans.factory.annotation.Autowired;

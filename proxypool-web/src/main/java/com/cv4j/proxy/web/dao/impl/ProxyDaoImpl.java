@@ -1,7 +1,7 @@
 package com.cv4j.proxy.web.dao.impl;
 
-import com.cv4j.proxy.config.Constant;
 import com.cv4j.proxy.domain.Proxy;
+import com.cv4j.proxy.web.config.Constant;
 import com.cv4j.proxy.web.dao.ProxyDao;
 import com.cv4j.proxy.web.dto.QueryProxyDTO;
 import com.cv4j.proxy.web.dto.ResultProxy;
