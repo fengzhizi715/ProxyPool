@@ -2,10 +2,10 @@ package com.cv4j.proxy.web.job;
 
 import com.cv4j.proxy.ProxyManager;
 import com.cv4j.proxy.ProxyPool;
-import com.cv4j.proxy.dao.LogDao;
-import com.cv4j.proxy.dao.ProxyDao;
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.domain.dto.JobLogDTO;
+import com.cv4j.proxy.web.dao.LogDao;
+import com.cv4j.proxy.web.dao.ProxyDao;
 import com.safframework.tony.common.utils.JodaUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
