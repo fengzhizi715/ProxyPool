@@ -2,6 +2,7 @@ package com.cv4j.proxy.http;
 
 import com.cv4j.proxy.config.Constant;
 import com.cv4j.proxy.domain.Page;
+import com.safframework.tony.common.utils.IOUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.config.AuthSchemes;
@@ -194,16 +195,10 @@ public class HttpManager {
 //            logger.warn("FAILRE - CAN not connect!  remote: " + p);
             return false;
         } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException e) {
-//                    logger.warn("Error occurred while closing socket of validating proxy", e);
-                }
-            }
+
+            IOUtils.closeQuietly(socket);
         }
     }
-
 
     public Page getWebPage(String url) throws IOException {
         return getWebPage(url, "UTF-8");
