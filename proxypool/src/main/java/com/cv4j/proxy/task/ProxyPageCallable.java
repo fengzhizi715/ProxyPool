@@ -9,7 +9,6 @@ import com.cv4j.proxy.site.ProxyListPageParserFactory;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public class ProxyPageCallable implements Callable<List<Proxy>>{
     public List<Proxy> call() throws Exception {
 
         long requestStartTime = System.currentTimeMillis();
-        HttpGet tempRequest = null;
+
         try {
             Page page = HttpManager.get().getWebPage(url);
             int status = page.getStatusCode();
@@ -54,10 +53,6 @@ public class ProxyPageCallable implements Callable<List<Proxy>>{
 
         } catch (IOException e) {
             log.info("IOException: e="+e.getMessage());
-        } finally {
-            if (tempRequest != null){
-                tempRequest.releaseConnection();
-            }
         }
 
         return new ArrayList<Proxy>();
