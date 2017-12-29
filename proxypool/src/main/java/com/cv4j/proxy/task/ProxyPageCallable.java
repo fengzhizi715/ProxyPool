@@ -48,7 +48,7 @@ public class ProxyPageCallable implements Callable<List<Proxy>>{
             if(status == HttpStatus.SC_OK){
                 log.info("Success: "+logStr);
                 return handle(page);
-            }else{
+            } else {
                 log.info("Failure: "+logStr);
             }
 

@@ -83,7 +83,6 @@ public class ScheduleJobs {
         }
 
         IS_JOB_RUNNING = false;
-        ProxyPool.proxyList.clear();
 
         log.info("Job End...");
     }
