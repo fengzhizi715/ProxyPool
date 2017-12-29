@@ -201,10 +201,12 @@ public class HttpManager {
     }
 
     public Page getWebPage(String url) throws IOException {
+
         return getWebPage(url, "UTF-8");
     }
 
     public Page getWebPage(String url, String charset) throws IOException {
+
         Page page = new Page();
         CloseableHttpResponse response = HttpManager.get().getResponse(url);
         if (response!=null) {
@@ -212,16 +214,14 @@ public class HttpManager {
             page.setUrl(url);
             try {
                 if(page.getStatusCode() == 200){
+
                     page.setHtml(EntityUtils.toString(response.getEntity(), charset));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                try {
-                    response.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+                IOUtils.closeQuietly(response);
             }
         }
 
