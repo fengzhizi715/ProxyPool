@@ -20,7 +20,7 @@ public class ProxyPool {
 
     public static CopyOnWriteArrayList<Proxy> proxyList = new CopyOnWriteArrayList<>();
     public final static Map<String, Class> proxyMap = new HashMap<>();
-    private AtomicInteger index = new AtomicInteger();
+    private static AtomicInteger index = new AtomicInteger();
 
     static {
         int pages = 8;
@@ -45,7 +45,7 @@ public class ProxyPool {
      * 采用round robin算法来获取Proxy
      * @return
      */
-    public Proxy getProxy(){
+    public static Proxy getProxy(){
 
         Proxy result = null;
 

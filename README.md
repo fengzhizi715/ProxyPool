@@ -25,7 +25,7 @@ repositories {
 Gradle:
 
 ```groovy
-compile 'com.cv4j.proxy:proxypool:1.0.1'
+compile 'com.cv4j.proxy:proxypool:1.1.0'
 ```
 
 
