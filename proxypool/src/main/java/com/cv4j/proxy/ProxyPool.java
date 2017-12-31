@@ -10,6 +10,7 @@ import com.cv4j.proxy.site.xicidaili.XicidailiProxyListPageParser;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 代理池
@@ -19,6 +20,7 @@ public class ProxyPool {
 
     public static CopyOnWriteArrayList<Proxy> proxyList = new CopyOnWriteArrayList<>();
     public final static Map<String, Class> proxyMap = new HashMap<>();
+    private AtomicInteger index = new AtomicInteger();
 
     static {
         int pages = 8;
@@ -36,5 +38,27 @@ public class ProxyPool {
 //            }
         }
 //        proxyMap.put("http://ipway.net/", IpwayProxyListPageParser.class);
+    }
+
+
+    /**
+     * 采用round robin算法来获取Proxy
+     * @return
+     */
+    public Proxy getProxy(){
+
+        Proxy result = null;
+
+        if (proxyList.size() > 0) {
+
+            if (index.get() > proxyList.size()-1) {
+                index.set(0);
+            }
+
+            result = proxyList.get(index.get());
+            index.incrementAndGet();
+        }
+
+        return result;
     }
 }
