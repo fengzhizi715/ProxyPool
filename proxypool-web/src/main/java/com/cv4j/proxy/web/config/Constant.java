@@ -7,5 +7,5 @@ public class Constant {
 
     public static final String COL_NAME_PROXY = "Proxy";
 
-    public static final String COL_NAME_JOB_LOG = "job_log";
+    public static final String COL_NAME_JOB_LOG = "Job_Log";
 }

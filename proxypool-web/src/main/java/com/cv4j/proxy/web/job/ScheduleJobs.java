@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -70,14 +68,11 @@ public class ScheduleJobs {
             }
 
             // 然后再进行插入新的proxy
-            List<String> ipList = new ArrayList<>();
             for (Proxy p:list) {
                 proxyDao.saveProxy(p);
-                ipList.add(p.getIp());
                 log.info("Job saveProxy = "+p.getProxyStr());
             }
 
-            jobLogDTO.setIpList(ipList);
             jobLogDTO.setResultDesc(String.format("成功保存了%s条代理IP数据", list.size()));
             jobLogDTO.setEndTime(JodaUtils.formatDateTime(new Date()));
             logDao.saveJobLog(jobLogDTO);

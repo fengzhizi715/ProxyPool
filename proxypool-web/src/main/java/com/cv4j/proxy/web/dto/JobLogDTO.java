@@ -2,8 +2,6 @@ package com.cv4j.proxy.web.dto;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 public class JobLogDTO {
 
@@ -11,5 +9,4 @@ public class JobLogDTO {
     private String startTime;
     private String endTime;
     private String resultDesc;
-    private List<String> ipList;
 }
