@@ -1,6 +1,5 @@
 package com.cv4j.proxy.web.dao;
 
-import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.web.dto.ProxyResource;
 import com.cv4j.proxy.web.dto.ResourcePlan;
 

@@ -5,15 +5,12 @@ import com.cv4j.proxy.web.dao.CommonDao;
 import com.cv4j.proxy.web.dao.ProxyResourceDao;
 import com.cv4j.proxy.web.dto.ProxyResource;
 import com.cv4j.proxy.web.dto.ResourcePlan;
-import com.safframework.tony.common.utils.JodaUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Component
 public class ProxyResourceDaoImpl implements ProxyResourceDao {
@@ -35,9 +32,9 @@ public class ProxyResourceDaoImpl implements ProxyResourceDao {
             //insert
             proxyResource.setResId(commonDao.getNextSequence(Constant.COL_NAME_PROXY_RESOURCE).getSequence());
 //            proxyResource.setAddTime(JodaUtils.getCurrentTime());
-            proxyResource.setAddTime(new java.util.Date().getTime());
+            proxyResource.setAddTime(new Date().getTime());
         }
-        proxyResource.setModTime(new java.util.Date().getTime());
+        proxyResource.setModTime(new Date().getTime());
         mongoTemplate.save(proxyResource, Constant.COL_NAME_PROXY_RESOURCE);
     }
 
@@ -45,9 +42,9 @@ public class ProxyResourceDaoImpl implements ProxyResourceDao {
     public void saveResourcePlan(ResourcePlan resourcePlan) {
         if(resourcePlan.getAddTime() == 0) {
             //insert
-            resourcePlan.setAddTime(new java.util.Date().getTime());
+            resourcePlan.setAddTime(new Date().getTime());
         }
-        resourcePlan.setModTime(new java.util.Date().getTime());
+        resourcePlan.setModTime(new Date().getTime());
         mongoTemplate.save(resourcePlan, Constant.COL_NAME_RESOURCE_PLAN);
     }
 
