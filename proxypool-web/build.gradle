@@ -1,11 +1,28 @@
 group 'com.cv4j.proxypool'
 version '1.0-SNAPSHOT'
 
+buildscript {
+    repositories {
+        maven{url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE")
+    }
+}
+
 apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'proxypool-web'
+    version =  '0.0.1'
+}
 
 sourceCompatibility = 1.8
 
 repositories {
+    maven{url 'http://maven.aliyun.com/nexus/content/groups/public/'}
     jcenter()
     mavenCentral()
     maven { url 'http://repo.spring.io/release' }

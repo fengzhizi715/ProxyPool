@@ -48,12 +48,12 @@ public class ProxyResourceController {
 
     @RequestMapping(value="/proxyResourceController/doSaveResource", method= RequestMethod.POST)
     @ResponseBody
-    public int doSaveResource(@RequestBody ProxyResource proxyResource) {
-        int result = 0;
+    public boolean doSaveResource(@RequestBody ProxyResource proxyResource) {
+        boolean result = false;
         if(proxyResource != null) {
             log.info("doSaveResource getSuffix="+proxyResource.getSuffix());
             proxyResourceDao.saveProxyResource(proxyResource);
-            result = 1;
+            result = true;
         }
 
         return result;
@@ -61,12 +61,12 @@ public class ProxyResourceController {
 
     @RequestMapping(value="/proxyResourceController/doSaveResourcePlan", method= RequestMethod.POST)
     @ResponseBody
-    public int doSaveResourcePlan(@RequestBody ResourcePlan resourcePlan) {
-        int result = 0;
+    public boolean doSaveResourcePlan(@RequestBody ResourcePlan resourcePlan) {
+        boolean result = false;
         if(resourcePlan != null) {
             log.info("doSaveResourcePlan refResId="+resourcePlan.getProxyResource().getResId());
             proxyResourceDao.saveResourcePlan(resourcePlan);
-            result = 1;
+            result = true;
         }
         return result;
     }
@@ -87,12 +87,12 @@ public class ProxyResourceController {
 
     @RequestMapping(value="/proxyResourceController/doDeleteResourcePlan", method= RequestMethod.POST)
     @ResponseBody
-    public int doDeleteResourcePlan(@RequestBody ResourcePlan resourcePlan) {
-        int result = 0;
+    public boolean doDeleteResourcePlan(@RequestBody ResourcePlan resourcePlan) {
+        boolean result = false;
         if(resourcePlan != null) {
             log.info("doDeleteResourcePlan id="+resourcePlan.getProxyResource().getId());
             proxyResourceDao.deleteResourcePlan(resourcePlan);
-            result = 1;
+            result = true;
         }
         return result;
     }

@@ -57,7 +57,7 @@
         });
 
         function loadData() {
-            _dataGridObj = initDataGrid1($('#queryResult'), _queryUrl, _toolbarArray);
+            _dataGridObj = initDataGrid_1($('#queryResult'), _queryUrl, _toolbarArray);
         }
 
         function bindAction() {
@@ -66,7 +66,9 @@
 
                 var jsonObj = $("#formAddRes").serializeObject();
                 var selectedRowObj = _dataGridObj.datagrid('getSelected');
-                jsonObj.id = selectedRowObj.id;   //因为mongo那边用了save方法，所以前台把主键要标明
+                if($("#resId").val() != "") {
+                    jsonObj.id = selectedRowObj.id; //更新时需要用到主键
+                }
                 var jsonData = JSON.stringify(jsonObj);
                 doPostRequest(_saveUrl, jsonData, successCallback1, errorCallback1);
             });
@@ -91,7 +93,7 @@
         }
 
         function successCallback1(data) {
-            if(data == 1) {
+            if(data) {
                 info_alert('保存资源成功！');
                 $('#divResWindow').window('close');
                 _dataGridObj.datagrid('reload');
@@ -105,7 +107,7 @@
         }
 
         function successCallback2(data) {
-            if(data == 1) {
+            if(data) {
                 info_alert('保存计划成功！');
                 $('#divJobWindow').window('close');
             } else {

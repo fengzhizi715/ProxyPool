@@ -40,7 +40,7 @@
         });
 
         function loadData() {
-            _dataGridObj = initDataGrid1($('#queryResult'), _queryUrl, _toolbarArray);
+            _dataGridObj = initDataGrid_1($('#queryResult'), _queryUrl, _toolbarArray);
         }
 
         function bindAction() {
@@ -48,7 +48,7 @@
         }
 
         function successCallback1(data) {
-            if(data == 1) {
+            if(data) {
                 info_alert('成功删除一条计划数据！');
                 _dataGridObj.datagrid('reload');
             } else {

@@ -41,7 +41,7 @@ function initDataGrid(datagridObj, dgurl, dblClickFun) {
         onDblClickRow:dblClickFun,
         method:"get",
         loadMsg: "数据加载中,请稍等...",
-        rownumbers:true,
+        rowNumbers:true,
         striped: true,
         fitColumns:true,
         singleSelect:true,
@@ -68,36 +68,22 @@ function initDataGrid(datagridObj, dgurl, dblClickFun) {
     return datagridObj;
 }
 
-function initDataGrid1(datagridObj, dgurl, toolbar) {
+function initDataGrid_1(datagridObj, dgurl, toolbar) {
     datagridObj.datagrid({
         url:dgurl,
         toolbar:toolbar,
         method:"get",
         loadMsg: "数据加载中，请稍等...",
-        rownumbers:true,
+        rowNumbers:true,
         striped: true,
         fitColumns:true,
         singleSelect:true,
         autoRowHeight:false,
-        pagination:true,
+        pagination:false,
         collapsible:true,
         minimizable:false,
         maximizable:false
     });
-// }).datagrid({loadFilter: pagerFilter});
-
-    //设置分页控件
-    // var p = datagridObj.datagrid('getPager');
-    // $(p).pagination({
-    //     pageNumber: 1,
-    //     pageSize: 15,
-    //     pageList: [15,30,45],
-    //     beforePageText: '第',
-    //     afterPageText: '页    共 {pages} 页',
-    //     displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
-    // });
-    //
-    // datagridObj.datagrid('options').pageNumber = 1;
 
     return datagridObj;
 }

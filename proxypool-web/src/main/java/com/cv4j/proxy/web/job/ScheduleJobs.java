@@ -3,6 +3,7 @@ package com.cv4j.proxy.web.job;
 import com.cv4j.proxy.ProxyManager;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
+import com.cv4j.proxy.web.config.Constant;
 import com.cv4j.proxy.web.dao.CommonDao;
 import com.cv4j.proxy.web.dao.ProxyDao;
 import com.cv4j.proxy.web.dto.JobLog;
@@ -45,6 +46,10 @@ public class ScheduleJobs {
         log.info("Job Start...");
 
         ProxyPool.proxyMap = proxyDao.getProxyMap();
+        if(ProxyPool.proxyMap.isEmpty()) {
+            log.info("proxyDao.getProxyMap() is empty");
+            ProxyPool.proxyMap = Constant.proxyMap;
+        }
 
         IS_JOB_RUNNING = true;
 
