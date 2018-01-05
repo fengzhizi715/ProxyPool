@@ -5,7 +5,6 @@ import com.cv4j.proxy.http.HttpManager;
 import com.cv4j.proxy.web.dao.ProxyDao;
 import com.cv4j.proxy.web.dto.QueryProxyDTO;
 import com.cv4j.proxy.web.dto.ResultProxy;
-import com.cv4j.proxy.web.job.ScheduleJobs;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,9 +29,9 @@ public class ProxyController {
     public Proxy doValidateProxy(String id, String proxyType, String proxyIp, Integer proxyPort) {
         log.info("doValidateProxy id="+id+",proxyType="+proxyType+",proxyIp="+proxyIp+",proxyPort="+proxyPort);
         HttpHost httpHost = new HttpHost(proxyIp, proxyPort, proxyType);
-        boolean validateResult = HttpManager.get().checkProxy(httpHost);
         Proxy proxy = new Proxy();
-        if(validateResult) {
+
+        if(HttpManager.get().checkProxy(httpHost)) {
             proxy.setType(proxyType);
             proxy.setIp(proxyIp);
             proxy.setPort(proxyPort);
@@ -64,12 +61,8 @@ public class ProxyController {
 
         List<Proxy> resultAll = proxyDao.findProxyByCond(queryProxyDTO,true);
         List<Proxy> resultPage = proxyDao.findProxyByCond(queryProxyDTO,false);
-        if(resultAll == null) {
-            log.info("queryProxy, resultAll = null");
-        } else{
-            log.info("queryProxy, resultAll = "+resultAll.size());
-        }
-        resultMap.put("total",resultAll.size());
+
+        resultMap.put("total",resultAll!=null?resultAll.size():0);
         resultMap.put("rows",resultPage);
 
         return resultMap;
@@ -80,13 +73,7 @@ public class ProxyController {
     public List<ResultProxy> getAllResultProxy() {
         log.info("getAllResultProxy");
         List<ResultProxy> result = proxyDao.findAllProxy();
-        if(result == null) {
-            log.info("getAllResultProxy, result = null");
-            return null;
-        } else{
-            log.info("getAllResultProxy, result = "+result.size());
-            return result;
-        }
+        return result!=null?result:new ArrayList<>();
     }
 
 }
