@@ -4,8 +4,10 @@ import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.web.config.Constant;
 import com.cv4j.proxy.web.dao.ProxyDao;
 import com.cv4j.proxy.web.dto.QueryProxyDTO;
+import com.cv4j.proxy.web.dto.ResourcePlan;
 import com.cv4j.proxy.web.dto.ResultProxy;
 import com.safframework.tony.common.utils.Preconditions;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -15,12 +17,16 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by tony on 2017/11/16.
  */
 @Component
+@Slf4j
 public class ProxyDaoImpl implements ProxyDao {
 
     @Autowired
@@ -85,5 +91,24 @@ public class ProxyDaoImpl implements ProxyDao {
     @Override
     public void deleteAll() {
         mongoTemplate.dropCollection(Constant.COL_NAME_PROXY);
+    }
+
+    @Override
+    public Map<String, Class> getProxyMap() {
+        Map<String, Class> proxyMap = new HashMap<>();
+        List<ResourcePlan> list = mongoTemplate.findAll(ResourcePlan.class, Constant.COL_NAME_RESOURCE_PLAN);
+        for(ResourcePlan plan : list) {
+            for(int i=plan.getStartPageNum(); i<=plan.getEndPageNum(); i++) {
+                String key = plan.getProxyResource().getPrefix() + i + plan.getProxyResource().getSuffix();
+                try {
+                    if(!proxyMap.containsKey(key)) {
+                        proxyMap.put(key, Class.forName(plan.getProxyResource().getParser()));
+                    }
+                } catch(ClassNotFoundException e) {
+                    log.info("ClassNotFoundException = "+e.getMessage());
+                }
+            }
+        }
+        return proxyMap;
     }
 }

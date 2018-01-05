@@ -3,9 +3,9 @@ package com.cv4j.proxy.web.job;
 import com.cv4j.proxy.ProxyManager;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
-import com.cv4j.proxy.web.dao.LogDao;
+import com.cv4j.proxy.web.dao.CommonDao;
 import com.cv4j.proxy.web.dao.ProxyDao;
-import com.cv4j.proxy.web.dto.JobLogDTO;
+import com.cv4j.proxy.web.dto.JobLog;
 import com.safframework.tony.common.utils.JodaUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class ScheduleJobs {
     ProxyDao proxyDao;
 
     @Autowired
-    LogDao logDao;
+    CommonDao commonDao;
 
     @Autowired
     ProxyManager proxyManager;
@@ -44,11 +44,13 @@ public class ScheduleJobs {
 
         log.info("Job Start...");
 
+        ProxyPool.proxyMap = proxyDao.getProxyMap();
+
         IS_JOB_RUNNING = true;
 
-        JobLogDTO jobLogDTO = new JobLogDTO();
-        jobLogDTO.setJobName("ScheduleJobs.cronJob");
-        jobLogDTO.setStartTime(JodaUtils.formatDateTime(new Date()));
+        JobLog jobLog = new JobLog();
+        jobLog.setJobName("ScheduleJobs.cronJob");
+        jobLog.setStartTime(JodaUtils.formatDateTime(new Date()));
 
         // 跑任务之前先清空proxyList中的数据
         ProxyPool.proxyList.clear();
@@ -73,9 +75,9 @@ public class ScheduleJobs {
                 log.info("Job saveProxy = "+p.getProxyStr());
             }
 
-            jobLogDTO.setResultDesc(String.format("成功保存了%s条代理IP数据", list.size()));
-            jobLogDTO.setEndTime(JodaUtils.formatDateTime(new Date()));
-            logDao.saveJobLog(jobLogDTO);
+            jobLog.setResultDesc(String.format("成功保存了%s条代理IP数据", list.size()));
+            jobLog.setEndTime(JodaUtils.formatDateTime(new Date()));
+            commonDao.saveJobLog(jobLog);
 
         } else {
             log.info("proxyList is empty...");

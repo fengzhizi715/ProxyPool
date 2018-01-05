@@ -2,6 +2,7 @@ package com.cv4j.proxy.web.dto;
 
 import lombok.Data;
 
+
 @Data
 public class ResultProxy {
 

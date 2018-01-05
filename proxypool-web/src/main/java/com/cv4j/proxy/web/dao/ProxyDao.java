@@ -5,6 +5,7 @@ import com.cv4j.proxy.web.dto.QueryProxyDTO;
 import com.cv4j.proxy.web.dto.ResultProxy;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tony on 2017/11/16.
@@ -22,4 +23,6 @@ public interface ProxyDao {
     void deleteProxyById(String id);
 
     void deleteAll();
+
+    Map<String, Class> getProxyMap();
 }

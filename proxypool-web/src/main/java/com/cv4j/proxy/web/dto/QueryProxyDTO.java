@@ -8,8 +8,10 @@ import lombok.Data;
  * 用于查询代理信息的条件对象
  */
 @Data
-public class QueryProxyDTO extends Proxy {
+public class QueryProxyDTO {
 
+    private String ip;
+    private String type;      //http、https
     private Integer minPort;  //最小端口值
     private Integer maxPort;  //最大端口值
     private String sort;      //排序字段

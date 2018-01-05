@@ -37,6 +37,8 @@ compile 'com.cv4j.proxy:proxypool:1.1.1'
 
 线上环境地址：http://47.97.7.119:8080/proxypool/load?pagename=proxy_list
 
+线上环境地址(移动端)：http://47.97.7.119:8080/proxypool/load?pagename=m_proxy_list
+
 预览效果如下：
 
 ![](proxy_list.png)
@@ -47,3 +49,7 @@ compile 'com.cv4j.proxy:proxypool:1.1.1'
 本地访问地址：http://localhost:8080/proxypool/getAllResultProxy
 
 线上环境地址：http://47.97.7.119:8080/proxypool/getAllResultProxy
+
+资源计划管理
+http://localhost:8080/proxypool/load?pagename=resource_list
+http://localhost:8080/proxypool/load?pagename=plan_list

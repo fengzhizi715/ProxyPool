@@ -27,21 +27,6 @@ public class ProxyController {
     @Autowired
     private ProxyDao proxyDao;
 
-    @Autowired
-    private ScheduleJobs scheduleJobs;
-
-    @RequestMapping(value="/load")
-    public String load(String pagename) {
-        log.info("load, pagename="+pagename);
-        return pagename;
-    }
-
-    @RequestMapping(value="/mload")
-    public String mload(String pagename) {
-        log.info("mload, pagename="+pagename);
-        return pagename;
-    }
-
     @RequestMapping(value="/proxyController/doValidateProxy")
     @ResponseBody
     public Proxy doValidateProxy(String id, String proxyType, String proxyIp, Integer proxyPort) {
@@ -101,27 +86,6 @@ public class ProxyController {
         } else{
             log.info("getAllResultProxy, result = "+result.size());
             return result;
-        }
-    }
-
-    @RequestMapping(value="/startJob")
-    @ResponseBody
-    public void startJob(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-
-        log.info("manual startJob");
-        try {
-            httpServletResponse.setContentType("text/plain; charset=utf-8");
-            ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();
-            if(ScheduleJobs.IS_JOB_RUNNING) {
-                responseOutputStream.write("Job正在运行。。。".getBytes("utf-8"));
-                responseOutputStream.flush();
-                responseOutputStream.close();
-            } else {
-                log.info("scheduleJobs.cronJob() start by controller...");
-                scheduleJobs.cronJob();
-            }
-        } catch (Exception e) {
-            log.info("startJob exception e="+e.getMessage());
         }
     }
 

@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>计划要爬的资源列表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{http://www.jeasyui.com/easyui/themes/material/easyui.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{http://www.jeasyui.com/easyui/themes/icon.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/page.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/easyui-lang-zh_CN.js}"></script>
+    <script type="text/javascript" th:src="@{/js/json2.js}"></script>
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var _queryUrl = "proxyResourceController/getAllResourcePlan";
+        var _deleteUrl = "proxyResourceController/doDeleteResourcePlan";
+        var _dataGridObj;
+
+        var _toolbarArray = [
+            {
+                text:'删除计划',
+                iconCls:'icon-edit',
+                handler:function(){
+                    var rowObj = $('#queryResult').datagrid('getSelected');
+                    if (rowObj){
+                        var selectedRowObj = _dataGridObj.datagrid('getSelected');
+                        var jsonData = JSON.stringify(selectedRowObj);
+                        doPostRequest(_deleteUrl, jsonData, successCallback1, errorCallback1);
+                    } else {
+                        info_alert('请选中一个计划再删除！');
+                    }
+                }
+            }];
+
+        $(function() {
+            loadData();
+            bindAction();
+        });
+
+        function loadData() {
+            _dataGridObj = initDataGrid1($('#queryResult'), _queryUrl, _toolbarArray);
+        }
+
+        function bindAction() {
+
+        }
+
+        function successCallback1(data) {
+            if(data == 1) {
+                info_alert('成功删除一条计划数据！');
+                _dataGridObj.datagrid('reload');
+            } else {
+                warn_alert('删除计划数据失败！');
+            }
+        }
+
+        function errorCallback1() {
+            error_alert('删除计划数据异常！');
+        }
+
+        function formatObj1(value,rec) {
+            return rec.proxyResource != null ? rec.proxyResource.resId : "";
+        }
+
+        function formatObj2(value,rec) {
+            var urlHtml = "";
+            if(rec.proxyResource != null) {
+                urlHtml = "<a target='_blank' href='"+rec.proxyResource.webUrl+"'>"+rec.proxyResource.webUrl+"</a>";
+            }
+            return urlHtml;
+        }
+
+        function formatObj3(value,rec) {
+            return rec.proxyResource != null ? rec.proxyResource.prefix : "";
+        }
+
+        function formatObj4(value,rec) {
+            return rec.proxyResource != null ? rec.proxyResource.suffix : "";
+        }
+
+        function formatObj5(value,rec) {
+            return rec.proxyResource != null ? rec.proxyResource.parser : "";
+        }
+
+        /*]]>*/
+    </script>
+</head>
+<body>
+<div id="bodyDiv">
+    <div class="easyui-panel" title="计划要爬的资源列表">
+        <div style="width:100%;text-align:center;padding:10px 0 0 0;">
+            <table id="queryResult" class="easyui-datagrid">
+                <thead>
+                <tr>
+                    <th data-options="field:'proxyResource.resId',width:100,align:'center',sortable:true,formatter:formatObj1">资源ID</th>
+                    <th data-options="field:'proxyResource.webUrl',width:250,align:'left',sortable:true,formatter:formatObj2">网站地址</th>
+                    <th data-options="field:'proxyResource.prefix',width:300,align:'left',sortable:true,formatter:formatObj3">URL前缀</th>
+                    <th data-options="field:'startPageNum',width:100,align:'center',sortable:true">开始页</th>
+                    <th data-options="field:'endPageNum',width:100,align:'center',sortable:true">结束页</th>
+                    <th data-options="field:'proxyResource.suffix',width:100,align:'center',sortable:true,formatter:formatObj4">URL后缀</th>
+                    <th data-options="field:'proxyResource.parser',width:360,align:'left',sortable:true,formatter:formatObj5">解析类</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
