@@ -39,6 +39,7 @@ compile 'com.cv4j.proxy:proxypool:1.1.1'
 
 资源计划管理（线上）
 管理网上的代理资源：http://47.97.7.119:8080/proxypool/load?pagename=resource_list
+
 把代理资源添加到计划任务：http://47.97.7.119:8080/proxypool/load?pagename=plan_list
 
 预览效果如下：
