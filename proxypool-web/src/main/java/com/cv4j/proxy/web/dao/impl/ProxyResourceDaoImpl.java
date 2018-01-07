@@ -39,9 +39,8 @@ public class ProxyResourceDaoImpl implements ProxyResourceDao {
             proxyResource.setAddTime(new Date().getTime());
             proxyResource.setModTime(new Date().getTime());
             mongoTemplate.save(proxyResource, Constant.COL_NAME_PROXY_RESOURCE);
-            if(!Preconditions.isBlank(proxyResource.getId())) {
-                result = true;
-            }
+
+            result = Preconditions.isNotBlank(proxyResource.getId());
         } else {                                                        //update
             Query query = new Query().addCriteria(Criteria.where("resId").is(proxyResource.getResId()));
             Update update = new Update();
@@ -54,9 +53,8 @@ public class ProxyResourceDaoImpl implements ProxyResourceDao {
             update.set("modTime", new Date().getTime());
 
             WriteResult writeResult = mongoTemplate.updateFirst(query, update, Constant.COL_NAME_PROXY_RESOURCE);
-            if (null != writeResult && writeResult.getN() > 0) {
-                result = true;
-            }
+
+            result = writeResult!=null && writeResult.getN() > 0;
         }
         return result;
     }
@@ -68,7 +66,7 @@ public class ProxyResourceDaoImpl implements ProxyResourceDao {
         resourcePlan.setModTime(new Date().getTime());
         mongoTemplate.save(resourcePlan, Constant.COL_NAME_RESOURCE_PLAN);
 
-        return Preconditions.isBlank(resourcePlan.getId()) ? false : true;
+        return Preconditions.isNotBlank(resourcePlan.getId());
     }
 
     @Override
@@ -78,12 +76,10 @@ public class ProxyResourceDaoImpl implements ProxyResourceDao {
 
     @Override
     public boolean deleteResourcePlan(ResourcePlan resourcePlan) {
-        boolean result = false;
+
         WriteResult writeResult = mongoTemplate.remove(resourcePlan, Constant.COL_NAME_RESOURCE_PLAN);
-        if (null != writeResult && writeResult.getN() > 0) {
-            result = true;
-        }
-        return result;
+
+        return writeResult!=null && writeResult.getN() > 0;
     }
 
 }

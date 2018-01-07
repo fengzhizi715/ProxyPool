@@ -23,7 +23,7 @@ public class CommonDaoImpl implements CommonDao {
     public boolean saveJobLog(JobLog jobLog) {
         mongoTemplate.save(jobLog, Constant.COL_NAME_JOB_LOG);
 
-        return Preconditions.isBlank(jobLog.getId()) ? false : true;
+        return Preconditions.isNotBlank(jobLog.getId());
     }
 
     @Override

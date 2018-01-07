@@ -43,16 +43,15 @@ public class ScheduleJobs {
 
         if(IS_JOB_RUNNING) return;
 
+        IS_JOB_RUNNING = true;
         log.info("Job Start...");
 
         ProxyPool.proxyMap = proxyDao.getProxyMap();
 
-        if(Preconditions.isNotBlank(ProxyPool.proxyMap)) {
+        if(Preconditions.isBlank(ProxyPool.proxyMap)) {
             log.info("proxyDao.getProxyMap() is empty");
             ProxyPool.proxyMap = Constant.proxyMap;
         }
-
-        IS_JOB_RUNNING = true;
 
         JobLog jobLog = new JobLog();
         jobLog.setJobName("ScheduleJobs.cronJob");
