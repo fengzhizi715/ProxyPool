@@ -12,15 +12,15 @@ import java.util.Map;
  */
 public interface ProxyDao {
 
-    void saveProxy(Proxy proxy);
+    boolean saveProxy(Proxy proxy);
 
     List<Proxy> findProxyByCond(QueryProxyDTO queryProxyDTO, boolean isGetAll);
 
     List<ResultProxy> findAllProxy();
 
-    void updateProxyById(String id);
+    boolean updateProxyById(String id);
 
-    void deleteProxyById(String id);
+    boolean deleteProxyById(String id);
 
     void deleteAll();
 

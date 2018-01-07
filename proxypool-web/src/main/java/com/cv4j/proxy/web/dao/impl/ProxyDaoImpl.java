@@ -6,9 +6,11 @@ import com.cv4j.proxy.web.dao.ProxyDao;
 import com.cv4j.proxy.web.dto.QueryProxyDTO;
 import com.cv4j.proxy.web.dto.ResourcePlan;
 import com.cv4j.proxy.web.dto.ResultProxy;
+import com.mongodb.WriteResult;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -33,13 +35,13 @@ public class ProxyDaoImpl implements ProxyDao {
     private MongoTemplate mongoTemplate;
 
     @Override
-    public void saveProxy(Proxy proxy) {
+    public boolean saveProxy(Proxy proxy) {
         mongoTemplate.save(proxy, Constant.COL_NAME_PROXY);
+        return Preconditions.isBlank(proxy.getId()) ? false : true;
     }
 
     @Override
     public List<Proxy> findProxyByCond(QueryProxyDTO queryProxyDTO, boolean isGetAll) {
-
         Query query = new Query();
         if(Preconditions.isNotBlank(queryProxyDTO.getType()) && !"all".equals(queryProxyDTO.getType())) {
             query.addCriteria(Criteria.where("type").is(queryProxyDTO.getType()));
@@ -75,17 +77,27 @@ public class ProxyDaoImpl implements ProxyDao {
     }
 
     @Override
-    public void updateProxyById(String id) {
+    public boolean updateProxyById(String id) {
+        boolean result = false;
         Query query = new Query(Criteria.where("id").is(id));
         Update update = new Update();
         update.set("lastSuccessfulTime", new Date().getTime());        //最近一次验证成功的时间
-        mongoTemplate.findAndModify(query, update, Proxy.class,Constant.COL_NAME_PROXY);
+        WriteResult writeResult = mongoTemplate.updateFirst(query, update, Proxy.class,Constant.COL_NAME_PROXY);
+        if (null != writeResult && writeResult.getN() > 0) {
+            result = true;
+        }
+        return result;
     }
 
     @Override
-    public void deleteProxyById(String id) {
+    public boolean deleteProxyById(String id) {
+        boolean result = false;
         Query query = new Query(Criteria.where("id").is(id));
-        mongoTemplate.remove(query, Proxy.class, Constant.COL_NAME_PROXY);
+        WriteResult writeResult = mongoTemplate.remove(query, Proxy.class, Constant.COL_NAME_PROXY);
+        if (null != writeResult && writeResult.getN() > 0) {
+            result = true;
+        }
+        return result;
     }
 
     @Override

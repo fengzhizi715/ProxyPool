@@ -43,10 +43,14 @@
       text-align:center
   }
 
+  .query_container {
+      margin-top:10px;
+      text-align:center
+  }
+
   .div-inline{
      display:inline;
   }
-
 
   a:link {
       color: #0000EE;

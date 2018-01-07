@@ -35,8 +35,7 @@ public class ProxyResourceController {
         boolean result = false;
         if(proxyResource != null) {
             log.info("doSaveResource getSuffix="+proxyResource.getSuffix());
-            proxyResourceDao.saveProxyResource(proxyResource);
-            result = true;
+            result = proxyResourceDao.saveProxyResource(proxyResource);
         }
 
         return result;
@@ -48,8 +47,7 @@ public class ProxyResourceController {
         boolean result = false;
         if(resourcePlan != null) {
             log.info("doSaveResourcePlan refResId="+resourcePlan.getProxyResource().getResId());
-            proxyResourceDao.saveResourcePlan(resourcePlan);
-            result = true;
+            result = proxyResourceDao.saveResourcePlan(resourcePlan);
         }
         return result;
     }
@@ -68,8 +66,7 @@ public class ProxyResourceController {
         boolean result = false;
         if(resourcePlan != null) {
             log.info("doDeleteResourcePlan id="+resourcePlan.getProxyResource().getId());
-            proxyResourceDao.deleteResourcePlan(resourcePlan);
-            result = true;
+            result = proxyResourceDao.deleteResourcePlan(resourcePlan);
         }
         return result;
     }

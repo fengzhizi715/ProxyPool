@@ -3,13 +3,13 @@
 <head>
     <title>代理服务器网站资源</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" th:href="@{http://www.jeasyui.com/easyui/themes/material/easyui.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{http://www.jeasyui.com/easyui/themes/icon.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{http://www.jeasyui.net/Public/js/easyui/themes/default/easyui.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{http://www.jeasyui.net/Public/js/easyui/themes/icon.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/page.css}"/>
-    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/jquery.easyui.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/easyui-lang-zh_CN.js}"></script>
-    <script type="text/javascript" th:src="@{/js/json2.js}"></script>
+    <script type="text/javascript" th:src="@{https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{https://cdn.staticfile.org/json2/20130526/json2.min.js}"></script>
+    <script type="text/javascript" th:src="@{http://www.jeasyui.net/Public/js/easyui/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{http://www.jeasyui.net/Public/js/easyui/locale/easyui-lang-zh_CN.js}"></script>
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -68,6 +68,7 @@
                 var selectedRowObj = _dataGridObj.datagrid('getSelected');
                 if($("#resId").val() != "") {
                     jsonObj.id = selectedRowObj.id; //更新时需要用到主键
+                    jsonObj.addTime = selectedRowObj.addTime;
                 }
                 var jsonData = JSON.stringify(jsonObj);
                 doPostRequest(_saveUrl, jsonData, successCallback1, errorCallback1);
@@ -215,19 +216,19 @@
     <div data-options="region:'center',border:false" style="padding:10px;">
         <form id="formAddRes" method="post" class="inputForm">
             <div class="input_container">
-                <input class="easyui-textbox" label="网站名称:" labelPosition="left" labelAlign="right" id="webName" name="webName" style="width:300px;" value="" data-options=""/>
+                <input class="easyui-textbox" prompt="网站名称:" id="webName" name="webName" style="width:300px;" value="" data-options=""/>
                 <input type="hidden" id="resId" name="resId"/>
             </div>
             <div class="input_container">
-                <input class="easyui-textbox" label="网站地址:" labelPosition="left" labelAlign="right" id="webUrl" name="webUrl" style="width:400px;" data-options=""/>
-                <input class="easyui-textbox" label="页面数量:" labelPosition="left" labelAlign="right" id="pageCount" name="pageCount" style="width:200px;" data-options="required:true"/>
+                <input class="easyui-textbox" prompt="网站地址:" id="webUrl" name="webUrl" style="width:400px;" data-options=""/>
+                <input class="easyui-textbox" prompt="页面数量:" id="pageCount" name="pageCount" style="width:200px;" data-options="required:true"/>
             </div>
             <div class="input_container">
-                <input class="easyui-textbox" label="URL前缀:" labelPosition="left" labelAlign="right" id="prefix" name="prefix" style="width:400px;" data-options="required:true"/>
-                <input class="easyui-textbox" label="URL后缀:" labelPosition="left" labelAlign="right" id="suffix" name="suffix" style="width:200px;" data-options=""/>
+                <input class="easyui-textbox" prompt="URL前缀:" id="prefix" name="prefix" style="width:400px;" data-options="required:true"/>
+                <input class="easyui-textbox" prompt="URL后缀:" id="suffix" name="suffix" style="width:200px;" data-options=""/>
             </div>
             <div class="input_container">
-                <input class="easyui-textbox" label="解析类:" labelPosition="left" labelAlign="right" id="parser" name="parser" style="width:600px;" data-options="required:true"/>
+                <input class="easyui-textbox" prompt="解析类:" id="parser" name="parser" style="width:600px;" data-options="required:true"/>
             </div>
         </form>
     </div>
@@ -236,15 +237,15 @@
         <a class="easyui-linkbutton" id="btnCloseRes" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" style="width:80px">取消</a>
     </div>
 </div>
-<div id="divJobWindow" class="easyui-window" title="添加资源到任务" data-options="modal:true,closed:true,collapsible:false,minimizable:false,maximizable:false,border:'thin',cls:'c6'" style="width:450px;height:200px;padding:10px;">
+<div id="divJobWindow" class="easyui-window" title="添加资源到任务" data-options="modal:true,closed:true,collapsible:false,minimizable:false,maximizable:false,border:'thin',cls:'c6'" style="width:350px;height:200px;padding:10px;">
     <div data-options="region:'center',border:false" style="">
         <form id="formAddPlan" method="post" class="inputForm">
             <div class="input_container">
-                <input class="easyui-textbox" label="资源ID:" labelPosition="left" labelAlign="right" id="refResId" name="refResId" style="width:200px;"/>
+                资源ID：<input class="easyui-textbox" id="refResId" name="refResId" style="width:150px;"/>
             </div>
             <div class="input_container">
-                <input class="easyui-textbox" label="开始页:" labelPosition="left" labelAlign="right" id="startPageNum" name="startPageNum" style="width:200px;" data-options="required:true"/>
-                <input class="easyui-textbox" label="结束页:" labelPosition="left" labelAlign="right" id="endPageNum" name="endPageNum" style="width:200px;" data-options="required:true"/>
+                <input class="easyui-textbox" prompt="开始页" id="startPageNum" name="startPageNum" style="width:100px;" data-options="required:true"/>&nbsp;&nbsp;
+                <input class="easyui-textbox" prompt="结束页" id="endPageNum" name="endPageNum" style="width:100px;" data-options="required:true"/>
             </div>
         </form>
     </div>

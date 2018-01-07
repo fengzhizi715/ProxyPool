@@ -4,6 +4,7 @@ import com.cv4j.proxy.web.config.Constant;
 import com.cv4j.proxy.web.dao.CommonDao;
 import com.cv4j.proxy.web.dto.JobLog;
 import com.cv4j.proxy.web.dto.SysSequence;
+import com.safframework.tony.common.utils.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -19,8 +20,10 @@ public class CommonDaoImpl implements CommonDao {
     private MongoTemplate mongoTemplate;
 
     @Override
-    public void saveJobLog(JobLog jobLog) {
+    public boolean saveJobLog(JobLog jobLog) {
         mongoTemplate.save(jobLog, Constant.COL_NAME_JOB_LOG);
+
+        return Preconditions.isBlank(jobLog.getId()) ? false : true;
     }
 
     @Override

@@ -48,7 +48,6 @@ public class ProxyManager {
                 .flatMap(new Function<List<Proxy>, Publisher<Proxy>>() {
                     @Override
                     public Publisher<Proxy> apply(List<Proxy> proxies) throws Exception {
-
                         if (Preconditions.isNotBlank(proxies)) {
                             List<Proxy> result = proxies
                                     .stream()
@@ -58,7 +57,7 @@ public class ProxyManager {
                                         public boolean test(Proxy proxy) {
                                             HttpHost httpHost = new HttpHost(proxy.getIp(), proxy.getPort(), proxy.getType());
                                             boolean result = HttpManager.get().checkProxy(httpHost);
-                                            log.info("checkProxy " + proxy.getProxyStr() +", "+result);
+                                            if(result) log.info("checkProxy " + proxy.getProxyStr() +", "+result);
                                             return result;
                                         }
                                     }).collect(Collectors.toList());

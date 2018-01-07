@@ -9,12 +9,12 @@ public interface ProxyResourceDao {
 
     List<ProxyResource> findAllProxyResource();
 
-    void saveProxyResource(ProxyResource proxyResource);
+    boolean saveProxyResource(ProxyResource proxyResource);
 
-    void saveResourcePlan(ResourcePlan resourcePlan);
+    boolean saveResourcePlan(ResourcePlan resourcePlan);
 
     List<ResourcePlan> findAllResourcePlan();
 
-    void deleteResourcePlan(ResourcePlan resourcePlan);
+    boolean deleteResourcePlan(ResourcePlan resourcePlan);
 
 }

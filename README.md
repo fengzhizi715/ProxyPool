@@ -37,11 +37,9 @@ compile 'com.cv4j.proxy:proxypool:1.1.1'
 
 线上环境地址：http://47.97.7.119:8080/proxypool/load?pagename=proxy_list
 
-线上环境地址(移动端)：http://47.97.7.119:8080/proxypool/load?pagename=m_proxy_list
-
 资源计划管理（线上）
 管理网上的代理资源：http://47.97.7.119:8080/proxypool/load?pagename=resource_list
-把资源添加到任务计划：http://47.97.7.119:8080/proxypool/load?pagename=plan_list
+把代理资源添加到计划任务：http://47.97.7.119:8080/proxypool/load?pagename=plan_list
 
 预览效果如下：
 

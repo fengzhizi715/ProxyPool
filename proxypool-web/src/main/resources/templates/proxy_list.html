@@ -3,15 +3,13 @@
 <head>
     <title>实时有效的代理服务器列表</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" th:href="@{http://www.jeasyui.com/easyui/themes/material/easyui.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{http://www.jeasyui.com/easyui/themes/icon.css}"/>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" th:href="@{http://www.jeasyui.net/Public/js/easyui/themes/default/easyui.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{http://www.jeasyui.net/Public/js/easyui/themes/icon.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/page.css}"/>
-    <!--<script type="text/javascript" th:src="@{http://www.jeasyui.com/easyui/jquery.min.js}"></script>-->
-    <!--<script type="text/javascript" th:src="@{http://www.jeasyui.com/easyui/jquery.easyui.min.js}"></script>-->
-    <!--<script type="text/javascript" th:src="@{http://www.jeasyui.com/easyui/locale/easyui-lang-zh_CN.js}"></script>-->
-    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/jquery.easyui.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/easyui-lang-zh_CN.js}"></script>
+    <script type="text/javascript" th:src="@{https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{http://www.jeasyui.net/Public/js/easyui/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{http://www.jeasyui.net/Public/js/easyui/locale/easyui-lang-zh_CN.js}"></script>
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -33,18 +31,20 @@
 
         function bindAction() {
             $("#btnQuery").click(function() {
-                var queryUrl = _queryUrl+"?proxyType="+$('#ipType').val()+"&proxyIp="+$('#ipAddress').val()+"&minPort="+$('#minPort').val()+"&maxPort="+$('#maxPort').val();
+                var queryUrl = _queryUrl+"?proxyType="+$('#ipType').combobox('getValue')+"&proxyIp="+$('#ipAddress').val()+"&minPort="+$('#minPort').val()+"&maxPort="+$('#maxPort').val();
                 _dataGridObj.datagrid('options').url = queryUrl;
                 _dataGridObj.datagrid('load');
             });
 
             $("#ipType").combobox({
                 onChange:function(record) {
-                    var queryUrl = _queryUrl+"?proxyType="+$('#ipType').val()+"&proxyIp="+$('#ipAddress').val()+"&minPort="+$('#minPort').val()+"&maxPort="+$('#maxPort').val();
+                    var queryUrl = _queryUrl+"?proxyType="+$('#ipType').combobox('getValue')+"&proxyIp="+$('#ipAddress').val()+"&minPort="+$('#minPort').val()+"&maxPort="+$('#maxPort').val();
                     _dataGridObj.datagrid('options').url = queryUrl;
                     _dataGridObj.datagrid('load');
                 }
             });
+
+            $("#ipType").combobox('setText','All');
         }
 
         function checkProxy(rowIndex, rowData) {
@@ -97,18 +97,19 @@
 <body>
 <div id="bodyDiv">
     <div class="easyui-panel" title="代理服务器列表（请双击进行验证）">
-        <div style="width:100%;text-align:center;padding:10px 0 0 0;">
-            <div class="queryForm">
-                <select class="easyui-combobox" label="类型:" labelPosition="left" labelAlign="right" id="ipType" style="width:150px;" panelHeight="auto">
-                    <option value="all" selected="selected">全部</option>
+        <div style="width:100%;text-align:left;padding:10px 0 0 0;">
+            <div class="queryForm" style="text-align:center">
+                <select class="easyui-combobox" id="ipType" name="ipType" style="width:60px;" panelHeight="auto">
+                    <option value="all" selected="selected">All</option>
                     <option value="http">http</option>
                     <option value="https">https</option>
-                </select>
-                <input class="easyui-textbox" label="IP地址:" labelPosition="left" labelAlign="right" id="ipAddress" style="width:220px"/>
-                <span style="margin-right: 50px"></span>
-                <input class="easyui-textbox" label="端口范围从:" labelPosition="left" labelAlign="right" id="minPort" style="width:150px"/>
-                <input class="easyui-textbox" label="到:" labelWidth="50px" labelPosition="left" labelAlign="center" id="maxPort" style="width:120px"/>
-                <a href="#" id="btnQuery" class="easyui-linkbutton" iconCls="icon-search" style="width:100px;height:38px;margin-left:50px;">查 询</a>
+                </select>&nbsp;&nbsp;
+                <input class="easyui-textbox" prompt="IP address" labelPosition="left" labelAlign="right" id="ipAddress" style="width:100px"/>
+                <input class="easyui-textbox" prompt="min port" id="minPort" style="width:80px"/>&nbsp;&nbsp;
+                <input class="easyui-textbox" prompt="max port" id="maxPort" style="width:80px"/>
+            </div>
+            <div class="query_container" style="text-align:center">
+                <a href="#" id="btnQuery" class="easyui-linkbutton" iconCls="icon-search" style="width:120px;height:30px;margin-top:5px;">查 询</a>
             </div>
         </div>
         <div style="width:100%;text-align:center;padding:10px 0 0 0;">
