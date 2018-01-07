@@ -10,7 +10,6 @@ import com.mongodb.WriteResult;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -22,7 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 /**
  * Created by tony on 2017/11/16.
@@ -36,8 +34,9 @@ public class ProxyDaoImpl implements ProxyDao {
 
     @Override
     public boolean saveProxy(Proxy proxy) {
+
         mongoTemplate.save(proxy, Constant.COL_NAME_PROXY);
-        return Preconditions.isBlank(proxy.getId()) ? false : true;
+        return Preconditions.isNotBlank(proxy.getId());
     }
 
     @Override
@@ -78,26 +77,20 @@ public class ProxyDaoImpl implements ProxyDao {
 
     @Override
     public boolean updateProxyById(String id) {
-        boolean result = false;
+
         Query query = new Query(Criteria.where("id").is(id));
         Update update = new Update();
         update.set("lastSuccessfulTime", new Date().getTime());        //最近一次验证成功的时间
         WriteResult writeResult = mongoTemplate.updateFirst(query, update, Proxy.class,Constant.COL_NAME_PROXY);
-        if (null != writeResult && writeResult.getN() > 0) {
-            result = true;
-        }
-        return result;
+        return writeResult!=null && writeResult.getN() > 0;
     }
 
     @Override
     public boolean deleteProxyById(String id) {
-        boolean result = false;
+
         Query query = new Query(Criteria.where("id").is(id));
         WriteResult writeResult = mongoTemplate.remove(query, Proxy.class, Constant.COL_NAME_PROXY);
-        if (null != writeResult && writeResult.getN() > 0) {
-            result = true;
-        }
-        return result;
+        return writeResult!=null && writeResult.getN() > 0;
     }
 
     @Override
@@ -107,20 +100,28 @@ public class ProxyDaoImpl implements ProxyDao {
 
     @Override
     public Map<String, Class> getProxyMap() {
+
         Map<String, Class> proxyMap = new HashMap<>();
         List<ResourcePlan> list = mongoTemplate.findAll(ResourcePlan.class, Constant.COL_NAME_RESOURCE_PLAN);
-        for(ResourcePlan plan : list) {
-            for(int i=plan.getStartPageNum(); i<=plan.getEndPageNum(); i++) {
-                String key = plan.getProxyResource().getPrefix() + i + plan.getProxyResource().getSuffix();
-                try {
-                    if(!proxyMap.containsKey(key)) {
-                        proxyMap.put(key, Class.forName(plan.getProxyResource().getParser()));
+
+        if (Preconditions.isNotBlank(list)) {
+
+            for(ResourcePlan plan : list) {
+
+                for(int i=plan.getStartPageNum(); i<=plan.getEndPageNum(); i++) {
+
+                    String key = plan.getProxyResource().getPrefix() + i + plan.getProxyResource().getSuffix();
+                    try {
+                        if(!proxyMap.containsKey(key)) {
+                            proxyMap.put(key, Class.forName(plan.getProxyResource().getParser()));
+                        }
+                    } catch(ClassNotFoundException e) {
+                        log.info("ClassNotFoundException = "+e.getMessage());
                     }
-                } catch(ClassNotFoundException e) {
-                    log.info("ClassNotFoundException = "+e.getMessage());
                 }
             }
         }
+
         return proxyMap;
     }
 }

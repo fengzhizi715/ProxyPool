@@ -46,7 +46,8 @@ public class ScheduleJobs {
         log.info("Job Start...");
 
         ProxyPool.proxyMap = proxyDao.getProxyMap();
-        if(ProxyPool.proxyMap.isEmpty()) {
+
+        if(Preconditions.isNotBlank(ProxyPool.proxyMap)) {
             log.info("proxyDao.getProxyMap() is empty");
             ProxyPool.proxyMap = Constant.proxyMap;
         }
