@@ -1,5 +1,6 @@
 package com.cv4j.proxy.domain;
 
+import org.apache.http.HttpHost;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -196,5 +197,14 @@ public class Proxy implements Delayed, Serializable {
 
     public String getProxyStr() {
         return type + "://" + ip + ":" + port;
+    }
+
+    /**
+     * 将Proxy转换成一个HttpHost对象
+     * @return
+     */
+    public HttpHost toHttpHost() {
+
+        return new HttpHost(ip,port,type);
     }
 }

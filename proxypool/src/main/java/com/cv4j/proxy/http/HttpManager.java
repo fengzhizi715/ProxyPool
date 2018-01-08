@@ -2,6 +2,7 @@ package com.cv4j.proxy.http;
 
 import com.cv4j.proxy.config.Constant;
 import com.cv4j.proxy.domain.Page;
+import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.IOUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.client.CookieStore;
@@ -163,17 +164,31 @@ public class HttpManager {
 
     public CloseableHttpResponse getResponse(String url) {
 
-        HttpGet request = new HttpGet(url);
-        return getResponse(request);
+        return getResponse(url,null);
     }
 
-    public CloseableHttpResponse getResponse(HttpRequestBase request) {
+    public CloseableHttpResponse getResponse(String url,Proxy proxy) {
+
+        HttpGet request = new HttpGet(url);
+        return getResponse(request,proxy);
+    }
+
+    public CloseableHttpResponse getResponse(HttpRequestBase request,Proxy proxy) {
 
         request.setHeader("User-Agent", Constant.userAgentArray[new Random().nextInt(Constant.userAgentArray.length)]);
         HttpClientContext httpClientContext = HttpClientContext.create();
         CloseableHttpResponse response = null;
+
         try {
-            response = createHttpClient().execute(request, httpClientContext);
+
+            if (proxy == null) {
+
+                response = createHttpClient().execute(request, httpClientContext);
+            } else {
+
+                response = createHttpClient(20000, proxy.toHttpHost(),null).execute(request, httpClientContext);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -192,7 +207,6 @@ public class HttpManager {
             socket.connect(endpointSocketAddr, 3000);
             return true;
         } catch (IOException e) {
-//            logger.warn("FAILRE - CAN not connect!  remote: " + p);
             return false;
         } finally {
 
@@ -202,13 +216,28 @@ public class HttpManager {
 
     public Page getWebPage(String url) throws IOException {
 
-        return getWebPage(url, "UTF-8");
+        return getWebPage(url, "UTF-8",null);
     }
 
-    public Page getWebPage(String url, String charset) throws IOException {
+    public Page getWebPage(String url,Proxy proxy) throws IOException {
+
+        return getWebPage(url, "UTF-8" , proxy);
+    }
+
+    public Page getWebPage(String url, String charset ,Proxy proxy) throws IOException {
 
         Page page = new Page();
-        CloseableHttpResponse response = HttpManager.get().getResponse(url);
+
+        CloseableHttpResponse response = null;
+
+        if (proxy == null) {
+
+            response = HttpManager.get().getResponse(url);
+        } else {
+
+            response = HttpManager.get().getResponse(url,proxy);
+        }
+
         if (response!=null) {
             page.setStatusCode(response.getStatusLine().getStatusCode());
             page.setUrl(url);

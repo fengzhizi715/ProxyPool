@@ -13,7 +13,6 @@ public class Page {
     private String url;
     private int statusCode;//响应状态码
     private String html;//response content
-    private Proxy proxy;
 
     @Override
     public boolean equals(Object o) {

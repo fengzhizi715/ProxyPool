@@ -47,7 +47,41 @@ public class ProxyPageCallable implements Callable<List<Proxy>>{
             if(status == HttpStatus.SC_OK){
                 log.info("Success: "+logStr);
                 return handle(page);
+            } else if (status>=500){ // 尝试3次使用代理
+
+                Proxy proxy = null;
+
+                for (int i=0; i<3; i++) {
+
+                    proxy = ProxyPool.getProxy();
+
+                    if (proxy!=null && HttpManager.get().checkProxy(proxy.toHttpHost())) {
+
+                        requestStartTime = System.currentTimeMillis();
+                        page = HttpManager.get().getWebPage(url,proxy);
+                        status = page.getStatusCode();
+                        requestEndTime = System.currentTimeMillis();
+
+                        sb = new StringBuilder();
+                        sb.append(Thread.currentThread().getName()).append(" ")
+                                .append("  ,executing request ").append(page.getUrl()).append(" ,response statusCode:").append(status)
+                                .append("  ,request cost time:").append(requestEndTime - requestStartTime).append("ms");
+
+                        logStr = sb.toString();
+
+                        if (status == HttpStatus.SC_OK) {
+
+                            log.info("Success: "+logStr);
+                            return handle(page);
+                        } else {
+
+                            log.info("Failure: "+logStr);
+                        }
+                    }
+                }
+
             } else {
+
                 log.info("Failure: "+logStr);
             }
 

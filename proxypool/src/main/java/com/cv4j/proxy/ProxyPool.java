@@ -1,11 +1,6 @@
 package com.cv4j.proxy;
 
 import com.cv4j.proxy.domain.Proxy;
-import com.cv4j.proxy.site.ip181.Ip181ProxyListPageParser;
-import com.cv4j.proxy.site.ip66.Ip66ProxyListPageParser;
-import com.cv4j.proxy.site.ipway.IpwayProxyListPageParser;
-import com.cv4j.proxy.site.mimiip.MimiipProxyListPageParser;
-import com.cv4j.proxy.site.xicidaili.XicidailiProxyListPageParser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,5 +36,10 @@ public class ProxyPool {
         }
 
         return result;
+    }
+
+    public static void addProxy(Proxy proxy) {
+
+        proxyList.add(proxy);
     }
 }
