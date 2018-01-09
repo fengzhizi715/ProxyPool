@@ -255,6 +255,9 @@ public class HttpManager {
 
                 IOUtils.closeQuietly(response);
             }
+        } else { // response is null
+
+            page.setUrl(url);
         }
 
         return page;
