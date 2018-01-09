@@ -76,6 +76,14 @@ public class ProxyDaoImpl implements ProxyDao {
     }
 
     @Override
+    public List<ResultProxy> findLimitProxy(int count) {
+        Query query = new Query();
+        query.limit(count);
+        query.with(new Sort(Sort.Direction.ASC, "port"));
+        return mongoTemplate.find(query, ResultProxy.class,Constant.COL_NAME_PROXY);
+    }
+
+    @Override
     public boolean updateProxyById(String id) {
 
         Query query = new Query(Criteria.where("id").is(id));

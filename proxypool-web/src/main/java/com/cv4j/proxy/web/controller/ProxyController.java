@@ -68,12 +68,4 @@ public class ProxyController {
         return resultMap;
     }
 
-    @RequestMapping(value="/getAllResultProxy")
-    @ResponseBody
-    public List<ResultProxy> getAllResultProxy() {
-        log.info("getAllResultProxy");
-        List<ResultProxy> result = proxyDao.findAllProxy();
-        return result!=null?result:new ArrayList<>();
-    }
-
 }

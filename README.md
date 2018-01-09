@@ -33,23 +33,24 @@ compile 'com.cv4j.proxy:proxypool:1.1.3'
 
 可用的代理会存放到MongoDB中。每隔几小时会抓取一次可用的代理。不过本地需要事先搭建好MongoDB。
 
-本地访问地址：http://localhost:8080/proxypool/load?pagename=proxy_list
+及时更新的免费代理资源：http://47.97.7.119:8080/proxypool/proxylist
 
-线上环境地址：http://47.97.7.119:8080/proxypool/load?pagename=proxy_list
+管理代理资源网站：http://47.97.7.119:8080/proxypool/resourcelist
 
-资源计划管理（线上）
-管理网上的代理资源：http://47.97.7.119:8080/proxypool/load?pagename=resource_list
-
-把代理资源添加到计划任务：http://47.97.7.119:8080/proxypool/load?pagename=plan_list
+把代理资源添加到计划任务：http://47.97.7.119:8080/proxypool/planlist
 
 预览效果如下：
 
 ![](proxy_list.png)
 
 
-另外，还提供了一个接口，返回代理池中所有的Proxy
+另外，还提供了一个接口，返回代理池中的Proxy
 
-本地访问地址：http://localhost:8080/proxypool/getAllResultProxy
+线上环境地址：http://47.97.7.119:8080/proxypool/proxys/{count}
 
-线上环境地址：http://47.97.7.119:8080/proxypool/getAllResultProxy
+类型：GET
+
+参数说明：count<=0  或 count>数据库里总数量， 也返回全部的代理数据
+
+###以上链接在本地运行时，请把47.97.7.119换成localhost即可
 

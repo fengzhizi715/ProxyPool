@@ -10,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletOutputStream;
@@ -27,13 +29,13 @@ public class CommonController {
     @Autowired
     private ScheduleJobs scheduleJobs;
 
-    @RequestMapping(value="/load")
-    public String load(String pagename) {
+    @RequestMapping(value="/{pagename}", method = RequestMethod.GET)
+    public String load(@PathVariable String pagename) {
         log.info("load, pagename="+pagename);
         return pagename;
     }
 
-    @RequestMapping(value="/startJob")
+    @RequestMapping(value="/launchjob")
     @ResponseBody
     public void startJob(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 

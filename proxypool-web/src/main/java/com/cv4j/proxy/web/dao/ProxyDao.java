@@ -18,6 +18,8 @@ public interface ProxyDao {
 
     List<ResultProxy> findAllProxy();
 
+    List<ResultProxy> findLimitProxy(int count);
+
     boolean updateProxyById(String id);
 
     boolean deleteProxyById(String id);
