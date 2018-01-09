@@ -47,15 +47,15 @@ public class ProxyPageCallable implements Callable<List<Proxy>>{
             if(status == HttpStatus.SC_OK){
                 log.info("Success: "+logStr);
                 return handle(page);
-            } else if (status>=500){ // 尝试3次使用代理
+            } else if (status>=500){ // http请求没有成功，尝试使用代理抓取数据源的策略
 
                 Proxy proxy = null;
 
                 for (int i=0; i<3; i++) {
 
-                    proxy = ProxyPool.getProxy();
+                    proxy = ProxyPool.getProxy(); // 从代理池中获取数据
 
-                    if (proxy!=null && HttpManager.get().checkProxy(proxy.toHttpHost())) {
+                    if (proxy!=null && HttpManager.get().checkProxy(proxy.toHttpHost())) { // 代理可用的情况下
 
                         requestStartTime = System.currentTimeMillis();
                         page = HttpManager.get().getWebPage(url,proxy);
