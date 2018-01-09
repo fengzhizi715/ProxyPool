@@ -5,6 +5,7 @@ import com.cv4j.proxy.domain.Page;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.IOUtils;
 import org.apache.http.HttpHost;
+import org.apache.http.NoHttpResponseException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.config.AuthSchemes;
 import org.apache.http.client.config.CookieSpecs;
@@ -189,6 +190,8 @@ public class HttpManager {
                 response = createHttpClient(20000, proxy.toHttpHost(),null).execute(request, httpClientContext);
             }
 
+        } catch (NoHttpResponseException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
