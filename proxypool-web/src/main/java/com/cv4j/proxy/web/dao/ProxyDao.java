@@ -25,4 +25,6 @@ public interface ProxyDao {
     void deleteAll();
 
     Map<String, Class> getProxyMap();
+
+    List<Proxy> takeTenProxy();
 }

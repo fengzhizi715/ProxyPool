@@ -60,6 +60,8 @@ public class ScheduleJobs {
         // 跑任务之前先清空proxyList中的数据
         ProxyPool.proxyList.clear();
 
+        ProxyPool.proxyList.addAll(proxyDao.takeTenProxy());  // 从数据库中选取10个代理作为种子代理，遇到http 503时使用代理来抓数据
+
         proxyManager.start();
 
         CopyOnWriteArrayList<Proxy> list = ProxyPool.proxyList;

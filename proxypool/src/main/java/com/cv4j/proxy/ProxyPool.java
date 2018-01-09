@@ -3,6 +3,7 @@ package com.cv4j.proxy;
 import com.cv4j.proxy.domain.Proxy;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -41,5 +42,10 @@ public class ProxyPool {
     public static void addProxy(Proxy proxy) {
 
         proxyList.add(proxy);
+    }
+
+    public static void addProxyList(List<Proxy> proxies) {
+
+        proxyList.addAll(proxies);
     }
 }

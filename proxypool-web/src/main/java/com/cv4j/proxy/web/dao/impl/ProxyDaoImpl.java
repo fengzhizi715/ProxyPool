@@ -124,4 +124,12 @@ public class ProxyDaoImpl implements ProxyDao {
 
         return proxyMap;
     }
+
+    @Override
+    public List<Proxy> takeTenProxy() {
+
+        Query query = new Query();
+        query.limit(10);
+        return mongoTemplate.find(query, Proxy.class, Constant.COL_NAME_PROXY);
+    }
 }
