@@ -1,6 +1,7 @@
 package com.cv4j.proxy;
 
 import com.cv4j.proxy.domain.Proxy;
+import com.safframework.tony.common.utils.Preconditions;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,11 +42,15 @@ public class ProxyPool {
 
     public static void addProxy(Proxy proxy) {
 
-        proxyList.add(proxy);
+        if (Preconditions.isNotBlank(proxy)) {
+            proxyList.add(proxy);
+        }
     }
 
     public static void addProxyList(List<Proxy> proxies) {
 
-        proxyList.addAll(proxies);
+        if (Preconditions.isNotBlank(proxies)) {
+            proxyList.addAll(proxies);
+        }
     }
 }
