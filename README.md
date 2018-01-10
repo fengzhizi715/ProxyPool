@@ -52,5 +52,5 @@ compile 'com.cv4j.proxy:proxypool:1.1.3'
 
 参数说明：count<=0  或 count>数据库里总数量， 也返回全部的代理数据
 
-###以上链接在本地运行时，请把47.97.7.119换成localhost即可
+> 以上链接在本地运行时，请把具体的IP替换成localhost即可
 
