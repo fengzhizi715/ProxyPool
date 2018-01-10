@@ -17,10 +17,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by tony on 2017/11/16.
@@ -136,8 +133,15 @@ public class ProxyDaoImpl implements ProxyDao {
     @Override
     public List<Proxy> takeRandomTenProxy() {
 
-        Query query = new Query();
-        query.limit(10);
-        return mongoTemplate.find(query, Proxy.class, Constant.COL_NAME_PROXY);
+        List<Proxy> list = mongoTemplate.findAll(Proxy.class);
+
+        if (Preconditions.isNotBlank(list)) {
+
+            Collections.shuffle(list);
+            return list.size()>10?list.subList(0,9):list;
+        } else {
+
+            return new ArrayList<>();
+        }
     }
 }
