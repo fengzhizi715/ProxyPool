@@ -134,7 +134,7 @@ public class ProxyDaoImpl implements ProxyDao {
     }
 
     @Override
-    public List<Proxy> takeTenProxy() {
+    public List<Proxy> takeRandomTenProxy() {
 
         Query query = new Query();
         query.limit(10);

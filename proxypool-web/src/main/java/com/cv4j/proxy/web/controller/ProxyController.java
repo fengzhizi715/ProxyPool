@@ -4,7 +4,6 @@ import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.http.HttpManager;
 import com.cv4j.proxy.web.dao.ProxyDao;
 import com.cv4j.proxy.web.dto.QueryProxyDTO;
-import com.cv4j.proxy.web.dto.ResultProxy;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

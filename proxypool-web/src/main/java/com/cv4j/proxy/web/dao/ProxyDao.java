@@ -28,5 +28,5 @@ public interface ProxyDao {
 
     Map<String, Class> getProxyMap();
 
-    List<Proxy> takeTenProxy();
+    List<Proxy> takeRandomTenProxy();
 }

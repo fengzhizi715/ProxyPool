@@ -47,7 +47,7 @@ public class ProxyPageCallable implements Callable<List<Proxy>>{
             if(status == HttpStatus.SC_OK){
                 log.info("Success: "+logStr);
                 return handle(page);
-            } else if (status>=500){ // http请求没有成功，尝试使用代理抓取数据源的策略
+            } else if (status>=400){ // http请求没有成功，尝试使用代理抓取数据源的策略
 
                 Proxy proxy = null;
 

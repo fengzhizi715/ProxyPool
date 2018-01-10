@@ -1,13 +1,7 @@
 package com.cv4j.proxy.web.controller;
 
-import com.cv4j.proxy.domain.Proxy;
-import com.cv4j.proxy.http.HttpManager;
-import com.cv4j.proxy.web.dao.ProxyDao;
-import com.cv4j.proxy.web.dto.QueryProxyDTO;
-import com.cv4j.proxy.web.dto.ResultProxy;
 import com.cv4j.proxy.web.job.ScheduleJobs;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpHost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @Slf4j
