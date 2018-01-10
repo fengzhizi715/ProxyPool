@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @RestController
 @Slf4j
@@ -18,22 +19,36 @@ public class APIController {
     private ProxyDao proxyDao;
 
     @RequestMapping(value="/proxys/{count}", method = RequestMethod.GET)
-    public ProxyData getProxyData(@PathVariable int count) {
+    public ProxyData getProxyData(@PathVariable String count) {
         log.info("getResultProxy, count="+count);
-        ProxyData proxyData = new ProxyData();
-
-        List<ResultProxy> result = proxyDao.findLimitProxy(count);
-        if(result == null) {
-            proxyData.setCode(404);
-            proxyData.setMessage("无法返回有效数据");
-            proxyData.setData(new ArrayList<>());
+        int code = 0;
+        String message = "";
+        List<ResultProxy> data = new ArrayList<>();
+        if(isNumeric(count)) {
+            data = proxyDao.findLimitProxy(Integer.parseInt(count));
+            if(data != null && data.size() > 0) {
+                code = 200;
+                message = "成功返回有效数据";
+            } else {
+                code = 404;
+                message = "无法返回有效数据";
+            }
         } else {
-            proxyData.setCode(200);
-            proxyData.setMessage("成功返回有效数据");
-            proxyData.setData(result);
+            code = 400;
+            message = "参数格式无效，请输入数字";
         }
 
+        ProxyData proxyData = new ProxyData();
+        proxyData.setCode(code);
+        proxyData.setMessage(message);
+        proxyData.setData(data);
+
         return proxyData;
+    }
+
+    private static boolean isNumeric(String str){
+        Pattern pattern = Pattern.compile("[0-9]*");
+        return pattern.matcher(str).matches();
     }
 
 }
