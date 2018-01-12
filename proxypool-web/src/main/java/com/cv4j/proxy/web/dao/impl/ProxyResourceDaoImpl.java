@@ -61,12 +61,26 @@ public class ProxyResourceDaoImpl implements ProxyResourceDao {
 
     @Override
     public boolean saveResourcePlan(ResourcePlan resourcePlan) {
-        //insert
-        resourcePlan.setAddTime(new Date().getTime());
-        resourcePlan.setModTime(new Date().getTime());
-        mongoTemplate.save(resourcePlan, Constant.COL_NAME_RESOURCE_PLAN);
+        boolean result = false;
+        if(resourcePlan.getAddTime() == 0) { //insert
+            resourcePlan.setAddTime(new Date().getTime());
+            resourcePlan.setModTime(new Date().getTime());
 
-        return Preconditions.isNotBlank(resourcePlan.getId());
+            mongoTemplate.save(resourcePlan, Constant.COL_NAME_RESOURCE_PLAN);
+            result = Preconditions.isNotBlank(resourcePlan.getId());
+
+        } else {                            //update
+            Query query = new Query().addCriteria(Criteria.where("_id").is(resourcePlan.getId()));
+            Update update = new Update();
+            update.set("startPageNum", resourcePlan.getStartPageNum());
+            update.set("endPageNum", resourcePlan.getEndPageNum());
+            update.set("modTime", new Date().getTime());
+
+            WriteResult writeResult = mongoTemplate.updateFirst(query, update, Constant.COL_NAME_RESOURCE_PLAN);
+            result = writeResult!=null && writeResult.getN() > 0;
+        }
+
+        return result;
     }
 
     @Override

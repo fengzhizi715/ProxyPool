@@ -68,10 +68,11 @@ function initDataGrid(datagridObj, dgurl, dblClickFun) {
     return datagridObj;
 }
 
-function initDataGrid_1(datagridObj, dgurl, toolbar) {
+function initDataGrid_1(datagridObj, dgurl, toolbar, dblClickFun) {
     datagridObj.datagrid({
         url:dgurl,
         toolbar:toolbar,
+        onDblClickRow:dblClickFun,
         method:"get",
         loadMsg: "数据加载中，请稍等...",
         rowNumbers:true,

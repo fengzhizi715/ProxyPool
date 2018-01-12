@@ -89,7 +89,7 @@
             });
 
             $("#btnClosePlan").click(function() {
-                $('#divJobWindow').window('close');
+                $('#divPlanWindow').window('close');
             });
         }
 
@@ -110,7 +110,7 @@
         function successCallback2(data) {
             if(data) {
                 info_alert('保存计划成功！');
-                $('#divJobWindow').window('close');
+                $('#divPlanWindow').window('close');
             } else {
                 warn_alert('保存计划失败！');
             }
@@ -152,7 +152,7 @@
             var rowData = _dataGridObj.datagrid("getSelected");
             $("#refResId").textbox("setValue", rowData.resId);
 
-            $('#divJobWindow').window('open');
+            $('#divPlanWindow').window('open');
         }
 
         function formatWebUrl(val) {
@@ -237,7 +237,7 @@
         <a class="easyui-linkbutton" id="btnCloseRes" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" style="width:80px">取消</a>
     </div>
 </div>
-<div id="divJobWindow" class="easyui-window" title="添加资源到任务" data-options="modal:true,closed:true,collapsible:false,minimizable:false,maximizable:false,border:'thin',cls:'c6'" style="width:350px;height:200px;padding:10px;">
+<div id="divPlanWindow" class="easyui-window" title="添加资源到任务" data-options="modal:true,closed:true,collapsible:false,minimizable:false,maximizable:false,border:'thin',cls:'c6'" style="width:350px;height:200px;padding:10px;">
     <div data-options="region:'center',border:false" style="">
         <form id="formAddPlan" method="post" class="inputForm">
             <div class="input_container">

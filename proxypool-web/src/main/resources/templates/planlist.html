@@ -16,6 +16,7 @@
 
         var _queryUrl = "proxyResourceController/getAllResourcePlan";
         var _deleteUrl = "proxyResourceController/doDeleteResourcePlan";
+        var _updateUrl= "proxyResourceController/doSaveResourcePlan";
         var _dataGridObj;
 
         var _toolbarArray = [
@@ -40,11 +41,33 @@
         });
 
         function loadData() {
-            _dataGridObj = initDataGrid_1($('#queryResult'), _queryUrl, _toolbarArray);
+            _dataGridObj = initDataGrid_1($('#queryResult'), _queryUrl, _toolbarArray, updatePlan);
         }
 
         function bindAction() {
+            $("#btnUpdatePlan").click(function() {
+                if(!checkInput1()) return;
 
+                var jsonObj = $("#formUpdatePlan").serializeObject();
+                var selectedRowObj = _dataGridObj.datagrid('getSelected');
+                selectedRowObj.startPageNum = jsonObj.startPageNum;
+                selectedRowObj.endPageNum = jsonObj.endPageNum;
+                var jsonData = JSON.stringify(selectedRowObj);
+                doPostRequest(_updateUrl, jsonData, successCallback2, errorCallback2);
+            });
+
+            $("#btnClosePlan").click(function() {
+                $('#divPlanWindow').window('close');
+            });
+        }
+
+        function updatePlan() {
+            var selectedRowObj = _dataGridObj.datagrid('getSelected');
+            $("#resId").textbox("setValue", selectedRowObj.proxyResource.resId);
+            $("#startPageNum").textbox("setValue", selectedRowObj.startPageNum);
+            $("#endPageNum").textbox("setValue", selectedRowObj.endPageNum);
+
+            $('#divPlanWindow').window('open');
         }
 
         function successCallback1(data) {
@@ -58,6 +81,21 @@
 
         function errorCallback1() {
             error_alert('删除计划数据异常！');
+        }
+
+
+        function successCallback2(data) {
+            if(data) {
+                info_alert('更新计划成功！');
+                $('#divPlanWindow').window('close');
+                _dataGridObj.datagrid('reload');
+            } else {
+                warn_alert('更新计划失败！');
+            }
+        }
+
+        function errorCallback2() {
+            error_alert('更新计划异常！');
         }
 
         function formatObj1(value,rec) {
@@ -84,6 +122,19 @@
             return rec.proxyResource != null ? rec.proxyResource.parser : "";
         }
 
+        function checkInput1() {
+            if($.trim($("#startPageNum").val()) == "") {
+                warn_alert('【开始页】不能为空！');
+                return false;
+            }
+            if($.trim($("#endPageNum").val()) == "") {
+                warn_alert('【结束页】不能为空！');
+                return false;
+            }
+
+            return true;
+        }
+
         /*]]>*/
     </script>
 </head>
@@ -105,6 +156,23 @@
                 </thead>
             </table>
         </div>
+    </div>
+</div>
+<div id="divPlanWindow" class="easyui-window" title="更新计划" data-options="modal:true,closed:true,collapsible:false,minimizable:false,maximizable:false,border:'thin',cls:'c6'" style="width:350px;height:200px;padding:10px;">
+    <div data-options="region:'center',border:false" style="">
+        <form id="formUpdatePlan" method="post" class="inputForm">
+            <div class="input_container">
+                资源ID：<input class="easyui-textbox" id="resId" name="resId" style="width:150px;" data-options="readonly:true"/>
+            </div>
+            <div class="input_container">
+                <input class="easyui-textbox" prompt="开始页" id="startPageNum" name="startPageNum" style="width:100px;" data-options="required:true"/>&nbsp;&nbsp;
+                <input class="easyui-textbox" prompt="结束页" id="endPageNum" name="endPageNum" style="width:100px;" data-options="required:true"/>
+            </div>
+        </form>
+    </div>
+    <div data-options="region:'south',border:false" style="text-align:right;padding:5px 0 0;">
+        <a class="easyui-linkbutton" id="btnUpdatePlan" data-options="iconCls:'icon-ok'" href="javascript:void(0)" style="width:80px">更新</a>
+        <a class="easyui-linkbutton" id="btnClosePlan" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" style="width:80px">取消</a>
     </div>
 </div>
 </body>
