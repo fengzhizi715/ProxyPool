@@ -113,15 +113,28 @@ public class ProxyDaoImpl implements ProxyDao {
 
             for(ResourcePlan plan : list) {
 
-                for(int i=plan.getStartPageNum(); i<=plan.getEndPageNum(); i++) {
 
-                    String key = plan.getProxyResource().getPrefix() + i + plan.getProxyResource().getSuffix();
+                if(plan.getProxyResource().getPageCount() == 1) {
+                    //如果pageCount=1代表是单页面的资源
+                    String key = plan.getProxyResource().getWebUrl();
                     try {
                         if(!proxyMap.containsKey(key)) {
                             proxyMap.put(key, Class.forName(plan.getProxyResource().getParser()));
                         }
                     } catch(ClassNotFoundException e) {
                         log.info("ClassNotFoundException = "+e.getMessage());
+                    }
+                } else {
+                    for(int i=plan.getStartPageNum(); i<=plan.getEndPageNum(); i++) {
+
+                        String key = plan.getProxyResource().getPrefix() + i + plan.getProxyResource().getSuffix();
+                        try {
+                            if(!proxyMap.containsKey(key)) {
+                                proxyMap.put(key, Class.forName(plan.getProxyResource().getParser()));
+                            }
+                        } catch(ClassNotFoundException e) {
+                            log.info("ClassNotFoundException = "+e.getMessage());
+                        }
                     }
                 }
             }
