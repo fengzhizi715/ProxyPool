@@ -44,5 +44,7 @@ dependencies {
     compile 'org.quartz-scheduler:quartz:2.3.0'
     compile 'org.springframework:spring-context-support:4.3.12.RELEASE'
 
+    compile 'com.github.ben-manes.caffeine:caffeine:2.6.1'
+
     compile project(':proxypool')
 }

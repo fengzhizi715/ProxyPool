@@ -151,7 +151,7 @@ public class ProxyDaoImpl implements ProxyDao {
         if (Preconditions.isNotBlank(list)) {
 
             Collections.shuffle(list);
-            return list.size()>10?list.subList(0,9):list;
+            return list.size()>10?list.subList(0,10):list;
         } else {
 
             return new ArrayList<>();

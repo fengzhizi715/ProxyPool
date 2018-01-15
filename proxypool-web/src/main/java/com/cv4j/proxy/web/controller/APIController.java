@@ -6,6 +6,7 @@ import com.cv4j.proxy.web.dto.ResultProxy;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class APIController {
     @Autowired
     private ProxyDao proxyDao;
 
+    @Cacheable(value="proxys")
     @RequestMapping(value="/proxys/{count}", method = RequestMethod.GET)
     public ProxyData getProxyData(@PathVariable String count) {
         log.info("getResultProxy, count="+count);
