@@ -11,6 +11,7 @@ import com.safframework.tony.common.utils.JodaUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -41,6 +42,9 @@ public class ScheduleJobs {
     @Autowired
     ProxyManager proxyManager;
 
+    @Autowired
+    CacheManager cacheManager;
+
     /**
      * 每隔几个小时跑一次任务
      */
@@ -56,6 +60,12 @@ public class ScheduleJobs {
         if(Preconditions.isBlank(ProxyPool.proxyMap)) {
             log.info("proxyDao.getProxyMap() is empty");
             ProxyPool.proxyMap = Constant.proxyMap;
+        }
+
+        // 每次跑job先清空缓存中的内容
+        if (cacheManager.getCache("proxys")!=null) {
+
+            cacheManager.getCache("proxys").clear();
         }
 
         JobLog jobLog = new JobLog();
