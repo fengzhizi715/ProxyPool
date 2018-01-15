@@ -3,6 +3,7 @@ package com.cv4j.proxy.web.controller;
 import com.cv4j.proxy.web.dao.ProxyDao;
 import com.cv4j.proxy.web.dto.ProxyData;
 import com.cv4j.proxy.web.dto.ResultProxy;
+import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,8 @@ public class APIController {
         List<ResultProxy> data = new ArrayList<>();
         if(isNumeric(count)) {
             data = proxyDao.findLimitProxy(Integer.parseInt(count));
-            if(data != null && data.size() > 0) {
+
+            if(Preconditions.isNotBlank(data)) {
                 code = 200;
                 message = "成功返回有效数据";
             } else {

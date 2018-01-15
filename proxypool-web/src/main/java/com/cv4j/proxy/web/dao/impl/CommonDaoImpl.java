@@ -2,7 +2,7 @@ package com.cv4j.proxy.web.dao.impl;
 
 import com.cv4j.proxy.web.config.Constant;
 import com.cv4j.proxy.web.dao.CommonDao;
-import com.cv4j.proxy.web.dto.JobLog;
+import com.cv4j.proxy.web.domain.JobLog;
 import com.cv4j.proxy.web.dto.SysSequence;
 import com.safframework.tony.common.utils.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
