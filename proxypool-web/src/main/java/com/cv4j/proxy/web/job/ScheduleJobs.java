@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by tony on 2017/11/22.
@@ -24,7 +25,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Slf4j
 public class ScheduleJobs {
 
-    public static boolean IS_JOB_RUNNING = false;
+
+    public final static int JOB_STATUS_INIT = 0;
+    public final static int JOB_STATUS_RUNNING = 1;
+    public final static int JOB_STATUS_STOPPED = 2;
+
+    protected AtomicInteger stat = new AtomicInteger(JOB_STATUS_INIT);
 
     @Autowired
     ProxyDao proxyDao;
@@ -41,9 +47,8 @@ public class ScheduleJobs {
     @Scheduled(cron="${cronJob.schedule}")
     public void cronJob() {
 
-        if(IS_JOB_RUNNING) return;
+        checkRunningStat();
 
-        IS_JOB_RUNNING = true;
         log.info("Job Start...");
 
         ProxyPool.proxyMap = proxyDao.getProxyMap();
@@ -90,8 +95,32 @@ public class ScheduleJobs {
             log.info("proxyList is empty...");
         }
 
-        IS_JOB_RUNNING = false;
+        stop();
 
         log.info("Job End...");
+    }
+
+    private void checkRunningStat() {
+        while (true) {
+
+            int statNow = getJobStatus();
+            if (statNow == JOB_STATUS_RUNNING) {
+                throw new IllegalStateException("Job is already running!");
+            }
+
+            if (stat.compareAndSet(statNow, JOB_STATUS_RUNNING)) {
+                break;
+            }
+        }
+    }
+
+    public int  getJobStatus() {
+
+        return stat.get();
+    }
+
+    public void stop() {
+
+        stat.compareAndSet(JOB_STATUS_RUNNING, JOB_STATUS_STOPPED);
     }
 }

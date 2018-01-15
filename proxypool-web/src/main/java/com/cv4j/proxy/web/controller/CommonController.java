@@ -34,7 +34,7 @@ public class CommonController {
         try {
             httpServletResponse.setContentType("text/plain; charset=utf-8");
             ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();
-            if(ScheduleJobs.IS_JOB_RUNNING) {
+            if(scheduleJobs.getJobStatus() == ScheduleJobs.JOB_STATUS_RUNNING) {
                 responseOutputStream.write("Job正在运行。。。".getBytes("utf-8"));
                 responseOutputStream.flush();
                 responseOutputStream.close();
