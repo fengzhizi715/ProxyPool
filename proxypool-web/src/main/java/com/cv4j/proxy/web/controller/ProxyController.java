@@ -2,6 +2,7 @@ package com.cv4j.proxy.web.controller;
 
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.http.HttpManager;
+import com.cv4j.proxy.web.aop.annotation.WebLog;
 import com.cv4j.proxy.web.dao.ProxyDao;
 import com.cv4j.proxy.web.dto.QueryProxyDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +23,11 @@ public class ProxyController {
     @Autowired
     private ProxyDao proxyDao;
 
+    @WebLog
     @RequestMapping(value="/proxyController/doValidateProxy")
     @ResponseBody
     public Proxy doValidateProxy(String id, String proxyType, String proxyIp, Integer proxyPort) {
-        log.info("doValidateProxy id="+id+",proxyType="+proxyType+",proxyIp="+proxyIp+",proxyPort="+proxyPort);
+
         HttpHost httpHost = new HttpHost(proxyIp, proxyPort, proxyType);
         Proxy proxy = new Proxy();
 
@@ -41,10 +43,11 @@ public class ProxyController {
         return proxy;
     }
 
+    @WebLog
     @RequestMapping(value="/proxyController/queryProxy")
     @ResponseBody
     public Map<String,Object> queryProxy(String proxyType, String proxyIp, Integer minPort, Integer maxPort, String sort, String order, Integer page, Integer rows) {
-        log.info("queryProxy proxyType="+proxyType+",proxyIp="+proxyIp+",minPort="+minPort+",maxPort="+maxPort+",sort="+sort+",order="+order+",page="+page+",rows="+rows);
+
         Map<String,Object> resultMap = new HashMap<>();
 
         QueryProxyDTO queryProxyDTO = new QueryProxyDTO();
