@@ -1,5 +1,6 @@
 package com.cv4j.proxy.web.controller;
 
+import com.cv4j.proxy.web.aop.annotation.WebLog;
 import com.cv4j.proxy.web.dao.ProxyDao;
 import com.cv4j.proxy.web.dto.ProxyData;
 import com.cv4j.proxy.web.dto.ResultProxy;
@@ -20,10 +21,11 @@ public class APIController {
     @Autowired
     private ProxyDao proxyDao;
 
+    @WebLog
     @Cacheable(value="proxys")
     @RequestMapping(value="/proxys/{count}", method = RequestMethod.GET)
     public ProxyData getProxyData(@PathVariable String count) {
-        log.info("getResultProxy, count="+count);
+
         int code = 0;
         String message = "";
         List<ResultProxy> data = new ArrayList<>();

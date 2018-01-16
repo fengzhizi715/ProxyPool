@@ -38,6 +38,7 @@ dependencies {
 
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.8.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-data-mongodb:+'
+    compile 'org.springframework.boot:spring-boot-starter-aop:1.5.9.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-thymeleaf:1.5.8.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-actuator:1.4.2.RELEASE'
 
