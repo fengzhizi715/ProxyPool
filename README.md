@@ -29,11 +29,13 @@ compile 'com.cv4j.proxy:proxypool:1.1.4'
 ```
 
 
-## 也可以将该repository clone独立运行，带web界面
+## 也可以将该repository clone下来独立运行，带web界面
 
-可用的代理会存放到MongoDB中。每隔几小时会抓取一次可用的代理。不过本地需要事先搭建好MongoDB。
+本地需要事先搭建好MongoDB的环境。
 
-及时更新的免费代理资源：http://47.97.7.119:8080/proxypool/proxylist
+可用的代理会存放到MongoDB中，每隔几小时(可配置)会重新抓取一次可用的代理。如果在抓取代理时遇到http status 503的情况，代理池会使用其中的代理来访问数据源再进行抓取。
+
+最新的免费代理资源：http://47.97.7.119:8080/proxypool/proxylist
 
 管理代理资源网站：http://47.97.7.119:8080/proxypool/resourcelist
 
@@ -52,5 +54,5 @@ compile 'com.cv4j.proxy:proxypool:1.1.4'
 
 参数说明：count<=0  或 count>数据库里总数量， 也返回全部的代理数据
 
-> 以上链接在本地运行时，请把具体的IP替换成localhost即可
+> 以上链接在本地运行时，请把具体的IP地址替换成localhost即可
 
