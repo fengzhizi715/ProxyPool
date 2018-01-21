@@ -1,4 +1,4 @@
-package com.cv4j.proxy.web.dto;
+package com.cv4j.proxy.web.domain;
 
 import com.cv4j.proxy.web.config.Constant;
 import lombok.Data;

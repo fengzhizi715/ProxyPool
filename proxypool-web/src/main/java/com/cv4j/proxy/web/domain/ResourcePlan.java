@@ -1,7 +1,8 @@
-package com.cv4j.proxy.web.dto;
+package com.cv4j.proxy.web.domain;
 
 
 import com.cv4j.proxy.web.config.Constant;
+import com.cv4j.proxy.web.domain.ProxyResource;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

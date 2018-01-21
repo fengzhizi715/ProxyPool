@@ -1,7 +1,5 @@
 package com.cv4j.proxy.web.dto;
 
-
-import com.cv4j.proxy.domain.Proxy;
 import lombok.Data;
 
 /**

@@ -4,6 +4,7 @@ import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.http.HttpManager;
 import com.cv4j.proxy.web.aop.annotation.WebLog;
 import com.cv4j.proxy.web.dao.ProxyDao;
+import com.cv4j.proxy.web.domain.ProxyData;
 import com.cv4j.proxy.web.dto.QueryProxyDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
@@ -26,21 +27,21 @@ public class ProxyController {
     @WebLog
     @RequestMapping(value="/proxyController/doValidateProxy")
     @ResponseBody
-    public Proxy doValidateProxy(String id, String proxyType, String proxyIp, Integer proxyPort) {
+    public ProxyData doValidateProxy(String id, String proxyType, String proxyIp, Integer proxyPort) {
 
         HttpHost httpHost = new HttpHost(proxyIp, proxyPort, proxyType);
-        Proxy proxy = new Proxy();
+        ProxyData proxyDate = new ProxyData();
 
         if(HttpManager.get().checkProxy(httpHost)) {
-            proxy.setType(proxyType);
-            proxy.setIp(proxyIp);
-            proxy.setPort(proxyPort);
+            proxyDate.setProxyType(proxyType);
+            proxyDate.setProxyAddress(proxyIp);
+            proxyDate.setProxyPort(proxyPort);
             proxyDao.updateProxyById(id);            //更新最后验证时间
         } else {
             proxyDao.deleteProxyById(id);            //物理删除数据
         }
 
-        return proxy;
+        return proxyDate;
     }
 
     @WebLog
@@ -60,8 +61,8 @@ public class ProxyController {
         queryProxyDTO.setPage(page <=0 ? 1 : page);
         queryProxyDTO.setRows(rows == 10 ? 15 : rows);
 
-        List<Proxy> resultAll = proxyDao.findProxyByCond(queryProxyDTO,true);
-        List<Proxy> resultPage = proxyDao.findProxyByCond(queryProxyDTO,false);
+        List<ProxyData> resultAll = proxyDao.findProxyByCond(queryProxyDTO,true);
+        List<ProxyData> resultPage = proxyDao.findProxyByCond(queryProxyDTO,false);
 
         resultMap.put("total",resultAll!=null?resultAll.size():0);
         resultMap.put("rows",resultPage);

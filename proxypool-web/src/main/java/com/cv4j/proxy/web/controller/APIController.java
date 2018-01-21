@@ -2,8 +2,8 @@ package com.cv4j.proxy.web.controller;
 
 import com.cv4j.proxy.web.aop.annotation.WebLog;
 import com.cv4j.proxy.web.dao.ProxyDao;
-import com.cv4j.proxy.web.dto.ProxyData;
-import com.cv4j.proxy.web.dto.ResultProxy;
+import com.cv4j.proxy.web.dto.ResultProxyDataDTO;
+import com.cv4j.proxy.web.dto.ProxyDataDTO;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +24,11 @@ public class APIController {
     @WebLog
     @Cacheable(value="proxys")
     @RequestMapping(value="/proxys/{count}", method = RequestMethod.GET)
-    public ProxyData getProxyData(@PathVariable String count) {
+    public ResultProxyDataDTO getProxyData(@PathVariable String count) {
 
         int code = 0;
         String message = "";
-        List<ResultProxy> data = new ArrayList<>();
+        List<ProxyDataDTO> data = new ArrayList<>();
         if(isNumeric(count)) {
             data = proxyDao.findLimitProxy(Integer.parseInt(count));
 
@@ -44,12 +44,12 @@ public class APIController {
             message = "参数格式无效，请输入数字";
         }
 
-        ProxyData proxyData = new ProxyData();
-        proxyData.setCode(code);
-        proxyData.setMessage(message);
-        proxyData.setData(data);
+        ResultProxyDataDTO resultProxyDataDTO = new ResultProxyDataDTO();
+        resultProxyDataDTO.setCode(code);
+        resultProxyDataDTO.setMessage(message);
+        resultProxyDataDTO.setData(data);
 
-        return proxyData;
+        return resultProxyDataDTO;
     }
 
     private static boolean isNumeric(String str){

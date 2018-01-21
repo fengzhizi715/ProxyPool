@@ -5,12 +5,12 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ProxyData {
+public class ResultProxyDataDTO {
 
     private int code;
 
     private String message;
 
-    private List<ResultProxy> data;
+    private List<ProxyDataDTO> data;
 
 }

@@ -51,7 +51,7 @@
             _showTag = 1;
             _timer = setTimeout(closeProcess, 10000); //10秒钟后自动关闭进度条（但还在继续处理中）
             progress();
-            var actionUrl = _checkUrl+"?id="+rowData.id+"&proxyType="+rowData.type+"&proxyIp="+rowData.ip+"&proxyPort="+rowData.port;
+            var actionUrl = _checkUrl+"?id="+rowData.id+"&proxyType="+rowData.proxyType+"&proxyIp="+rowData.proxyAddress+"&proxyPort="+rowData.proxyPort;
             doGetRequest(actionUrl, successCallback1, errorCallback1);
         }
 
@@ -64,13 +64,13 @@
         function successCallback1(data) {
             clearTimeout(_timer);
             $.messager.progress('close');
-            if(data.ip == "" || data.ip == null || data.ip == undefined) {
+            if(data.proxyAddress == "" || data.proxyAddress == null || data.proxyAddress == undefined) {
                 if(_showTag == 1) {
                     //10秒钟以内的返回，才显示对话框
                     warn_alert('该代理已失效并被删除了！');
                 }
             } else {
-                info_alert("该代理有效！</br>"+data.type+"://"+data.ip+":"+data.port);
+                info_alert("该代理有效！</br>"+data.proxyType+"://"+data.proxyAddress+":"+data.proxyPort);
             }
             _dataGridObj.datagrid('reload');
         }
@@ -116,9 +116,9 @@
             <table id="queryResult">
                 <thead>
                 <tr>
-                    <th data-options="field:'type',width:120,align:'center',sortable:true">类型</th>
-                    <th data-options="field:'ip',width:200,align:'center',sortable:true">IP地址</th>
-                    <th data-options="field:'port',width:120,align:'center',sortable:true">端口</th>
+                    <th data-options="field:'proxyType',width:120,align:'center',sortable:true">类型</th>
+                    <th data-options="field:'proxyAddress',width:200,align:'center',sortable:true">IP地址</th>
+                    <th data-options="field:'proxyPort',width:120,align:'center',sortable:true">端口</th>
                     <th data-options="field:'lastSuccessfulTime',width:200,align:'center',sortable:true,formatter:timestamp2string">最新验证时间</th>
                 </tr>
                 </thead>

@@ -1,8 +1,8 @@
 package com.cv4j.proxy.web.controller;
 
 import com.cv4j.proxy.web.dao.ProxyResourceDao;
-import com.cv4j.proxy.web.dto.ProxyResource;
-import com.cv4j.proxy.web.dto.ResourcePlan;
+import com.cv4j.proxy.web.domain.ProxyResource;
+import com.cv4j.proxy.web.domain.ResourcePlan;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

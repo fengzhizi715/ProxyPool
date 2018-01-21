@@ -1,8 +1,8 @@
 package com.cv4j.proxy.web.dao;
 
-import com.cv4j.proxy.domain.Proxy;
+import com.cv4j.proxy.web.domain.ProxyData;
+import com.cv4j.proxy.web.dto.ProxyDataDTO;
 import com.cv4j.proxy.web.dto.QueryProxyDTO;
-import com.cv4j.proxy.web.dto.ResultProxy;
 
 import java.util.List;
 import java.util.Map;
@@ -12,13 +12,11 @@ import java.util.Map;
  */
 public interface ProxyDao {
 
-    boolean saveProxy(Proxy proxy);
+    boolean saveProxy(ProxyData proxyData);
 
-    List<Proxy> findProxyByCond(QueryProxyDTO queryProxyDTO, boolean isGetAll);
+    List<ProxyData> findProxyByCond(QueryProxyDTO queryProxyDTO, boolean isGetAll);
 
-    List<ResultProxy> findAllProxy();
-
-    List<ResultProxy> findLimitProxy(int count);
+    List<ProxyDataDTO> findLimitProxy(int count);
 
     boolean updateProxyById(String id);
 
@@ -28,5 +26,5 @@ public interface ProxyDao {
 
     Map<String, Class> getProxyMap();
 
-    List<Proxy> takeRandomTenProxy();
+    List<ProxyData> takeRandomTenProxy();
 }
