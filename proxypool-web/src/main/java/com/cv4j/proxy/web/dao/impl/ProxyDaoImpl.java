@@ -56,6 +56,7 @@ public class ProxyDaoImpl implements ProxyDao {
                     query.with(new Sort(Sort.Direction.DESC, queryProxyDTO.getSort()));
                 }
             } else {
+                query.with(new Sort(Sort.Direction.DESC, "lastSuccessfulTime"));
                 query.with(new Sort(Sort.Direction.ASC, "proxyPort"));
             }
             int skip = (queryProxyDTO.getPage() - 1) * queryProxyDTO.getRows();
@@ -69,6 +70,7 @@ public class ProxyDaoImpl implements ProxyDao {
     public List<ProxyDataDTO> findLimitProxy(int count) {
         Query query = new Query();
         query.limit(count);
+        query.with(new Sort(Sort.Direction.DESC, "lastSuccessfulTime"));
         query.with(new Sort(Sort.Direction.ASC, "proxyPort"));
         return mongoTemplate.find(query, ProxyDataDTO.class,Constant.COL_NAME_PROXY);
     }

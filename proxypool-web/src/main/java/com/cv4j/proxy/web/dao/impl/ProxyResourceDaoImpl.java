@@ -8,6 +8,7 @@ import com.cv4j.proxy.web.domain.ResourcePlan;
 import com.mongodb.WriteResult;
 import com.safframework.tony.common.utils.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -28,7 +29,10 @@ public class ProxyResourceDaoImpl implements ProxyResourceDao {
 
     @Override
     public List<ProxyResource> findAllProxyResource() {
-        return mongoTemplate.findAll(ProxyResource.class, Constant.COL_NAME_PROXY_RESOURCE);
+        Query query = new Query();
+        query.with(new Sort(Sort.Direction.DESC, "modTime"));
+
+        return mongoTemplate.find(query, ProxyResource.class, Constant.COL_NAME_PROXY_RESOURCE);
     }
 
     @Override
@@ -85,7 +89,9 @@ public class ProxyResourceDaoImpl implements ProxyResourceDao {
 
     @Override
     public List<ResourcePlan> findAllResourcePlan() {
-        return mongoTemplate.findAll(ResourcePlan.class, Constant.COL_NAME_RESOURCE_PLAN);
+        Query query = new Query();
+        query.with(new Sort(Sort.Direction.DESC, "modTime"));
+        return mongoTemplate.find(query, ResourcePlan.class, Constant.COL_NAME_RESOURCE_PLAN);
     }
 
     @Override
