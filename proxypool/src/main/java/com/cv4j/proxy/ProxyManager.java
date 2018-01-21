@@ -10,7 +10,6 @@ import io.reactivex.functions.Function;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.reactivestreams.Publisher;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,8 +21,18 @@ import java.util.stream.Collectors;
  * Created by tony on 2017/10/25.
  */
 @Slf4j
-@Component
 public class ProxyManager {
+
+    private ProxyManager() {
+    }
+
+    public static ProxyManager get() {
+        return ProxyManager.Holder.MANAGER;
+    }
+
+    private static class Holder {
+        private static final ProxyManager MANAGER = new ProxyManager();
+    }
 
     /**
      * 抓取代理，成功的代理存放到ProxyPool中

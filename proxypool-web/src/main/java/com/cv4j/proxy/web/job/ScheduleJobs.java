@@ -43,10 +43,9 @@ public class ScheduleJobs {
     CommonDao commonDao;
 
     @Autowired
-    ProxyManager proxyManager;
-
-    @Autowired
     CacheManager cacheManager;
+
+    ProxyManager proxyManager = ProxyManager.get();
 
     /**
      * 每隔几个小时跑一次任务
