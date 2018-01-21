@@ -23,7 +23,7 @@ public class CacheConfig {
     public static final int DEFAULT_TTL = 10;
 
     /**
-     * 定義cache名稱、超時時長（秒）、最大容量
+     * 定义cache名称、超时时间（秒）、最大容量
      * 每个cache缺省：10秒超时、最多缓存50000条数据，需要修改可以在构造方法的参数中指定。
      */
     public enum Caches{
@@ -43,7 +43,7 @@ public class CacheConfig {
             this.maxSize = maxSize;
         }
 
-        private int maxSize = DEFAULT_MAXSIZE;    //最大數量
+        private int maxSize = DEFAULT_MAXSIZE;    //最大数量
         private int ttl = DEFAULT_TTL;            //过期时间（秒）
 
         public int getMaxSize() {
