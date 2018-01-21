@@ -11,9 +11,9 @@ ProxyPool可以供给网络爬虫使用，ProxyPool由Spring Boot+RxJava2.x+Mong
 
 
 # 使用方法：
-## 单独使用代理抓取逻辑，无任何界面，可以在任何项目中使用
+## 单独使用ProxyPool抓取逻辑，无任何界面，可用于任何项目，无侵入性
 
-对于Java项目如果使用gradle构建，由于默认不是使用jcenter，需要在相应module的build.gradle中配置
+对于Java工程如果使用gradle构建，由于默认没有使用jcenter()，需要在相应module的build.gradle中配置
 
 ```groovy
 repositories {
@@ -46,7 +46,7 @@ compile 'com.cv4j.proxy:proxypool:1.1.5'
 ![](proxy_list.png)
 
 
-另外，还提供了一个接口，返回代理池中的Proxy
+另外，还提供了一个接口，可以返回代理池中的Proxy
 
 线上环境地址：http://47.97.7.119:8080/proxypool/proxys/{count}
 
