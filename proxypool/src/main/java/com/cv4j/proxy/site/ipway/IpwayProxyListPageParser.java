@@ -3,10 +3,8 @@ package com.cv4j.proxy.site.ipway;
 import com.cv4j.proxy.ProxyListPageParser;
 import com.cv4j.proxy.config.Constant;
 import com.cv4j.proxy.domain.Proxy;
-import com.cv4j.proxy.site.ProxyListPageParserFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;

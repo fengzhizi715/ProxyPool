@@ -40,7 +40,6 @@ dependencies {
     compile 'org.projectlombok:lombok:1.16.18'
 
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.8.RELEASE'
-    compile 'org.springframework.boot:spring-boot-starter-data-mongodb:+'
 }
 
 publish{
