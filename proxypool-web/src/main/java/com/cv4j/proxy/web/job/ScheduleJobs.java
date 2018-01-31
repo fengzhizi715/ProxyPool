@@ -53,60 +53,66 @@ public class ScheduleJobs {
     @Scheduled(cron="${cronJob.schedule}")
     public void cronJob() {
 
+        //1.检查job的状态
         checkRunningStat();
 
         log.info("Job Start...");
 
+        //2.获取目标网页的Url
         ProxyPool.proxyMap = proxyDao.getProxyMap();
 
+        //3.如果数据库里没取到，用默认内置的
         if(Preconditions.isBlank(ProxyPool.proxyMap)) {
-            log.info("proxyDao.getProxyMap() is empty");
+            log.info("Job proxyDao.getProxyMap() is empty");
             ProxyPool.proxyMap = Constant.proxyMap;
         }
 
-        // 每次跑job先清空缓存中的内容
+        //4.每次跑job先清空缓存中的内容
         if (cacheManager.getCache("proxys")!=null) {
 
             cacheManager.getCache("proxys").clear();
         }
 
+        //5.创建一个日志对象，用于存储job的每次工作记录
         JobLog jobLog = new JobLog();
         jobLog.setJobName("ScheduleJobs.cronJob");
         jobLog.setStartTime(JodaUtils.formatDateTime(new Date()));
 
-        // 跑任务之前先清空proxyList中的数据
+        //6.跑任务之前先清空proxyList中上一次job留下的proxy数据，
         ProxyPool.proxyList.clear();
 
-        ProxyPool.addProxyList(getProxyList(proxyDao.takeRandomTenProxy()));  // 从数据库中选取10个代理作为种子代理，遇到http 503时使用代理来抓数据
-
+        //7.从数据库中选取10个代理作为种子代理，遇到http 503时使用代理来抓数据
+        ProxyPool.addProxyList(getProxyList(proxyDao.takeRandomTenProxy()));
+        log.info("Job ProxyPool.proxyList size = "+ProxyPool.proxyList.size());
+        //8.正式开始，爬代理数据
         proxyManager.start();
 
+        //9.爬完以后，把数据转换为ProxyData并存到数据库
         CopyOnWriteArrayList<ProxyData> list = getProxyDataList(ProxyPool.proxyList);
-
+        log.info("Job ProxyData list size = "+list.size());
         if (Preconditions.isNotBlank(list)) {
 
-            // list的数量<=15时，不删除原先的数据
+            // 10. list的数量<=15时，不删除数据库里的老数据
             if (list.size()>15) {
-
-                // 先删除旧的数据
                 proxyDao.deleteAll();
                 log.info("Job after deleteAll");
             }
 
-            // 然后再进行插入新的proxy
+            //11. 然后再进行插入新的proxy
             for (ProxyData p:list) {
                 proxyDao.saveProxy(p);
-                log.info("Job saveProxy = "+p.getProxyStr());
             }
+            log.info("Job save count = "+list.size());
 
-            jobLog.setResultDesc(String.format("成功保存了%s条代理IP数据", list.size()));
+            jobLog.setResultDesc(String.format("success save count = %s", list.size()));
             jobLog.setEndTime(JodaUtils.formatDateTime(new Date()));
             commonDao.saveJobLog(jobLog);
 
         } else {
-            log.info("proxyList is empty...");
+            log.info("Job proxyList is empty...");
         }
 
+        //12. 设置job状态为停止
         stop();
 
         log.info("Job End...");
@@ -116,10 +122,13 @@ public class ScheduleJobs {
         while (true) {
 
             int statNow = getJobStatus();
+
+            //如果已经在运行了，就抛出异常，结束循环
             if (statNow == JOB_STATUS_RUNNING) {
                 throw new IllegalStateException("Job is already running!");
             }
 
+            //如果还没在运行，就设置为运行状态，结束循环
             if (stat.compareAndSet(statNow, JOB_STATUS_RUNNING)) {
                 break;
             }
@@ -132,7 +141,7 @@ public class ScheduleJobs {
     }
 
     public void stop() {
-
+        //状态从JOB_STATUS_RUNNING更新为JOB_STATUS_STOPPED，代表停止job
         stat.compareAndSet(JOB_STATUS_RUNNING, JOB_STATUS_STOPPED);
     }
 
