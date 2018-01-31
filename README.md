@@ -56,3 +56,7 @@ compile 'com.cv4j.proxy:proxypool:1.1.5'
 
 > 以上链接在本地运行时，请把具体的IP地址替换成localhost即可
 
+
+# 联系方式:
+QQ交流群：490882934
+
