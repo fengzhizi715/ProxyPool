@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202-lightgrey.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 
-+ ProxyPool的作用：从网络上获取免费可用的IP代理数据。先用爬虫程序抓取代理数据，再检查是否可用，可用的话就存放到数据库中。每隔一段时间重复执行这个过程。
++ ProxyPool的作用：从网络上获取免费可用的IP代理数据。先用爬虫程序抓取代理数据，再检查代理是否可用，可用的话就存放到数据库中。每隔一段时间重复执行这个过程。
 
 + ProxyPool的技术：Spring Boot+RxJava2.x+MongoDB等
 
@@ -103,7 +103,8 @@ http://47.97.7.119:8080/proxypool/resourcelist
 http://47.97.7.119:8080/proxypool/planlist
 
 + 返回Json格式的代理数据：
-http://47.97.7.119:8080/proxypool/proxys/{count},类型：GET,参数：count代表计划获取的代理IP数据条数
+http://47.97.7.119:8080/proxypool/proxys/{count}
+类型：GET,参数：count代表计划获取的代理IP数据条数
 
 ## 3）联系方式: 
 + QQ交流群：490882934
