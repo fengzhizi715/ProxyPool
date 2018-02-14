@@ -5,58 +5,103 @@
 [![License](https://img.shields.io/badge/license-Apache%202-lightgrey.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 
-获取可用代理池的库，从网上抓取的代理很多都是不可用的。这个库先用爬虫抓取代理，再做一些检查是否可用，可用的话就存放到mongodb中。
++ ProxyPool的作用：从网络上获取免费可用的IP代理数据。先用爬虫程序抓取代理数据，再检查是否可用，可用的话就存放到数据库中。每隔一段时间重复执行这个过程。
 
-ProxyPool可以供给网络爬虫使用，ProxyPool由Spring Boot+RxJava2.x+MongoDB搭建
++ ProxyPool的技术：Spring Boot+RxJava2.x+MongoDB等
 
++ ProxyPool的概述：该项目有两个模块proxypool和proxypool-web，从网络上抓取数据的核心工作由proxypool模块完成，可以在site这个package下新增针对不同网页的解析类。proxypool-web模块是依赖proxypool模块实现的sample模块。
 
-# 使用方法：
-## 单独使用ProxyPool抓取逻辑，无任何界面，可用于任何项目，无侵入性
+## 1) 使用方法
++ #### 单独使用ProxyPool项目中proxypool模块的抓取逻辑，无任何界面，可用于任何项目，无侵入性
 
 对于Java工程如果使用gradle构建，由于默认没有使用jcenter()，需要在相应module的build.gradle中配置
-
 ```groovy
 repositories {
     mavenCentral()
     jcenter()
 }
 ```
-
 Gradle:
 
 ```groovy
 compile 'com.cv4j.proxy:proxypool:1.1.5'
 ```
 
++ ####  clone到本地，运行proxypool-web模块，带界面
+准备条件：
+  1）本地装好MongoDB数据库
+  2）proxypool-web模块下的application.properties，参考配置如下：
+```
+spring.data.mongodb.uri=mongodb://localhost:27017/proxypool
+spring.data.mongodb.uri=mongodb://username:password@localhost:27017/proxypool （有账号密码）
+```
+3）创建database和collection
+```
+database:proxypool
+collection:Proxy_Resource、Resource_Plan、Proxy、Job_Log、Sys_Sequence
+```
+4）collection中的默认数据
+Proxy_Resource:
+```
+{
+    "_id" : ObjectId("5a48578737a340d5c48a84af"),
+    "_class" : "com.cv4j.proxy.web.dto.ProxyResource",
+    "resId" : 1,
+    "webName" : "西刺国内高匿代理",
+    "webUrl" : "http://www.xicidaili.com/nn/1.html",
+    "pageCount" : 100,
+    "prefix" : "http://www.xicidaili.com/nn/",
+    "suffix" : ".html",
+    "parser" : "com.cv4j.proxy.site.xicidaili.XicidailiProxyListPageParser",
+    "addTime" : NumberLong(1515114009516),
+    "modTime" : NumberLong(1515114009516)
+}
+```
+Sys_Sequence:
+```
+{
+    "_id" : ObjectId("5a4f2baf87ccb25df57b096b"),
+    "colName" : "Proxy_Resource",
+    "sequence" : 2
+}
+```
 
-## 也可以将该repository clone下来独立运行，带web界面
+5）运行
+按照SpringBoot项目的方式运行程序，访问web的地址如下：
++ 解析资源
+http://{host}:{port}/proxypool/resourcelist
 
-本地需要事先搭建好MongoDB的环境。
++ 依赖资源，当前job的要抓取的目标网页
+http://{host}:{port}/proxypool/planlist
 
-可用的代理会存放到MongoDB中，每隔几小时(可配置)会重新抓取一次可用的代理。如果在抓取代理时遇到http status 503的情况，代理池会使用其中的代理来访问数据源再进行抓取。
++ 查看抓取到本地的代理数据
+http://{host}:{port}/proxypool/proxylist
 
-最新的免费代理资源：http://47.97.7.119:8080/proxypool/proxylist
++ 获取数据库里当前可用的代理数据
+http://{host}:{port}/proxypool/proxys/{count}
 
-管理代理资源网站：http://47.97.7.119:8080/proxypool/resourcelist
+6）定时抓取数据的job
+proxypool-web模块下目前配置了一个每隔三小时自动运行的job：
+```
+com.cv4j.proxy.web.job.ScheduleJobs:cronJob()
+```
+```
+application.properties: cronJob.schedule = 0 0 0/3 * * ?s
+```
 
-把代理资源添加到计划任务：http://47.97.7.119:8080/proxypool/planlist
+## 2）免费的在线演示:
+ 
++ 实时最新的免费代理资源：http://47.97.7.119:8080/proxypool/proxylist
 
-预览效果如下：
++ 管理代理资源：http://47.97.7.119:8080/proxypool/resourcelist
 
-![](proxy_list.png)
++ Job运行依赖的数据：http://47.97.7.119:8080/proxypool/planlist
 
-
-另外，还提供了一个接口，可以返回代理池中的Proxy
-
-线上环境地址：http://47.97.7.119:8080/proxypool/proxys/{count}
-
++ 返回Json格式的代理数据：
+http://47.97.7.119:8080/proxypool/proxys/{count}
 类型：GET
+参数：count代表计划获取的代理IP数据条数
 
-参数说明：count<=0  或 count>数据库里总数量， 也返回全部的代理数据
-
-> 以上链接在本地运行时，请把具体的IP地址替换成localhost即可
-
-
-# 联系方式:
-QQ交流群：490882934
+## 3）联系方式: 
++ QQ交流群：490882934
 
