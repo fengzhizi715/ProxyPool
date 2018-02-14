@@ -29,8 +29,10 @@ compile 'com.cv4j.proxy:proxypool:1.1.5'
 
 + ####  clone到本地，运行proxypool-web模块，带界面
 准备条件：
-  1）本地装好MongoDB数据库
-  2）proxypool-web模块下的application.properties，参考配置如下：
+
+1）本地装好MongoDB数据库
+
+2）proxypool-web模块下的application.properties，参考配置如下：
 ```
 spring.data.mongodb.uri=mongodb://localhost:27017/proxypool
 spring.data.mongodb.uri=mongodb://username:password@localhost:27017/proxypool （有账号密码）
@@ -83,7 +85,7 @@ http://{host}:{port}/proxypool/proxys/{count}
 6）定时抓取数据的job
 proxypool-web模块下目前配置了一个每隔三小时自动运行的job：
 ```
-com.cv4j.proxy.web.job.ScheduleJobs:cronJob()
+com.cv4j.proxy.web.job.ScheduleJobs.cronJob()
 ```
 ```
 application.properties: cronJob.schedule = 0 0 0/3 * * ?s
@@ -91,16 +93,17 @@ application.properties: cronJob.schedule = 0 0 0/3 * * ?s
 
 ## 2）免费的在线演示:
  
-+ 实时最新的免费代理资源：http://47.97.7.119:8080/proxypool/proxylist
++ 实时最新的免费代理资源：
+http://47.97.7.119:8080/proxypool/proxylist
 
-+ 管理代理资源：http://47.97.7.119:8080/proxypool/resourcelist
++ 管理代理资源：
+http://47.97.7.119:8080/proxypool/resourcelist
 
-+ Job运行依赖的数据：http://47.97.7.119:8080/proxypool/planlist
++ Job运行依赖的数据：
+http://47.97.7.119:8080/proxypool/planlist
 
 + 返回Json格式的代理数据：
-http://47.97.7.119:8080/proxypool/proxys/{count}
-类型：GET
-参数：count代表计划获取的代理IP数据条数
+http://47.97.7.119:8080/proxypool/proxys/{count},类型：GET,参数：count代表计划获取的代理IP数据条数
 
 ## 3）联系方式: 
 + QQ交流群：490882934
