@@ -3,6 +3,7 @@ package com.cv4j.proxy.domain;
 import org.apache.http.HttpHost;
 
 import java.io.Serializable;
+import java.net.InetSocketAddress;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
@@ -202,5 +203,10 @@ public class Proxy implements Delayed, Serializable {
     public HttpHost toHttpHost() {
 
         return new HttpHost(ip,port,type);
+    }
+
+    public java.net.Proxy toJavaNetProxy() {
+
+        return new java.net.Proxy(java.net.Proxy.Type.HTTP,new InetSocketAddress(ip , port));
     }
 }
