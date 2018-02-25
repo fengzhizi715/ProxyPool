@@ -12,7 +12,7 @@
 + ProxyPool的概述：该项目有两个模块proxypool和proxypool-web，从网络上抓取数据的核心工作由proxypool模块完成，可以在site这个package下新增针对不同网页的解析类。proxypool-web模块是依赖proxypool模块实现的sample模块。
 
 ## 1) 使用方法
-+ #### 单独使用ProxyPool项目中proxypool模块的抓取逻辑，无任何界面，可用于任何项目，无侵入性
++ #### 单独使用ProxyPool项目中proxypool模块的抓取逻辑，它无任何界面，可用于任何项目，无侵入性
 
 对于Java工程如果使用gradle构建，由于默认没有使用jcenter()，需要在相应module的build.gradle中配置
 ```groovy
@@ -24,7 +24,7 @@ repositories {
 Gradle:
 
 ```groovy
-compile 'com.cv4j.proxy:proxypool:1.1.6'
+compile 'com.cv4j.proxy:proxypool:1.1.7'
 ```
 
 + ####  clone到本地，运行proxypool-web模块，带界面
