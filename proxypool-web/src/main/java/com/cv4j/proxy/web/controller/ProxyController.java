@@ -5,13 +5,15 @@ import com.cv4j.proxy.http.HttpManager;
 import com.cv4j.proxy.web.aop.annotation.WebLog;
 import com.cv4j.proxy.web.dao.ProxyDao;
 import com.cv4j.proxy.web.domain.ProxyData;
+import com.cv4j.proxy.web.dto.PageResult;
+import com.cv4j.proxy.web.dto.QueryProxy;
 import com.cv4j.proxy.web.dto.QueryProxyDTO;
+import com.cv4j.proxy.web.dto.ResultMap;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -68,6 +70,43 @@ public class ProxyController {
         resultMap.put("rows",resultPage);
 
         return resultMap;
+    }
+
+    @WebLog
+    @RequestMapping(value="/proxyController/proxys/{type}/{ip}/{minport}/{maxport}", method= RequestMethod.GET)
+    @ResponseBody
+    public PageResult<ProxyData> proxys(@PathVariable String type, @PathVariable String ip, @PathVariable Integer minport, @PathVariable Integer maxport, Integer page, Integer limit) {
+        log.info("proxy info:"+type+","+ip+","+minport+","+maxport);
+
+        QueryProxyDTO queryProxyDTO = new QueryProxyDTO();
+        queryProxyDTO.setType(type);
+        queryProxyDTO.setIp(".".equals(ip) ? "all" : ip);
+        queryProxyDTO.setMinPort(minport);
+        queryProxyDTO.setMaxPort(maxport);
+        queryProxyDTO.setPage(page);
+        queryProxyDTO.setRows(limit);
+
+        List<ProxyData> resultAll = proxyDao.findProxyByCond(queryProxyDTO,true);
+        List<ProxyData> resultPage = proxyDao.findProxyByCond(queryProxyDTO,false);
+
+        PageResult<ProxyData> pageResult = new PageResult<>();
+        pageResult.setData(resultPage);
+        pageResult.setCount(resultAll.size());
+
+        return pageResult;
+    }
+
+    @WebLog
+    @RequestMapping(value="/proxyController/checkproxy/{type}/{ip}/{port}")
+    @ResponseBody
+    public ResultMap checkproxy(@PathVariable String type, @PathVariable String ip, @PathVariable Integer port) {
+        log.info("checkproxy:"+type+"://"+ip+":"+port);
+        HttpHost httpHost = new HttpHost(ip, port, type);
+        if(HttpManager.get().checkProxy(httpHost)){
+            return ResultMap.ok();
+        } else {
+            return ResultMap.failure();
+        }
     }
 
 }

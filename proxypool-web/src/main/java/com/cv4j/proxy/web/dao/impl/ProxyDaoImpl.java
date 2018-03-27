@@ -42,7 +42,7 @@ public class ProxyDaoImpl implements ProxyDao {
         if(Preconditions.isNotBlank(queryProxyDTO.getType()) && !"all".equals(queryProxyDTO.getType())) {
             query.addCriteria(Criteria.where("proxyType").is(queryProxyDTO.getType()));
         }
-        if(Preconditions.isNotBlank(queryProxyDTO.getIp())) {
+        if(Preconditions.isNotBlank(queryProxyDTO.getIp()) && !"all".equals(queryProxyDTO.getIp())) {
             query.addCriteria(Criteria.where("proxyAddress").regex(".*?"+queryProxyDTO.getIp()+".*"));
         }
         if(queryProxyDTO.getMinPort() != null) {

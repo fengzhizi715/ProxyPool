@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+		<title>实时更新的免费代理IP资源</title>
+		<link rel="shortcut icon" type="image/x-icon" th:href="@{/css/favicon.ico}"/>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/common.css}"/>
+	</head>
+	<body>
+		<div class="weadmin-body">
+			<div class="layui-row">
+				<div class="layui-form layui-form-pane">
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<label class="layui-form-label">类型</label>
+							<div class="layui-input-inline">
+								<select id="ipType" name="ipType" lay-search="">
+									<option value="all" selected="">--全部--</option>
+									<option value="http">HTTP</option>
+									<option value="https">HTTPS</option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">IP地址</label>
+							<div class="layui-input-inline">
+								<input type="text" id="ipAddress" name="ipAddress" placeholder="可模糊输入" class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">最小端口</label>
+							<div class="layui-input-inline">
+								<input type="text" id="minPort" name="minPort" placeholder="最小的" class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">最大端口</label>
+							<div class="layui-input-inline">
+								<input type="text" id="maxPort" name="maxPort" placeholder="最大的" class="layui-input"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-row layui-bg-gray">
+					<div class="layui-col-md8">
+						<div class="layui-inline">
+							<button class="layui-btn" id="queryBtn" lay-filter="queryBtn" lay-submit=""><i class="layui-icon">&#xe615;</i>查询</button>
+						</div>
+					</div>
+					<div class="layui-col-md4">
+						<div style="padding: 6px;">
+							<span class="layui-breadcrumb" lay-separator="  ">
+								<a href="https://github.com/fengzhizi715/ProxyPool" target="_blank"><span style="color: #FF5722;font-size:20px">GitHub项目地址</span></a>
+								<a href="//shang.qq.com/wpa/qunwpa?idkey=75c27afe5f1b45a45ad33e30164215cda897e122391de88969be45db1b86e66f" target="_blank"><span style="color: #FF5722;font-size:20px">QQ交流群：490882934</span></a>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<table class="layui-table" id="resultTable" lay-filter="resultTable"></table>
+		</div>
+		<div class="layui-row layui-bg-gray">
+			<p><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1271391861'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1271391861%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script></p>
+		</div>
+
+        <!-- 表格操作列 -->
+        <script type="text/html" id="barTpl">
+            <a class="layui-btn layui-btn-sm" lay-event="verify">验证</a>
+        </script>
+		<script type="text/javascript" th:src="@{//cdn.bootcss.com/jquery/3.2.0/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{//cdn.bootcss.com/axios/0.18.0/axios.min.js}"></script>
+		<script type="text/javascript" th:src="@{/layui/layui.all.js}"></script>
+		<script type="text/javascript" th:src="@{/js/proxys.js}"></script>
+	</body>
+</html>

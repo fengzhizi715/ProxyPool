@@ -33,16 +33,16 @@ public class WebLogAspect {
     public void doBeforeController(JoinPoint joinPoint) {
 
         // 接收到请求，记录请求内容
-        log.info("WebLogAspect.doBefore()");
+        log.debug("WebLogAspect.doBefore()");
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
 
         // 记录下请求内容
-        log.info("URL : " + request.getRequestURL().toString());
-        log.info("HTTP_METHOD : " + request.getMethod());
-        log.info("IP : " + request.getRemoteAddr());
-        log.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        log.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
+        log.debug("URL : " + request.getRequestURL().toString());
+        log.debug("HTTP_METHOD : " + request.getMethod());
+        log.debug("IP : " + request.getRemoteAddr());
+        log.debug("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+        log.debug("ARGS : " + Arrays.toString(joinPoint.getArgs()));
         //获取所有参数方法一：
         Enumeration<String> enu = request.getParameterNames();
         while (enu.hasMoreElements()) {
@@ -53,6 +53,6 @@ public class WebLogAspect {
 
     @AfterReturning(pointcut = "log()")
     public void doAfterController(JoinPoint joinPoint) {
-        log.info("WebLogAspect.doAfterReturning()");
+        log.debug("WebLogAspect.doAfterReturning()");
     }
 }

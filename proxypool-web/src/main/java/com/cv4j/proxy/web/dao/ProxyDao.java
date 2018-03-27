@@ -1,6 +1,7 @@
 package com.cv4j.proxy.web.dao;
 
 import com.cv4j.proxy.web.domain.ProxyData;
+import com.cv4j.proxy.web.dto.PageResult;
 import com.cv4j.proxy.web.dto.ProxyDataDTO;
 import com.cv4j.proxy.web.dto.QueryProxyDTO;
 
