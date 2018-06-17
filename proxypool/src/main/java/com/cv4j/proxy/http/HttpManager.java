@@ -199,6 +199,24 @@ public class HttpManager {
         return response;
     }
 
+    public boolean checkProxy(Proxy proxy) {
+
+        if (proxy == null) return false;
+
+        Socket socket = null;
+        try {
+            socket = new Socket();
+            InetSocketAddress endpointSocketAddr = new InetSocketAddress(proxy.getIp(), proxy.getPort());
+            socket.connect(endpointSocketAddr, 3000);
+            return true;
+        } catch (IOException e) {
+            return false;
+        } finally {
+
+            IOUtils.closeQuietly(socket);
+        }
+    }
+
     public boolean checkProxy(HttpHost proxy) {
 
         if (proxy == null) return false;
