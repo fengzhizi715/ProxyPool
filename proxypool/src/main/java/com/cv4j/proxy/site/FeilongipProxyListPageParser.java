@@ -13,22 +13,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * http://www.ip3366.net/
+ * http://www.feilongip.com/
  */
 @Slf4j
-public class Ip3366ProxyListPageParser implements ProxyListPageParser {
+public class FeilongipProxyListPageParser implements ProxyListPageParser {
 
     @Override
     public List<Proxy> parse(String html) {
         Document document = Jsoup.parse(html);
-        Elements elements = document.select("div[id=list] table tbody tr");
+        Elements elements = document.select("div[id=j-tab-newprd] table tbody tr");
         List<Proxy> proxyList = new ArrayList<>();
         for (Element element : elements){
-            String ip = element.select("td:eq(0)").first().text();
-            String port  = element.select("td:eq(1)").first().text();
-//            String isAnonymous = element.select("td:eq(2)").first().text();  //gb2312乱码未解决
-            String isAnonymous = "匿";
-            String type = element.select("td:eq(3)").first().text();
+            String ip_port = element.select("td:eq(1)").first().text();
+            String ip = ip_port.split(":")[0];
+            String port  = ip_port.split(":")[1];
+
+            String isAnonymous = element.select("td:eq(3)").first().text();
+            String type = element.select("td:eq(4)").first().text();
             if(!anonymousFlag || isAnonymous.contains("匿") || isAnonymous.contains("anonymous")){
                 proxyList.add(new Proxy(ip, Integer.valueOf(port), type, Constant.TIME_INTERVAL));
             }
