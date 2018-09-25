@@ -7,6 +7,7 @@ import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.reactivestreams.Publisher;
@@ -40,7 +41,7 @@ public class ProxyManager {
     public void start() {
 
         Flowable.fromIterable(ProxyPool.proxyMap.keySet())
-                .parallel()
+                .parallel(ProxyPool.proxyMap.size())
                 .map(new Function<String, List<Proxy>>() {
                     @Override
                     public List<Proxy> apply(String s) throws Exception {
@@ -77,6 +78,7 @@ public class ProxyManager {
                         return Flowable.empty();
                     }
                 })
+                .runOn(Schedulers.io())
                 .sequential()
                 .subscribe(new Consumer<Proxy>() {
                     @Override
