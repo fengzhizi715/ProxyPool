@@ -7,7 +7,7 @@
 
 + ProxyPool的作用：从网络上获取免费可用的IP代理数据。先用爬虫程序抓取代理数据，再检查代理是否可用，可用的话就存放到数据库中。每隔一段时间重复执行这个过程。
 
-+ ProxyPool的技术：Spring Boot+RxJava2.x+MongoDB等，前端：layUI+jquery+jquery等
++ ProxyPool的技术：Spring Boot+RxJava2.x+MongoDB等，前端：layUI+jquery 等
 
 + ProxyPool的概述：该项目有两个模块proxypool和proxypool-web，从网络上抓取数据的核心工作由proxypool模块完成，可以在site这个package下新增针对不同网页的解析类。proxypool-web模块是依赖proxypool模块实现的sample模块。
 
@@ -85,9 +85,11 @@ http://{host}:{port}/proxypool/proxys/{count}
 
 6）定时抓取数据的job
 proxypool-web模块下目前配置了一个每隔三小时自动运行的job：
+
 ```
 com.cv4j.proxy.web.job.ScheduleJobs.cronJob()
 ```
+
 ```
 application.properties: cronJob.schedule = 0 0 0/3 * * ?s
 ```
