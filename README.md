@@ -11,7 +11,7 @@
 
 + ProxyPool的概述：该项目有两个模块proxypool和proxypool-web，从网络上抓取数据的核心工作由proxypool模块完成，可以在site这个package下新增针对不同网页的解析类。proxypool-web模块是依赖proxypool模块实现的sample模块。
 
-## 1) 使用方法
+## 1. 使用方法
 + #### 单独使用ProxyPool项目中proxypool模块的抓取逻辑，它无任何界面，可用于任何项目，无侵入性
 
 对于Java工程如果使用gradle构建，由于默认没有使用jcenter()，需要在相应module的build.gradle中配置
@@ -94,7 +94,7 @@ com.cv4j.proxy.web.job.ScheduleJobs.cronJob()
 application.properties: cronJob.schedule = 0 0 0/3 * * ?s
 ```
 
-## 2）免费的在线演示:
+## 2. 免费的在线演示:
  
 + 实时最新的免费代理资源：
 http://47.97.7.119:8080/proxypool/proxylist
@@ -109,7 +109,11 @@ http://47.97.7.119:8080/proxypool/planlist
 http://47.97.7.119:8080/proxypool/proxys/{count}
 类型：GET,参数：count代表计划获取的代理IP数据条数
 
-## 3）联系方式: 
+## 3. 专业的爬虫
+笔者开发的专业的爬虫框架:
+[NetDiscovery](https://github.com/fengzhizi715/NetDiscovery)
+
+## 4. 联系方式: 
 
 QQ交流群：490882934
 
