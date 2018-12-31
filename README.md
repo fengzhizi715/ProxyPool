@@ -115,7 +115,7 @@ http://47.97.7.119:8080/proxypool/proxys/{count}
 
 ## 4. 联系方式: 
 
-QQ交流群：490882934
+Wechat：fengzhizi715
 
 
 > Java与Android技术栈：每周更新推送原创技术文章，欢迎扫描下方的公众号二维码并关注，期待与您的共同成长和进步。
