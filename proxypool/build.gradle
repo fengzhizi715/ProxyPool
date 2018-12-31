@@ -30,21 +30,21 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
-    compile "io.reactivex.rxjava2:rxjava:2.2.1"
-    compile "org.apache.httpcomponents:httpclient:4.5.2"
-    compile 'org.jsoup:jsoup:1.10.3'
-    compile 'tony-common:tony-common-utils:1.2.5'
-    compile 'ch.qos.logback:logback-classic:1.2.3'
-    compile 'ch.qos.logback:logback-core:1.2.3'
-    compile 'ch.qos.logback:logback-access:1.2.3'
-    compile 'org.projectlombok:lombok:1.18.0'
+    compileOnly "io.reactivex.rxjava2:rxjava:2.2.4"
+    implementation "org.apache.httpcomponents:httpclient:4.5.2"
+    implementation 'org.jsoup:jsoup:1.10.3'
+    implementation 'tony-common:tony-common-utils:1.2.6'
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+    implementation 'ch.qos.logback:logback-core:1.2.3'
+    implementation 'ch.qos.logback:logback-access:1.2.3'
+    implementation 'org.projectlombok:lombok:1.18.0'
 }
 
 publish{
     userOrg = 'fengzhizi715'
     groupId = 'com.cv4j.proxy'
     artifactId = 'proxypool'
-    publishVersion = '1.1.10'
+    publishVersion = '1.1.11'
     desc = 'this is a proxy pool library for spider'
     website = 'https://github.com/fengzhizi715/ProxyPool'
 }
