@@ -24,7 +24,7 @@ repositories {
 Gradle:
 
 ```groovy
-compile 'com.cv4j.proxy:proxypool:1.1.11'
+compile 'com.cv4j.proxy:proxypool:1.1.12'
 ```
 
 + ####  clone到本地，运行proxypool-web模块，带界面
