@@ -176,7 +176,7 @@ public class HttpManager {
 
     public CloseableHttpResponse getResponse(HttpRequestBase request,Proxy proxy) {
 
-        request.setHeader("User-Agent", Constant.userAgentArray[new Random().nextInt(Constant.userAgentArray.length)]);
+        request.setHeader("User-Agent", Constant.getUserAgent());
         HttpClientContext httpClientContext = HttpClientContext.create();
         CloseableHttpResponse response = null;
 
